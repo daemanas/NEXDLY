@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#BCCFEB",
     },
     titleContainer: {
-        height: '200',
+        height: 200,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',

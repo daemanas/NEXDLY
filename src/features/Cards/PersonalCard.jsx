@@ -63,7 +63,6 @@ export default PersonalCard
 
 const styles = StyleSheet.create({
     Container: {
-        height: '100%',
         width: "100%",
         alignItems: "center"
     },
