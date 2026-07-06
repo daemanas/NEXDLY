@@ -1,10 +1,14 @@
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Image, Pressable, ScrollView, StyleSheet, Text, View, } from 'react-native'
+import React, { useState } from 'react'
 import Feather from 'react-native-vector-icons/Feather';
-
 import walletImage from '../assets/images/wallet.png';
 
+import Personal from './Personal/PersonalExpense'
+import Group from "./Group/GroupExpense"
+
 const Expansion = () => {
+    const [view, serView] = useState(0);
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.ContaintContainer}>
@@ -32,7 +36,10 @@ const Expansion = () => {
 
                 <View style={styles.ItemsContainer}>
                     <View style={styles.ItemCatagory}>
-                        <Pressable style={styles.ExpsButton}>
+                        <Pressable
+                            style={styles.ExpsButton}
+                            onPress={() => serView(0)}
+                        >
                             <View style={styles.ExpsButtonContainer}>
                                 <View style={styles.ExpsButtonIcon}>
                                     <Feather name="user" size={38} color="#573292" />
@@ -49,8 +56,16 @@ const Expansion = () => {
                                     </Text>
                                 </View>
                             </View>
+                            {view === 0 && (
+                                <View style={styles.activeLine} />
+                            )}
                         </Pressable>
-                        <Pressable style={styles.ExpsButton}>
+
+                        <Pressable
+                            style={styles.ExpsButton}
+                            onPress={() => serView(1)}
+
+                        >
                             <View style={styles.ExpsButtonContainer}>
                                 <View style={styles.ExpsButtonIcon}>
                                     <Feather name="users" size={38} color="rgb(29, 148, 37)" />
@@ -67,8 +82,15 @@ const Expansion = () => {
                                     </Text>
                                 </View>
                             </View>
+                            {view === 1 && (
+                                <View style={styles.activeLine} />
+                            )}
                         </Pressable>
+
+
                     </View>
+                    {view === 0 && <Personal />}
+                    {view === 1 && <Group />}
                 </View>
             </View>
         </ScrollView>
@@ -79,6 +101,8 @@ export default Expansion
 
 const styles = StyleSheet.create({
     container: {
+        height: "100%",
+        width: "100%",
         flex: 1,
     },
     ContaintContainer: {
@@ -128,12 +152,22 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     ExpsButton: {
-        // borderWidth: 1 ,
         height: 110,
         width: 180,
-        borderRadius: 20 ,
+        borderRadius: 20,
         boxShadow: '1px 4px 16px 7px rgba(0, 0, 0, 0.1)',
         shadowOpacity: 0.1,
+
+    },
+    activeLine: {
+        position: 'absolute',
+        bottom: 0,
+        left: 14,
+        right: 14,
+        height: 4,
+        backgroundColor: '#6246EA',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     },
     ExpsButtonContainer: {
         marginLeft: 2,
@@ -147,7 +181,7 @@ const styles = StyleSheet.create({
     },
     ExpsButtonIcon: {
         marginTop: 2,
-        marginLeft: 3,
+        marginLeft: 8,
         borderRadius: 19,
         backgroundColor: "#b0a8b9",
         height: 60,
