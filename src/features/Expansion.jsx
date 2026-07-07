@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import Feather from 'react-native-vector-icons/Feather';
 import walletImage from '../assets/images/wallet.png';
 
-import Personal from './Personal/PersonalExpense'
-import Group from "./Group/GroupExpense"
+import Personal from './Expense/Personal/PersonalExpense'
+import Group from "./Expense/Group/GroupExpense"
 
 const Expansion = () => {
     const [view, serView] = useState(0);

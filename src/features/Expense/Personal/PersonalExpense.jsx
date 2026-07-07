@@ -1,9 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React from 'react'
 import PersonalCard from '../Cards/PersonalCard'
-import PersonalExpList from '../ExpList/PersonalExpList'
+import PersonalExpList from '../components/PersonalExpenseListItem'
+import { useNavigation } from '@react-navigation/native'
 
 const PersonalExpense = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.ContaintContainer}>
@@ -19,9 +22,14 @@ const PersonalExpense = () => {
           <Text style={{ fontSize: 17, fontWeight: "bold" }} >
             Recent Expension
           </Text>
-          <Text style={{ fontSize: 15, fontWeight: "500", color: "#192ebd" }}>
-            See All
-          </Text>
+          <Pressable
+            onPress={() => navigation.navigate('AllExpenses')}
+          >
+            <Text style={{ ontSize: 15, fontWeight: "500", color: "#192ebd"
+              }} >
+              See All
+            </Text>
+          </Pressable>
         </View>
         <View>
           <PersonalExpList />
