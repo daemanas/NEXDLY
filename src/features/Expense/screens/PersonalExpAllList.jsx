@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Entypo from 'react-native-vector-icons/Entypo';
 import PersonalExpList from '../components/PersonalExpenseListItem'
@@ -13,7 +13,7 @@ const PersonalExpAllList = () => {
 
                 <View style={styles.titleContainer}>
                     <Text style={{ fontSize: 19, fontWeight: 700 }}>
-                        All Expenses
+                        All Personal Expenses
                     </Text>
                 </View>
                 <View style={styles.walletContainer}>
@@ -91,9 +91,11 @@ const PersonalExpAllList = () => {
                         <Text style={styles.titles}>↑↓</Text>
                     </View>
                 </View>
-                <View style={styles.itemContainer}>
+                <ScrollView
+                    style={styles.itemContainer}
+                    showsVerticalScrollIndicator={false}>
                     <PersonalExpList />
-                </View>
+                </ScrollView>
 
 
             </View>
@@ -110,6 +112,7 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     contantContainer: {
+         flex: 1,
         marginTop: 30,
         marginLeft: 20,
         marginRight: 20,
@@ -161,27 +164,28 @@ const styles = StyleSheet.create({
     transactionWallet: {
         transform: [{ translateX: -34 }]
     },
-    itemContainer:{
-        marginTop:20,
+    itemContainer: {
+        flex:1,
+        marginTop: 20,
     },
-    expensesTitleContainer:{
-        marginTop:19,
-        flexDirection:"row",
-        justifyContent:"space-between"
+    expensesTitleContainer: {
+        marginTop: 19,
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
-    rightTitleContainer:{
-        flexDirection:"row",
-        gap:6,
-        marginLeft:4,
+    rightTitleContainer: {
+        flexDirection: "row",
+        gap: 6,
+        marginLeft: 4,
     },
-    leftTitleContainer:{
-        flexDirection:"row",
-        gap:6,
-        marginRight:4,
+    leftTitleContainer: {
+        flexDirection: "row",
+        gap: 6,
+        marginRight: 4,
     },
-    titles:{
-        fontSize:15,
-        fontWeight:500,
-        color:"#47474a"
+    titles: {
+        fontSize: 15,
+        fontWeight: 500,
+        color: "#47474a"
     }
 })

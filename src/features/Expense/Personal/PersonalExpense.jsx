@@ -23,7 +23,7 @@ const PersonalExpense = () => {
             Recent Expension
           </Text>
           <Pressable
-            onPress={() => navigation.navigate('AllExpenses')}
+            onPress={() => navigation.navigate('AllPersonalExpenses')}
           >
             <Text style={{ ontSize: 15, fontWeight: "500", color: "#192ebd"
               }} >
@@ -32,7 +32,7 @@ const PersonalExpense = () => {
           </Pressable>
         </View>
         <View>
-          <PersonalExpList />
+          <PersonalExpList limit={6} />
         </View>
       </View>
     </View>

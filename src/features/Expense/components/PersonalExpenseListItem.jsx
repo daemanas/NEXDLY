@@ -1,29 +1,40 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const PersonalExpList = () => {
+import personalExpenseData from '../data/PersonalExpStore';
+
+const PersonalExpList = ({ limit }) => {
+    const expensesData = limit
+        ? personalExpenseData.slice(0, limit)
+        : personalExpenseData
     return (
         <View style={styles.container}>
-            <View style={styles.ItemList}>
-                <View style={styles.item}>
-                    <View style={styles.itemNameContainer}>
-                        <View style={styles.itemIconContainer}>
-                            <Text style={styles.itemIcon}>🍔</Text>
-                        </View>
+            {expensesData.map((item) => (
+                <View
+                    style={styles.ItemList}
+                    key={item.id}
+                >
+                    <View style={styles.item}>
+                        <View style={styles.itemNameContainer}>
+                            <View style={styles.itemIconContainer}>
+                                <Text style={styles.itemIcon}>🍔</Text>
+                            </View>
 
-                        <View style={styles.itemName}>
-                            <Text style={{ fontSize: 16, fontWeight: 700 }} >Lunch</Text>
-                            <Text style={{ color: "#656164" }}>Today,1:20PM</Text>
+                            <View style={styles.itemName}>
+                                <Text style={{ fontSize: 16, fontWeight: 700 }} >Lunch</Text>
+                                <Text style={{ color: "#656164" }}>Today,1:20PM</Text>
+                            </View>
+                        </View>
+                        <View style={styles.itemMoneyContainer}>
+                            <Text style={{ fontSize: 16, fontWeight: 700, color: "#e02b34" }}>₹180.00</Text>
+                            <Text style={{ fontSize: 15, }}>🏦</Text>
                         </View>
                     </View>
-                    <View style={styles.itemMoneyContainer}>
-                        <Text style={{fontSize:16, fontWeight: 700, color:"#e02b34"}}>₹180.00</Text>
-                        <Text style={{fontSize:15,}}>🏦</Text>
-                    </View>
+
                 </View>
-                
-            </View>
-            
+            ))}
+
+
 
         </View>
     )
@@ -78,9 +89,9 @@ const styles = StyleSheet.create({
         marginLeft: 3,
         gap: 1
     },
-    itemMoneyContainer:{
-        marginRight:10,
+    itemMoneyContainer: {
+        marginRight: 10,
         alignItems: "flex-end",
-        gap:4
+        gap: 4
     }
 })

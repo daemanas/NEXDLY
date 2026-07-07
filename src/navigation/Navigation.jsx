@@ -15,7 +15,8 @@ import Workflow from '../features/WorkFlow';
 import Expansion from '../features/Expansion';
 import Setting from '../features/Setting';
 
-import AllExpenses from '../features/Expense/screens/PersonalExpAllList';
+import AllPersonalExpenses from '../features/Expense/screens/PersonalExpAllList';
+import AllGroupExpenses from '../features/Expense/screens/GroupExpAllList';
 
 
 const Tab = createBottomTabNavigator();
@@ -119,8 +120,12 @@ const Navigation = () => {
 
 
                 <Stack.Screen
-                    name="AllExpenses"
-                    component={AllExpenses}
+                    name="AllPersonalExpenses"
+                    component={AllPersonalExpenses}
+                />
+                <Stack.Screen
+                    name="AllGroupExpenses"
+                    component={AllGroupExpenses}
                 />
 
 
