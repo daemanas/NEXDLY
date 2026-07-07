@@ -16,17 +16,17 @@ const PersonalExpList = ({ limit }) => {
                 >
                     <View style={styles.item}>
                         <View style={styles.itemNameContainer}>
-                            <View style={styles.itemIconContainer}>
-                                <Text style={styles.itemIcon}>🍔</Text>
+                            <View style={[styles.itemIconContainer, {backgroundColor:item.iconBg }]}>
+                                <Text style={styles.itemIcon}>{item.icon}</Text>
                             </View>
 
                             <View style={styles.itemName}>
-                                <Text style={{ fontSize: 16, fontWeight: 700 }} >Lunch</Text>
-                                <Text style={{ color: "#656164" }}>Today,1:20PM</Text>
+                                <Text style={{ fontSize: 16, fontWeight: 700 }} >{item.title}</Text>
+                                <Text style={{ color: "#656164" }}>{item.date}, {item.time}</Text>
                             </View>
                         </View>
                         <View style={styles.itemMoneyContainer}>
-                            <Text style={{ fontSize: 16, fontWeight: 700, color: "#e02b34" }}>₹180.00</Text>
+                            <Text style={{ fontSize: 16, fontWeight: 700, color: "#e02b34" }}>₹{item.amount}</Text>
                             <Text style={{ fontSize: 15, }}>🏦</Text>
                         </View>
                     </View>
@@ -48,10 +48,10 @@ const styles = StyleSheet.create({
     },
     ItemList: {
         height: 72,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "#fcfcfc",
         borderRadius: 14,
         justifyContent: "center",
-        marginBottom: 12,
+        marginBottom: 2,
 
         shadowColor: "#000",
         shadowOffset: {

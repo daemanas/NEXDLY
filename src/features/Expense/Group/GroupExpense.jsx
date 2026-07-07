@@ -1,15 +1,17 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native'
 import React from 'react'
 import GroupCard from '../Cards/GroupCard'
 import GroupExpList from '../components/GroupExpenseListItem'
 import { useNavigation } from '@react-navigation/native'
+
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const GroupExpense = () => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <View style={styles.ContaintContainer}>
+      <ScrollView style={styles.ContaintContainer}>
         <View style={styles.CardTitle}>
           <Text style={styles.CardName}> Quick Summary</Text>
           <Text style={styles.CardMonth}>This Month </Text>
@@ -25,16 +27,27 @@ const GroupExpense = () => {
           <Pressable
             onPress={() => navigation.navigate('AllGroupExpenses')}
           >
-            <Text style={{ ontSize: 15, fontWeight: "500", color: "#192ebd"
-              }} >
+            <Text style={{
+              ontSize: 15, fontWeight: "500", color: "#192ebd"
+            }} >
               See All
             </Text>
           </Pressable>
         </View>
-        <View>
+        <View style={{marginTop:20}}>
           <GroupExpList limit={6} />
         </View>
-      </View>
+      </ScrollView>
+      <Pressable
+        style={styles.addButton}
+        onPress={() => navigation.navigate('AddGroupExpenses')}
+      >
+        <AntDesign
+          name="plus"
+          size={30}
+          color="#FFFFFF"
+        />
+      </Pressable>
     </View>
   )
 }
@@ -43,7 +56,7 @@ export default GroupExpense
 
 const styles = StyleSheet.create({
   container: {
-    // flex:1,
+    flex:1,
     width: "100%"
   },
   ContaintContainer: {
@@ -51,6 +64,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginLeft: 21,
     marginRight: 21,
+    paddingBottom:100,
   },
   CardTitle: {
     flexDirection: "row",
@@ -75,4 +89,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 30,
   },
+  addButton: {
+    height: 58,
+    width: 58,
+    backgroundColor: "#6246EA",
+    borderRadius: 29,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    right: 22,
+    bottom: 25,
+    elevation: 8,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+  }
 })

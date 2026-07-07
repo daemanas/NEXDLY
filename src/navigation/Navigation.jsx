@@ -17,8 +17,8 @@ import Setting from '../features/Setting';
 
 import AllPersonalExpenses from '../features/Expense/screens/PersonalExpAllList';
 import AllGroupExpenses from '../features/Expense/screens/GroupExpAllList';
-
-
+import AddPersonalExpenses from '../features/Expense/Input/PersonalInput'
+import AddGroupExpenses from '../features/Expense/Input/GroupInput'
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
@@ -126,6 +126,15 @@ const Navigation = () => {
                 <Stack.Screen
                     name="AllGroupExpenses"
                     component={AllGroupExpenses}
+                />
+
+                <Stack.Screen
+                    name="AddPersonalExpenses"
+                    component={AddPersonalExpenses}
+                />
+                <Stack.Screen
+                    name="AddGroupExpenses"
+                    component={AddGroupExpenses}
                 />
 
 

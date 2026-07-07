@@ -10,7 +10,7 @@ const Expansion = () => {
     const [view, serView] = useState(0);
 
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.ContaintContainer}>
                 <View style={styles.titleContainer}>
                     <View>
@@ -93,7 +93,7 @@ const Expansion = () => {
                     {view === 1 && <Group />}
                 </View>
             </View>
-        </ScrollView>
+        </View>
     )
 }
 
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     ContaintContainer: {
+        flex:1,
         backgroundColor: "#BCCFEB",
     },
     titleContainer: {
@@ -140,6 +141,7 @@ const styles = StyleSheet.create({
 
     },
     ItemsContainer: {
+        flex:1,
         backgroundColor: "white",
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20
