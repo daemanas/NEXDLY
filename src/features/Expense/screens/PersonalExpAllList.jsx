@@ -2,6 +2,9 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Entypo from 'react-native-vector-icons/Entypo';
 import PersonalExpList from '../components/PersonalExpenseListItem'
+import SearchFilter from '../components/ExpenseSearchFilter'
+
+
 
 const PersonalExpAllList = () => {
     return (
@@ -76,7 +79,17 @@ const PersonalExpAllList = () => {
                     </View>
                 </View>
                 <View style={styles.searceContainer}>
-                    {/* <PersonalExpList /> */}
+                    <SearchFilter />
+                </View>
+                <View style={styles.expensesTitleContainer}>
+                    <View style={styles.rightTitleContainer}>
+                        <Text style={styles.titles}>31</Text>
+                        <Text style={styles.titles}>Expenses Found</Text>
+                    </View>
+                    <View style={styles.leftTitleContainer}>
+                        <Text style={styles.titles}>Sort</Text>
+                        <Text style={styles.titles}>↑↓</Text>
+                    </View>
                 </View>
                 <View style={styles.itemContainer}>
                     <PersonalExpList />
@@ -97,7 +110,6 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     contantContainer: {
-        // backgroundColor:"pink",
         marginTop: 30,
         marginLeft: 20,
         marginRight: 20,
@@ -150,6 +162,26 @@ const styles = StyleSheet.create({
         transform: [{ translateX: -34 }]
     },
     itemContainer:{
-        marginTop:30,
+        marginTop:20,
+    },
+    expensesTitleContainer:{
+        marginTop:19,
+        flexDirection:"row",
+        justifyContent:"space-between"
+    },
+    rightTitleContainer:{
+        flexDirection:"row",
+        gap:6,
+        marginLeft:4,
+    },
+    leftTitleContainer:{
+        flexDirection:"row",
+        gap:6,
+        marginRight:4,
+    },
+    titles:{
+        fontSize:15,
+        fontWeight:500,
+        color:"#47474a"
     }
 })
