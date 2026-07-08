@@ -1,15 +1,10 @@
 import React from 'react';
-
 import { NavigationContainer } from '@react-navigation/native';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-
 import HomeScreen from '../features/HomeScreen';
 import Workflow from '../features/WorkFlow';
 import Expansion from '../features/Expansion';
@@ -19,8 +14,9 @@ import AllPersonalExpenses from '../features/Expense/screens/PersonalExpAllList'
 import AllGroupExpenses from '../features/Expense/screens/GroupExpAllList';
 import AddPersonalExpenses from '../features/Expense/Input/PersonalInput'
 import AddGroupExpenses from '../features/Expense/Input/GroupInput'
-const Tab = createBottomTabNavigator();
+import { ExpenseProvider } from '../context/ExpenseContext'
 
+const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 
@@ -53,7 +49,6 @@ const BottomTabs = () => {
                 }}
             />
 
-
             <Tab.Screen
                 name="Expense"
                 component={Expansion}
@@ -68,7 +63,6 @@ const BottomTabs = () => {
                 }}
             />
 
-
             <Tab.Screen
                 name="My Plans"
                 component={Workflow}
@@ -82,7 +76,6 @@ const BottomTabs = () => {
                     ),
                 }}
             />
-
 
             <Tab.Screen
                 name="Setting"
@@ -105,42 +98,42 @@ const BottomTabs = () => {
 
 const Navigation = () => {
     return (
-        <NavigationContainer>
+        <ExpenseProvider>
+            <NavigationContainer>
 
-            <Stack.Navigator
-                screenOptions={{
-                    headerShown: false,
-                }}
-            >
+                <Stack.Navigator
+                    screenOptions={{
+                        headerShown: false,
+                    }}
+                >
 
-                <Stack.Screen
-                    name="MainTabs"
-                    component={BottomTabs}
-                />
-
-
-                <Stack.Screen
-                    name="AllPersonalExpenses"
-                    component={AllPersonalExpenses}
-                />
-                <Stack.Screen
-                    name="AllGroupExpenses"
-                    component={AllGroupExpenses}
-                />
-
-                <Stack.Screen
-                    name="AddPersonalExpenses"
-                    component={AddPersonalExpenses}
-                />
-                <Stack.Screen
-                    name="AddGroupExpenses"
-                    component={AddGroupExpenses}
-                />
+                    <Stack.Screen
+                        name="MainTabs"
+                        component={BottomTabs}
+                    />
 
 
-            </Stack.Navigator>
+                    <Stack.Screen
+                        name="AllPersonalExpenses"
+                        component={AllPersonalExpenses}
+                    />
+                    <Stack.Screen
+                        name="AllGroupExpenses"
+                        component={AllGroupExpenses}
+                    />
+                    <Stack.Screen
+                        name="AddPersonalExpenses"
+                        component={AddPersonalExpenses}
+                    />
+                    <Stack.Screen
+                        name="AddGroupExpenses"
+                        component={AddGroupExpenses}
+                    />
 
-        </NavigationContainer>
+                </Stack.Navigator>
+
+            </NavigationContainer>
+        </ExpenseProvider>
     );
 };
 

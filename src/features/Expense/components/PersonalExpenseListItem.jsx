@@ -1,12 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-
-import personalExpenseData from '../data/PersonalExpStore';
+import { useExpense } from "../../../context/ExpenseContext";
 
 const PersonalExpList = ({ limit }) => {
+    const {
+        personalExpenses
+    } = useExpense();
+
     const expensesData = limit
-        ? personalExpenseData.slice(0, limit)
-        : personalExpenseData
+        ? personalExpenses.slice(0, limit)
+        : personalExpenses
     return (
         <View style={styles.container}>
             {expensesData.map((item) => (
@@ -16,13 +19,13 @@ const PersonalExpList = ({ limit }) => {
                 >
                     <View style={styles.item}>
                         <View style={styles.itemNameContainer}>
-                            <View style={[styles.itemIconContainer, {backgroundColor:item.iconBg }]}>
+                            <View style={[styles.itemIconContainer, { backgroundColor: item.iconBg }]}>
                                 <Text style={styles.itemIcon}>{item.icon}</Text>
                             </View>
 
                             <View style={styles.itemName}>
                                 <Text style={{ fontSize: 16, fontWeight: 700 }} >{item.title}</Text>
-                                <Text style={{ color: "#656164" }}>{item.date}, {item.time}</Text>
+                                <Text style={{ color: "#656164" }}>{item.date.toLocaleDateString("en-GB")}, {item.time}</Text>
                             </View>
                         </View>
                         <View style={styles.itemMoneyContainer}>

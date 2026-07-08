@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
 
+import InputsItem from '../Input/PersonalInput'
 const personalExpenseData = [
     {
         id: 1,
@@ -84,5 +83,7 @@ const personalExpenseData = [
         iconBg: "#EEEEF8",
     },
 ];
+
+
 
 export default personalExpenseData;

@@ -9,6 +9,7 @@ import Group from "./Expense/Group/GroupExpense"
 const Expansion = () => {
     const [view, serView] = useState(0);
 
+
     return (
         <View style={styles.container}>
             <View style={styles.ContaintContainer}>
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     ContaintContainer: {
-        flex:1,
+        flex: 1,
         backgroundColor: "#BCCFEB",
     },
     titleContainer: {
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
 
     },
     ItemsContainer: {
-        flex:1,
+        flex: 1,
         backgroundColor: "white",
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20

@@ -32,15 +32,15 @@ const PersonalExpense = () => {
             </Text>
           </Pressable>
         </View>
-        <View style={{marginTop:20}}>
+        <View style={{ marginTop: 20 }}>
           <PersonalExpList limit={6} />
         </View>
 
       </ScrollView>
 
-      <Pressable 
-      style={styles.addButton}
-      onPress={() => navigation.navigate('AddPersonalExpenses')}
+      <Pressable
+        style={styles.addButton}
+        onPress={() => navigation.navigate('AddPersonalExpenses')}
       >
         <AntDesign
           name="plus"
@@ -57,11 +57,11 @@ export default PersonalExpense
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     width: "100%"
   },
   ContaintContainer: {
-    flex:1,
+    flex: 1,
     marginTop: 30,
     marginLeft: 21,
     marginRight: 21,

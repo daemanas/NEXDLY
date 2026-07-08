@@ -1,7 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { useExpense } from "../../../context/ExpenseContext";
 
 const PersonalCard = () => {
+
+    const { totalPersonalTransactionExpenses, totalPersonalMoneyExpenses } = useExpense();
     return (
         <View style={styles.Container}>
             <View style={styles.cardContainer}>
@@ -9,7 +12,7 @@ const PersonalCard = () => {
                     <View style={styles.moneyContainerContent}>
                         <View style={styles.moneyContainerContentMoney}>
                             <Text style={{ color: "#ffff" }}> Total Spent </Text>
-                            <Text style={{ color: "#ffff", fontSize: 22, fontWeight: 500 }}> ₹8450.90 </Text>
+                            <Text style={{ color: "#ffff", fontSize: 22, fontWeight: 500 }}> ₹{totalPersonalMoneyExpenses} </Text>
                             <Text style={{ color: "#ffff" }}> This Month </Text>
                         </View>
                         <View style={styles.percentageSection}>
@@ -39,7 +42,7 @@ const PersonalCard = () => {
                                 Transactions
                             </Text>
                             <Text style={styles.FoodContainerboxContent}>
-                                31
+                                {totalPersonalTransactionExpenses}
                             </Text>
                         </View>
                     </View>
