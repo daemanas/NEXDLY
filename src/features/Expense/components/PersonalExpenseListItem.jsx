@@ -3,10 +3,14 @@ import React from 'react'
 import { useExpense } from "../../../context/ExpenseContext";
 import Feather from 'react-native-vector-icons/Feather';
 
+import { useNavigation } from '@react-navigation/native'
+
 const PersonalExpList = ({ limit, }) => {
+    const navigation = useNavigation();
     const {
         personalExpenses,
-        handaleDeletePersonalExpenses
+        handaleDeletePersonalExpenses,
+        editPersonalExpenseshandelar
     } = useExpense();
 
     const expensesData = limit
@@ -35,10 +39,14 @@ const PersonalExpList = ({ limit, }) => {
                             <Text style={{ fontSize: 16, fontWeight: 700, color: "#e02b34" }}>₹{item.amount}</Text>
                             <Text style={{ fontSize: 15, }}>🏦</Text>
                         </View>
-                        
+
                         <View style={styles.itemButtonContainer}>
                             <Pressable
                                 style={styles.ButtonContainer}
+                                onPress={() => {
+                                    editPersonalExpenseshandelar(item)
+                                    navigation.navigate("AddPersonalExpenses");
+                                }}
                             >
                                 <Feather
                                     name="edit-2"
@@ -48,7 +56,8 @@ const PersonalExpList = ({ limit, }) => {
                             </Pressable>
                             <Pressable
                                 style={styles.ButtonContainer}
-                                onPress={() => handaleDeletePersonalExpenses(item.id)}
+                                onPress={() =>
+                                    handaleDeletePersonalExpenses(item.id)}
                             >
                                 <Feather
                                     name="delete"

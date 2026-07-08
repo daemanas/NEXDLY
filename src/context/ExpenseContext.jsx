@@ -12,6 +12,10 @@ const ExpenseProvider = ({ children }) => {
 
     const totalPersonalTransactionExpenses = personalExpenses.length;
 
+    const [personalEditItem, setPersonalEditItem] = useState(null)
+
+    const [ispersonalEdit, setPersonalEdit] = useState(false)
+
     const totalPersonalMoneyExpenses =
         personalExpenses.reduce(
             (accumulator, item) =>
@@ -24,12 +28,37 @@ const ExpenseProvider = ({ children }) => {
         ))
     }
 
+    const editPersonalExpenseshandelar = (item) => {
+        setPersonalEdit(true);
+        setPersonalEditItem(item);
+
+    }
+
+    const updatePersonalExpense = (updatedItem) => {
+        setPersonalExpenses((prevExpenses) =>
+            prevExpenses.map((item) =>
+                item.id === personalEditItem.id
+                    ? updatedItem
+                    : item
+            )
+        );
+
+        setPersonalEditItem(null);
+
+    };
+
+
+
 
     //group expenses
 
     const [groupExpenses, setGroupExpenses] = useState([]);
 
     const totalGroupTransactionExpenses = groupExpenses.length;
+
+    const [groupEditItem, setGroupEditItem] = useState(null)
+
+    const [isgroupEdit, setGroupEdit] = useState(false)
 
     const totalGroupMoneyExpenses =
         groupExpenses.reduce(
@@ -43,6 +72,25 @@ const ExpenseProvider = ({ children }) => {
         ))
     }
 
+    const editGroupExpenseshandelar = (item) => {
+        setGroupEdit(true);
+        setGroupEditItem(item);
+
+    }
+
+    const updateGroupExpense = (updatedItem) => {
+        setGroupExpenses((prevExpenses) =>
+            prevExpenses.map((item) =>
+                item.id === groupEditItem.id
+                    ? updatedItem
+                    : item
+            )
+        );
+
+        setGroupEditItem(null);
+
+    };
+
 
 
     return (
@@ -55,12 +103,32 @@ const ExpenseProvider = ({ children }) => {
                 totalPersonalMoneyExpenses,
                 handaleDeletePersonalExpenses,
 
+                ispersonalEdit,
+                setPersonalEdit,
+
+                personalEditItem,
+                editPersonalExpenseshandelar,
+                updatePersonalExpense,
+
+                // personalEditId,
+
+
+
+                // setPersonalEditItem,
+
                 groupExpenses,
                 setGroupExpenses,
                 totalGroupTransactionExpenses,
 
                 totalGroupMoneyExpenses,
-                handaleDeleteGroupExpenses
+                handaleDeleteGroupExpenses,
+
+                isgroupEdit,
+                setGroupEdit,
+
+                groupEditItem,
+                editGroupExpenseshandelar,
+                updateGroupExpense,
 
             }}
         >

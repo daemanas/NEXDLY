@@ -2,11 +2,14 @@ import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React from 'react'
 import { useExpense } from "../../../context/ExpenseContext";
 import Feather from 'react-native-vector-icons/Feather';
-
+import { useNavigation } from '@react-navigation/native'
 const GroupExpList = ({ limit }) => {
+    const navigation = useNavigation();
+
     const {
         groupExpenses,
-        handaleDeleteGroupExpenses
+        handaleDeleteGroupExpenses,
+        editGroupExpenseshandelar
     } = useExpense();
 
     const expensesData = limit
@@ -38,6 +41,10 @@ const GroupExpList = ({ limit }) => {
                         <View style={styles.itemButtonContainer}>
                             <Pressable
                                 style={styles.ButtonContainer}
+                                onPress={() => {
+                                    editGroupExpenseshandelar(item)
+                                    navigation.navigate("AddGroupExpenses")
+                                }}
                             >
                                 <Feather
                                     name="edit-2"
@@ -60,11 +67,12 @@ const GroupExpList = ({ limit }) => {
                     </View>
 
                 </View>
-            ))}
+            ))
+            }
 
 
 
-        </View>
+        </View >
     )
 }
 

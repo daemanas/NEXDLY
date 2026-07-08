@@ -11,7 +11,7 @@ import {
   Alert,
 } from 'react-native';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useExpense } from "../../../context/ExpenseContext";
 
@@ -33,6 +33,10 @@ const GroupInput = () => {
 
   const {
     setGroupExpenses,
+    setGroupEdit,
+    isgroupEdit,
+    groupEditItem,
+    updateGroupExpense,
   } = useExpense();
 
 
@@ -50,6 +54,23 @@ const GroupInput = () => {
     date: new Date(),
     notes: "",
   });
+
+  useEffect(() => {
+
+    if (groupEditItem) {
+
+      setInputData({
+        itemName: groupEditItem.title,
+        itemIcon: groupEditItem.icon,
+        amount: groupEditItem.amount.toString(),
+        date: new Date(groupEditItem.date),
+        notes: groupEditItem.notes || "",
+      });
+
+    }
+
+  }, [groupEditItem]);
+
 
 
   const handleChange = (key, value) => {
@@ -97,11 +118,21 @@ const GroupInput = () => {
     console.log("New Expense:", newExpensesItem);
 
 
-    setGroupExpenses((prev) => [
-      newExpensesItem,
-      ...prev,
+    if (groupEditItem) {
 
-    ]);
+      updateGroupExpense({
+        ...newExpensesItem,
+        id: groupEditItem.id,
+      });
+
+    } else {
+
+      setGroupExpenses((prev) => [
+        newExpensesItem,
+        ...prev,
+      ]);
+
+    }
 
 
     setInputData({
@@ -116,6 +147,8 @@ const GroupInput = () => {
       "Expense Added",
       "Your expense has been added successfully."
     );
+
+    setGroupEdit(false)
 
   };
 
@@ -144,7 +177,7 @@ const GroupInput = () => {
                 Group Expenses
               </Text>
               <Text style={styles.subTitle}>
-                Add your Group expenses
+                {isgroupEdit ? 'Edit your Group expenses' : 'Add your Group expenses'}
               </Text>
             </View>
           </View>
@@ -328,7 +361,7 @@ const GroupInput = () => {
               >
 
                 <Text style={styles.buttonText}>
-                  Add Expenses
+                  {isgroupEdit ? 'Edit Expenses' : 'Add Expenses'}
                 </Text>
 
               </Pressable>

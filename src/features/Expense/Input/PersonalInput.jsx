@@ -11,7 +11,7 @@ import {
   Alert,
 } from 'react-native';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useExpense } from "../../../context/ExpenseContext";
 
@@ -32,8 +32,12 @@ const expenseIcons = [
 const PersonalInput = () => {
 
   const {
-    setPersonalExpenses
-  } = useExpense();
+    setPersonalExpenses,
+    personalEditItem,
+    updatePersonalExpense,
+    setPersonalEdit,
+    ispersonalEdit
+  } = useExpense();;
 
 
 
@@ -51,6 +55,22 @@ const PersonalInput = () => {
     date: new Date(),
     notes: "",
   });
+
+  useEffect(() => {
+
+    if (personalEditItem) {
+
+      setInputData({
+        itemName: personalEditItem.title,
+        itemIcon: personalEditItem.icon,
+        amount: personalEditItem.amount.toString(),
+        date: new Date(personalEditItem.date),
+        notes: personalEditItem.notes || "",
+      });
+
+    }
+
+  }, [personalEditItem]);
 
 
   const handleChange = (key, value) => {
@@ -94,12 +114,21 @@ const PersonalInput = () => {
     console.log("New Expense:", newExpensesItem);
 
 
-    setPersonalExpenses((prev) => [
-      newExpensesItem,
-      ...prev,
+    if (personalEditItem) {
 
-    ]);
+      updatePersonalExpense({
+        ...newExpensesItem,
+        id: personalEditItem.id,
+      });
 
+    } else {
+
+      setPersonalExpenses((prev) => [
+        newExpensesItem,
+        ...prev,
+      ]);
+
+    }
 
     setInputData({
       itemName: "",
@@ -109,10 +138,13 @@ const PersonalInput = () => {
       notes: "",
     });
 
+
+
     Alert.alert(
       "Expense Added",
       "Your expense has been added successfully."
     );
+    setPersonalEdit(false)
 
   };
 
@@ -137,11 +169,9 @@ const PersonalInput = () => {
         <View style={styles.mainContainer}>
           <View style={styles.inputTitleContainer}>
             <View style={styles.inputTitle}>
-              <Text style={styles.title}>
-                Personal Expenses
-              </Text>
+              <Text style={styles.title}>Personal Expenses</Text>
               <Text style={styles.subTitle}>
-                Add your personal expenses
+                { ispersonalEdit ? 'Edit your personal expenses' : 'Add your personal expenses' }
               </Text>
             </View>
           </View>
@@ -325,7 +355,7 @@ const PersonalInput = () => {
               >
 
                 <Text style={styles.buttonText}>
-                  Add Expenses
+                  { ispersonalEdit ? 'Update Expenses'  :'Add Expenses'}
                 </Text>
 
               </Pressable>
