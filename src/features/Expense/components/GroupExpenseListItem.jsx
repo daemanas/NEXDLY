@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React from 'react'
 import { useExpense } from "../../../context/ExpenseContext";
+import Feather from 'react-native-vector-icons/Feather';
 
 const GroupExpList = ({ limit }) => {
     const {
-        groupExpenses
+        groupExpenses,
+        handaleDeleteGroupExpenses
     } = useExpense();
 
     const expensesData = limit
@@ -31,6 +33,29 @@ const GroupExpList = ({ limit }) => {
                         <View style={styles.itemMoneyContainer}>
                             <Text style={{ fontSize: 16, fontWeight: 700, color: "#e02b34" }}>₹{item.amount}</Text>
                             <Text style={{ fontSize: 15, }}>🏦</Text>
+                        </View>
+
+                        <View style={styles.itemButtonContainer}>
+                            <Pressable
+                                style={styles.ButtonContainer}
+                            >
+                                <Feather
+                                    name="edit-2"
+                                    size={20}
+                                    color="rgb(88, 67, 222)"
+                                />
+                            </Pressable>
+                            <Pressable
+                                style={styles.ButtonContainer}
+                                onPress={() => handaleDeleteGroupExpenses(item.id)}
+                            >
+                                <Feather
+                                    name="delete"
+                                    size={20}
+                                    color="rgb(88, 67, 222)"
+                                />
+                            </Pressable>
+
                         </View>
                     </View>
 
@@ -96,5 +121,22 @@ const styles = StyleSheet.create({
         marginRight: 10,
         alignItems: "flex-end",
         gap: 4
+    },
+    itemButtonContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        borderRadius: 15,
+        gap: 5,
+        paddingRight: 10
+    },
+    ButtonContainer: {
+        height: "100%",
+        width: 44,
+        borderRadius: 15,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#e3e2e2"
     }
+
+
 })

@@ -18,6 +18,12 @@ const ExpenseProvider = ({ children }) => {
                 accumulator + item.amount, 0
         );
 
+    const handaleDeletePersonalExpenses = (id) => {
+        setPersonalExpenses(personalExpenses.filter(
+            (item) => item.id != id
+        ))
+    }
+
 
     //group expenses
 
@@ -31,6 +37,11 @@ const ExpenseProvider = ({ children }) => {
                 accumulator + item.amount, 0
         );
 
+    const handaleDeleteGroupExpenses = (id) => {
+        setGroupExpenses(groupExpenses.filter(
+            (item) => item.id != id
+        ))
+    }
 
 
 
@@ -42,12 +53,14 @@ const ExpenseProvider = ({ children }) => {
                 totalPersonalTransactionExpenses,
 
                 totalPersonalMoneyExpenses,
+                handaleDeletePersonalExpenses,
 
                 groupExpenses,
                 setGroupExpenses,
                 totalGroupTransactionExpenses,
 
-                totalGroupMoneyExpenses
+                totalGroupMoneyExpenses,
+                handaleDeleteGroupExpenses
 
             }}
         >

@@ -4,7 +4,12 @@ import { useExpense } from "../../../context/ExpenseContext";
 
 const PersonalCard = () => {
 
-    const { totalPersonalTransactionExpenses, totalPersonalMoneyExpenses } = useExpense();
+    const {
+        totalPersonalTransactionExpenses,
+        totalPersonalMoneyExpenses
+    } = useExpense();
+
+    
     return (
         <View style={styles.Container}>
             <View style={styles.cardContainer}>

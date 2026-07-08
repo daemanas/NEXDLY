@@ -3,7 +3,13 @@ import React from 'react'
 import { useExpense } from '../../../context/ExpenseContext'
 
 const GroupCard = () => {
-    const { totalGroupTransactionExpenses,totalGroupMoneyExpenses } = useExpense()
+    const {
+        totalGroupTransactionExpenses,
+        totalGroupMoneyExpenses
+
+    } = useExpense()
+
+
     return (
         <View style={styles.Container}>
             <View style={styles.cardContainer}>
@@ -11,7 +17,7 @@ const GroupCard = () => {
                     <View style={styles.moneyContainerContent}>
                         <View style={styles.moneyContainerContentMoney}>
                             <Text style={{ color: "#ffff" }}> Total Spent </Text>
-                            <Text style={{ color: "#ffff", fontSize: 22, fontWeight: 500 }}> ₹{ totalGroupMoneyExpenses } </Text>
+                            <Text style={{ color: "#ffff", fontSize: 22, fontWeight: 500 }}> ₹{totalGroupMoneyExpenses} </Text>
                             <Text style={{ color: "#ffff" }}> This Month </Text>
                         </View>
                         <View style={styles.percentageSection}>
@@ -24,14 +30,14 @@ const GroupCard = () => {
                     </View>
                 </View>
                 <View style={styles.FoodContainer}>
-                    
+
                     <View style={styles.FoodContainerbox}>
                         <View style={styles.FoodContainerboxChi} >
                             <Text style={styles.FoodContainerboxTitle}>
                                 Transactions
                             </Text>
                             <Text style={styles.FoodContainerboxContent}>
-                               {totalGroupTransactionExpenses}
+                                {totalGroupTransactionExpenses}
                             </Text>
                         </View>
                     </View>
