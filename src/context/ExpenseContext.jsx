@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, } from "react";
 
 // ১. Context তৈরি করা
 const ExpenseContext = createContext();
@@ -54,42 +54,93 @@ const ExpenseProvider = ({ children }) => {
 
     const [groupExpenses, setGroupExpenses] = useState([]);
 
-    const totalGroupTransactionExpenses = groupExpenses.length;
+    const totalGroupExpenses = groupExpenses.length;
 
-    const [groupEditItem, setGroupEditItem] = useState(null)
+    const addGroupMemberMoney = (groupId, memberId, newAmount) => {
 
-    const [isgroupEdit, setGroupEdit] = useState(false)
-
-    const totalGroupMoneyExpenses =
-        groupExpenses.reduce(
-            (accumulator, item) =>
-                accumulator + item.amount, 0
-        );
-
-    const handaleDeleteGroupExpenses = (id) => {
-        setGroupExpenses(groupExpenses.filter(
-            (item) => item.id != id
-        ))
+        setGroupExpenses((prevGroup) =>
+            prevGroup.map((group) => {
+                if (group.id === groupId) {
+                    return {
+                        ...group,
+                        members: group.members.map((member) => {
+                            if (member.id === memberId) {
+                                return {
+                                    ...member,
+                                    amount:
+                                        Number(member.amount) + Number(newAmount)
+                                }
+                            }
+                            return member;
+                        })
+                    }
+                }
+                return group;
+            })
+        )
     }
 
-    const editGroupExpenseshandelar = (item) => {
-        setGroupEdit(true);
-        setGroupEditItem(item);
+    const addNewGroupMember = (groupId, memberName, memberAmount) => {
+        const newMember = {
+            id: Date.now().toString(),
+            name: memberName,
+            amount: memberAmount,
+        };
 
+        setGroupExpenses((prev) =>
+            prev.map((group) => {
+                if (group.id === groupId) {
+                    return {
+                        ...group,
+                        members: [
+                            ...group.members,
+                            newMember
+
+                        ]
+                    }
+                }
+
+                return group
+            })
+        )
     }
 
-    const updateGroupExpense = (updatedItem) => {
-        setGroupExpenses((prevExpenses) =>
-            prevExpenses.map((item) =>
-                item.id === groupEditItem.id
-                    ? updatedItem
-                    : item
-            )
-        );
 
-        setGroupEditItem(null);
 
-    };
+    // const [groupEditItem, setGroupEditItem] = useState(null)
+
+    // const [isgroupEdit, setGroupEdit] = useState(false)
+
+    // const totalGroupMoneyExpenses =
+    //     groupExpenses.reduce(
+    //         (accumulator, item) =>
+    //             accumulator + item.amount, 0
+    //     );
+
+    // const handaleDeleteGroupExpenses = (id) => {
+    //     setGroupExpenses(groupExpenses.filter(
+    //         (item) => item.id != id
+    //     ))
+    // }
+
+    // const editGroupExpenseshandelar = (item) => {
+    //     setGroupEdit(true);
+    //     setGroupEditItem(item);
+
+    // }
+
+    // const updateGroupExpense = (updatedItem) => {
+    //     setGroupExpenses((prevExpenses) =>
+    //         prevExpenses.map((item) =>
+    //             item.id === groupEditItem.id
+    //                 ? updatedItem
+    //                 : item
+    //         )
+    //     );
+
+    //     setGroupEditItem(null);
+
+    // };
 
 
 
@@ -111,24 +162,23 @@ const ExpenseProvider = ({ children }) => {
                 updatePersonalExpense,
 
                 // personalEditId,
-
-
-
                 // setPersonalEditItem,
 
                 groupExpenses,
                 setGroupExpenses,
-                totalGroupTransactionExpenses,
+                totalGroupExpenses,
+                addGroupMemberMoney,
+                addNewGroupMember,
 
-                totalGroupMoneyExpenses,
-                handaleDeleteGroupExpenses,
+                // totalGroupMoneyExpenses,
+                // handaleDeleteGroupExpenses,
 
-                isgroupEdit,
-                setGroupEdit,
+                // isgroupEdit,
+                // setGroupEdit,
 
-                groupEditItem,
-                editGroupExpenseshandelar,
-                updateGroupExpense,
+                // groupEditItem,
+                // editGroupExpenseshandelar,
+                // updateGroupExpense,
 
             }}
         >

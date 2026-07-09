@@ -20,23 +20,35 @@ import DateTimePicker
 
 
 const expenseIcons = [
-  "🍔", "🍕", "🍜", "☕",
-  "🥪", "🍦", "🥤", "🍿",
-  "🚗", "🚌", "🚕", "⛽",
-  "🛍️", "👕", "🎬", "🎮",
-  "📚", "💊", "🏠", "💡",
-  "📱", "🎁", "✂️", "📦",
+  "✈️", "🚗", "🚌", "🚂",
+  "🚢", "🏍️", "🚲", "🚁",
+  "🏖️", "🏝️", "🏕️", "🏔️",
+  "⛰️", "🌊", "🌴", "❄️",
+  "🗺️", "🧭", "📍", "🎒",
+  "🧳", "📸", "🏨", "🛣️",
+  "🌍", "🌅", "🌄", "🌃",
+  "🏰", "🗼", "🎡", "🔥",
 ];
+
+// const memberIcons = [
+//   "👤", "🧑", "👨", "👩",
+//   "👦", "👧", "🧔", "👱‍♂️",
+//   "👱‍♀️", "👨‍🦱", "👩‍🦱", "👨‍🦰",
+//   "👩‍🦰", "👨‍🦳", "👩‍🦳", "👨‍🦲",
+//   "😊", "😎", "🤓", "😁",
+//   "🙂", "😄", "🤠", "🥳",
+//   "👨‍💻", "👩‍💻", "🧑‍🎓", "🧑‍💼",
+// ];
 
 
 const GroupInput = () => {
 
   const {
     setGroupExpenses,
-    setGroupEdit,
-    isgroupEdit,
-    groupEditItem,
-    updateGroupExpense,
+    // setGroupEdit,
+    // isgroupEdit,
+    // groupEditItem,
+    // updateGroupExpense,
   } = useExpense();
 
 
@@ -46,111 +58,214 @@ const GroupInput = () => {
   const [showDatePicker, setShowDatePicker] =
     useState(false);
 
-
-  const [inputData, setInputData] = useState({
-    itemName: "",
-    itemIcon: "🍔",
-    amount: "",
+  const [groupData, setGroupData] = useState({
+    groupName: "",
+    groupIcon: "",
     date: new Date(),
     notes: "",
   });
 
-  useEffect(() => {
 
-    if (groupEditItem) {
+  const [member, setMember] = useState([])
 
-      setInputData({
-        itemName: groupEditItem.title,
-        itemIcon: groupEditItem.icon,
-        amount: groupEditItem.amount.toString(),
-        date: new Date(groupEditItem.date),
-        notes: groupEditItem.notes || "",
-      });
-
+  const addMemberInput = () => {
+    const newMembAdd = {
+      name: "",
+      amount: "",
+      id: Date.now()
     }
+    setMember((prev) => [
+      ...prev,
+      newMembAdd
+    ])
+    console.log(member)
+  }
 
-  }, [groupEditItem]);
-
-
+  const removeMemberInput = (id) => {
+    setMember((prev) =>
+      prev.filter((item) => item.id !== id)
+    );
+  };
 
   const handleChange = (key, value) => {
-    setInputData((prev) => ({
+    setGroupData((prev) => ({
       ...prev,
       [key]: value,
     }));
 
   };
+
+  const handleMemberChange = (id, key, value) => {
+    setMember((prev) =>
+      prev.map((item) =>
+        item.id === id ? {
+          ...item,
+          [key]: value,
+        }
+          : item
+
+      ))
+  }
+
   const AddInputItems = () => {
+    // if (
+    //   !groupData.itemName.trim() ||
+    //   !groupData.amount.trim()
+    // ) {
+    //   Alert.alert(
+    //     "Missing Information",
+    //     "Please enter expense name and amount."
+    //   );
 
-    if (
-      !inputData.itemName.trim() ||
-      !inputData.amount.trim()
-    ) {
-      Alert.alert(
-        "Missing Information",
-        "Please enter expense name and amount."
-      );
-
-      return;
-    }
-    const newExpensesItem = {
-
+    //   return;
+    // }
+    const newGroup = {
       id: Date.now(),
-      icon: inputData.itemIcon,
-      title: inputData.itemName.trim(),
-      date: inputData.date,
-      amount: Number(inputData.amount),
-      time: inputData.date.toLocaleTimeString(
+      title: groupData.groupName,
+      icon: groupData.groupIcon,
+      date: groupData.date,
+      members: member,
+      time: groupData.date.toLocaleTimeString(
         "en-IN",
         {
           hour: "2-digit",
           minute: "2-digit",
         }
       ),
-
-      notes: inputData.notes.trim(),
-
+      notes: groupData.notes.trim(),
       iconBg: "#F5F5FA",
-
     };
+    console.log(newGroup)
 
+    setGroupExpenses((prev) => [
+      newGroup,
+      ...prev
+    ])
 
-    console.log("New Expense:", newExpensesItem);
-
-
-    if (groupEditItem) {
-
-      updateGroupExpense({
-        ...newExpensesItem,
-        id: groupEditItem.id,
-      });
-
-    } else {
-
-      setGroupExpenses((prev) => [
-        newExpensesItem,
-        ...prev,
-      ]);
-
-    }
-
-
-    setInputData({
-      itemName: "",
-      itemIcon: "🍔",
-      amount: "",
+    setGroupData({
+      groupName: "",
+      groupIcon: "🍔",
       date: new Date(),
       notes: "",
-    });
+    })
 
-    Alert.alert(
-      "Expense Added",
-      "Your expense has been added successfully."
-    );
+    // setMember({
+    //   name: "",
+    //   amount: "",
+    // })
+  }
 
-    setGroupEdit(false)
 
-  };
+
+
+
+  // const [groupData, setgroupData] = useState({
+  //   itemName: "",
+  //   itemIcon: "🍔",
+  //   amount: "",
+  //   date: new Date(),
+  //   notes: "",
+  // });
+
+  // useEffect(() => {
+
+  //   if (groupEditItem) {
+
+  //     setgroupData({
+  //       itemName: groupEditItem.title,
+  //       itemIcon: groupEditItem.icon,
+  //       amount: groupEditItem.amount.toString(),
+  //       date: new Date(groupEditItem.date),
+  //       notes: groupEditItem.notes || "",
+  //     });
+
+  //   }
+
+  // }, [groupEditItem]);
+
+
+
+  // const handleChange = (key, value) => {
+  //   setgroupData((prev) => ({
+  //     ...prev,
+  //     [key]: value,
+  //   }));
+
+  // };
+
+
+  // const AddInputItems = () => {
+
+  //   if (
+  //     !groupData.itemName.trim() ||
+  //     !groupData.amount.trim()
+  //   ) {
+  //     Alert.alert(
+  //       "Missing Information",
+  //       "Please enter expense name and amount."
+  //     );
+
+  //     return;
+  //   }
+  //   const newExpensesItem = {
+
+  //     id: Date.now(),
+  //     icon: groupData.itemIcon,
+  //     title: groupData.itemName.trim(),
+  //     date: groupData.date,
+  //     amount: Number(groupData.amount),
+  //     time: groupData.date.toLocaleTimeString(
+  //       "en-IN",
+  //       {
+  //         hour: "2-digit",
+  //         minute: "2-digit",
+  //       }
+  //     ),
+
+  //     notes: groupData.notes.trim(),
+
+  //     iconBg: "#F5F5FA",
+
+  //   };
+
+
+  //   console.log("New Expense:", newExpensesItem);
+
+
+  //   if (groupEditItem) {
+
+  //     updateGroupExpense({
+  //       ...newExpensesItem,
+  //       id: groupEditItem.id,
+  //     });
+
+  //   } else {
+
+  //     setGroupExpenses((prev) => [
+  //       newExpensesItem,
+  //       ...prev,
+  //     ]);
+
+  //   }
+
+
+  //   setgroupData({
+  //     itemName: "",
+  //     itemIcon: "🍔",
+  //     amount: "",
+  //     date: new Date(),
+  //     notes: "",
+  //   });
+
+  //   Alert.alert(
+  //     "Expense Added",
+  //     "Your expense has been added successfully."
+  //   );
+
+  //   setGroupEdit(false)
+
+  // };
+
 
 
   return (
@@ -171,173 +286,164 @@ const GroupInput = () => {
       >
 
         <View style={styles.mainContainer}>
+
           <View style={styles.inputTitleContainer}>
             <View style={styles.inputTitle}>
               <Text style={styles.title}>
                 Group Expenses
               </Text>
               <Text style={styles.subTitle}>
-                {isgroupEdit ? 'Edit your Group expenses' : 'Add your Group expenses'}
+                {/* {isgroupEdit ? 'Edit your Group expenses' : 'Add your Group expenses'} */}
+                Add your Group expenses
               </Text>
             </View>
           </View>
 
-
           <View style={styles.inputContentContainer}>
+
             <View style={styles.inputBoxContainer}>
+
               <View style={styles.inputContainer}>
                 <Text style={styles.inputname}>
-                  Expense Name
+                  Group Name/Trip Name
                 </Text>
                 <View style={styles.inputBox}>
-
                   <View style={styles.iconContainer}>
                     <Text style={styles.icon}>
-                      {inputData.itemIcon}
+                      {groupData.groupIcon}
                     </Text>
                   </View>
 
                   <TextInput
                     placeholder="eg: Kurkuri"
-                    value={inputData.itemName}
+                    value={groupData.groupName}
                     style={styles.input}
                     onChangeText={(value) =>
-                      handleChange("itemName", value)
+                      handleChange("groupName", value)
                     }
-
                   />
 
                 </View>
 
               </View>
-
-
-              {/* Amount */}
-
-              <View style={styles.inputContainer}>
-
-                <Text style={styles.inputname}>
-                  Amount
-                </Text>
-
-                <View style={styles.inputBox}>
-
-                  <View style={styles.iconContainer}>
-
-                    <Text style={styles.icon}>
-                      ₹
-                    </Text>
-
-                  </View>
-
-
-                  <TextInput
-                    placeholder="eg: 300"
-                    keyboardType="numeric"
-                    value={inputData.amount}
-                    onChangeText={(value) =>
-                      handleChange(
-                        "amount",
-                        value
-                      )
-                    }
-                    style={styles.input}
-                  />
-
-                </View>
-
-              </View>
-
 
               {/* Date */}
-
               <View style={styles.inputContainer}>
-
                 <Text style={styles.inputname}>
                   Date
                 </Text>
-
-
                 <Pressable
                   style={styles.inputBox}
                   onPress={() =>
                     setShowDatePicker(true)
                   }
                 >
-
                   <View style={styles.iconContainer}>
-
                     <Text style={styles.icon}>
                       📅
                     </Text>
-
                   </View>
-
-
                   <Text style={styles.dateText}>
-
-                    {inputData.date.toLocaleDateString(
+                    {groupData.date.toLocaleDateString(
                       "en-GB"
                     )}
-
                   </Text>
-
                 </Pressable>
-
               </View>
 
-
               {/* Expense Icon */}
-
               <View style={styles.inputContainer}>
-
                 <Text style={styles.inputname}>
-                  Expense Icon
+                  Group Icon
                 </Text>
-
-
                 <Pressable
                   style={styles.inputBox}
                   onPress={() =>
                     setShowIconPicker(true)
                   }
                 >
-
                   <View style={styles.iconContainer}>
-
                     <Text style={styles.icon}>
-                      {inputData.itemIcon}
+                      {groupData.groupIcon}
                     </Text>
-
                   </View>
-
 
                   <Text style={styles.iconSelectText}>
                     Select Expense Icon
                   </Text>
 
                 </Pressable>
+              </View>
+
+              {/* Expense Members */}
+              <View style={styles.memberContainer}>
+                {
+                  member.map((member, index) => (
+                    <View
+                      key={member.id}
+                      style={[styles.memberInputContainer, { gap: 8 }]} >
+                      <View style={styles.memberHeader}>
+                        <Text style={styles.inputname} >
+                          Member {index + 1}
+                        </Text>
+
+                        <Pressable
+                          onPress={() => removeMemberInput(member.id)}
+                          style={styles.removeMemberButton}
+                        >
+                          <Text style={styles.removeMemberText}>
+                            ✕
+                          </Text>
+                        </Pressable>
+                      </View>
+
+                      <View style={styles.inputBox}>
+                        <TextInput
+                          style={styles.input}
+                          placeholder="Member Name"
+                          value={member.name}
+                          onChangeText={(value) =>
+                            handleMemberChange(member.id, "name", value)
+                          }
+                        />
+                      </View>
+
+                      <View style={styles.inputBox}>
+                        <TextInput
+                          placeholder="Amount Paid"
+                          style={styles.input}
+                          keyboardType="numeric"
+                          value={member.amount}
+                          onChangeText={(value) =>
+                            handleMemberChange(member.id, "amount", value)
+                          }
+                        />
+                      </View>
+                    </View>
+                  ))
+
+                }
+
+                <Pressable style={styles.Button}
+                  onPress={addMemberInput}
+                >
+                  <Text style={styles.buttonText}> + Add Member</Text>
+                </Pressable>
 
               </View>
 
-
               {/* Notes */}
-
               <View style={styles.inputContainer}>
-
                 <Text style={styles.inputname}>
                   Notes (Optional)
                 </Text>
-
-
                 <View style={styles.noteInputBox}>
-
                   <TextInput
                     multiline
                     numberOfLines={4}
                     maxLength={130}
                     placeholder="Write a note..."
-                    value={inputData.notes}
+                    value={groupData.notes}
                     onChangeText={(value) =>
                       handleChange(
                         "notes",
@@ -347,25 +453,19 @@ const GroupInput = () => {
                     style={styles.noteInput}
                     textAlignVertical="top"
                   />
-
                 </View>
-
               </View>
 
-
               {/* Add Button */}
-
               <Pressable
                 style={styles.Button}
-                onPress={AddInputItems}
-              >
+                onPress={AddInputItems} >
 
                 <Text style={styles.buttonText}>
-                  {isgroupEdit ? 'Edit Expenses' : 'Add Expenses'}
+                  {/* {isgroupEdit ? 'Edit Expenses' : 'Add Expenses'} */}
+                  Add Expenses
                 </Text>
-
               </Pressable>
-
 
             </View>
 
@@ -381,7 +481,7 @@ const GroupInput = () => {
       {showDatePicker && (
 
         <DateTimePicker
-          value={inputData.date}
+          value={groupData.date}
           mode="date"
           display="default"
           maximumDate={new Date()}
@@ -392,7 +492,7 @@ const GroupInput = () => {
 
             if (selectedDate) {
 
-              setInputData((prev) => ({
+              setGroupData((prev) => ({
                 ...prev,
                 date: selectedDate,
               }));
@@ -464,14 +564,14 @@ const GroupInput = () => {
                   style={[
                     styles.iconItem,
 
-                    inputData.itemIcon === item &&
+                    groupData.groupIcon === item &&
                     styles.selectedIconItem,
                   ]}
                   onPress={() => {
 
-                    setInputData((prev) => ({
+                    setGroupData((prev) => ({
                       ...prev,
-                      itemIcon: item,
+                      groupIcon: item,
                     }));
 
 
@@ -506,9 +606,7 @@ const GroupInput = () => {
 
 };
 
-
 export default GroupInput;
-
 
 
 const styles = StyleSheet.create({
@@ -781,6 +879,28 @@ const styles = StyleSheet.create({
 
   pickerIcon: {
     fontSize: 25,
+  },
+
+
+  memberHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  removeMemberButton: {
+    height: 28,
+    width: 28,
+    borderRadius: 14,
+    backgroundColor: "#FFE5E5",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  removeMemberText: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#E53935",
   },
 
 });

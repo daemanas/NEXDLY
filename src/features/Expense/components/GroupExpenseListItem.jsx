@@ -8,8 +8,8 @@ const GroupExpList = ({ limit }) => {
 
     const {
         groupExpenses,
-        handaleDeleteGroupExpenses,
-        editGroupExpenseshandelar
+        // handaleDeleteGroupExpenses,
+        // editGroupExpenseshandelar
     } = useExpense();
 
     const expensesData = limit
@@ -34,16 +34,21 @@ const GroupExpList = ({ limit }) => {
                             </View>
                         </View>
                         <View style={styles.itemMoneyContainer}>
-                            <Text style={{ fontSize: 16, fontWeight: 700, color: "#e02b34" }}>₹{item.amount}</Text>
+                            <Text style={{ fontSize: 16, fontWeight: 700, color: "#e02b34" }}>
+                                {/* ₹{item.amount} */}
+                                300
+                            </Text>
                             <Text style={{ fontSize: 15, }}>🏦</Text>
                         </View>
 
                         <View style={styles.itemButtonContainer}>
                             <Pressable
+                                key={item.id}
                                 style={styles.ButtonContainer}
                                 onPress={() => {
-                                    editGroupExpenseshandelar(item)
-                                    navigation.navigate("AddGroupExpenses")
+                                    navigation.navigate("GroupSummer", {
+                                        groupId: item.id,
+                                    })
                                 }}
                             >
                                 <Feather
@@ -54,7 +59,7 @@ const GroupExpList = ({ limit }) => {
                             </Pressable>
                             <Pressable
                                 style={styles.ButtonContainer}
-                                onPress={() => handaleDeleteGroupExpenses(item.id)}
+                            // onPress={() => handaleDeleteGroupExpenses(item.id)}
                             >
                                 <Feather
                                     name="delete"

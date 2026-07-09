@@ -14,6 +14,8 @@ import AllPersonalExpenses from '../features/Expense/screens/PersonalExpAllList'
 import AllGroupExpenses from '../features/Expense/screens/GroupExpAllList';
 import AddPersonalExpenses from '../features/Expense/Input/PersonalInput'
 import AddGroupExpenses from '../features/Expense/Input/GroupInput'
+import GroupSummer from '../features/Expense/screens/GroupSummer'
+
 import { ExpenseProvider } from '../context/ExpenseContext'
 
 const Tab = createBottomTabNavigator();
@@ -28,10 +30,22 @@ const BottomTabs = () => {
                 headerShown: false,
                 tabBarLabelStyle: {
                     fontSize: 13,
+                    transform: [{ translateY: 5 }],
                 },
 
-                tabBarActiveTintColor: "red",
-                tabBarInactiveTintColor: "black",
+                tabBarStyle: {
+                    height: 80,
+                    paddingTop: 6,
+                    paddingBottom: 8,
+                },
+                tabBarItemStyle: {
+                    justifyContent: "center",
+                    alignItems: "center",
+                },
+
+                tabBarActiveTintColor: "#3a30c7",
+                tabBarInactiveTintColor: "gray",
+
             }}
         >
 
@@ -39,11 +53,11 @@ const BottomTabs = () => {
                 name="Home"
                 component={HomeScreen}
                 options={{
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ color }) => (
                         <Entypo
                             name="home"
-                            size={30}
-                            color="#900"
+                            size={26}
+                            color={color}
                         />
                     ),
                 }}
@@ -53,11 +67,11 @@ const BottomTabs = () => {
                 name="Expense"
                 component={Expansion}
                 options={{
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ color }) => (
                         <Entypo
                             name="wallet"
-                            size={30}
-                            color="#900"
+                            size={26}
+                            color={color}
                         />
                     ),
                 }}
@@ -67,11 +81,11 @@ const BottomTabs = () => {
                 name="My Plans"
                 component={Workflow}
                 options={{
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ color }) => (
                         <Entypo
                             name="star"
-                            size={30}
-                            color="#900"
+                            size={26}
+                            color={color}
                         />
                     ),
                 }}
@@ -81,11 +95,12 @@ const BottomTabs = () => {
                 name="Setting"
                 component={Setting}
                 options={{
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ color }) => (
                         <Ionicons
                             name="settings"
-                            size={30}
-                            color="#900"
+                            size={26}
+                            color={color}
+
                         />
                     ),
                 }}
@@ -128,6 +143,10 @@ const Navigation = () => {
                     <Stack.Screen
                         name="AddGroupExpenses"
                         component={AddGroupExpenses}
+                    />
+                    <Stack.Screen
+                        name="GroupSummer"
+                        component={GroupSummer}
                     />
 
                 </Stack.Navigator>
