@@ -3,6 +3,31 @@ import React from 'react'
 import { useExpense } from "../../../context/ExpenseContext";
 import Feather from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native'
+
+const formatMoney = (amount) => {
+    const money = Number(amount);
+    if (money >= 10000000) {
+        return `₹${(money / 10000000).toFixed(1)}Cr`;
+    }
+    if (money >= 100000) {
+        return `₹${(money / 100000).toFixed(1)}L`;
+    }
+    if (money >= 1000) {
+        return `₹${(money / 1000).toFixed(1)}K`;
+    }
+    return `₹${money}`;
+};
+
+const formatName = (name) => {
+    if (!name) return "";
+
+    if (name.length <= 7) {
+        return name;
+    }
+
+    return `${name.slice(0, 3)}...${name.slice(-3)}`;
+};
+
 const GroupExpList = ({ limit }) => {
     const navigation = useNavigation();
 
@@ -39,14 +64,14 @@ const GroupExpList = ({ limit }) => {
                                 </View>
 
                                 <View style={styles.itemName}>
-                                    <Text style={{ fontSize: 16, fontWeight: 700 }} >{item.title}</Text>
-                                    <Text style={{ color: "#656164" }}>{item.date.toLocaleDateString("en-GB")}, {item.time}</Text>
+                                    <Text style={{ fontSize: 16, fontWeight: 700 }} >{formatName(item.title)}</Text>
+                                    <Text style={{ color: "#656164" }}>{item.date.toLocaleDateString("en-GB")}</Text>
                                 </View>
                             </View>
+
                             <View style={styles.itemMoneyContainer}>
                                 <Text style={{ fontSize: 16, fontWeight: 700, color: "#e02b34" }}>
-                                    {totalGroupMoneyExpenses}
-                                    {/* 300 */}
+                                    {formatMoney(totalGroupMoneyExpenses)}
                                 </Text>
                                 <Text style={{ fontSize: 15, }}>🏦</Text>
                             </View>
@@ -95,7 +120,7 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     ItemList: {
-        height: 72,
+        height: 78,
         backgroundColor: "#fcfcfc",
         borderRadius: 14,
         justifyContent: "center",
@@ -114,6 +139,8 @@ const styles = StyleSheet.create({
     item: {
         flexDirection: "row",
         justifyContent: "space-between",
+        // alignItems: "center",
+        // width: "100%",
 
     },
     itemNameContainer: {
@@ -135,7 +162,7 @@ const styles = StyleSheet.create({
     },
     itemName: {
         marginLeft: 3,
-        gap: 1
+        gap: 8
     },
     itemMoneyContainer: {
         marginRight: 10,
@@ -148,6 +175,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         gap: 5,
         paddingRight: 10
+        // marginRight:30,
     },
     ButtonContainer: {
         height: "100%",
