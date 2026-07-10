@@ -3,10 +3,17 @@ import React from 'react'
 import Entypo from 'react-native-vector-icons/Entypo';
 import PersonalExpList from '../components/PersonalExpenseListItem'
 import SearchFilter from '../components/ExpenseSearchFilter'
-
+import { useExpense } from "../../../context/ExpenseContext";
 
 
 const PersonalExpAllList = () => {
+
+    const {
+        totalPersonalTransactionExpenses,
+        totalPersonalMoneyExpenses
+    } = useExpense()
+
+
     return (
         <View style={styles.container}>
             <View style={styles.contantContainer}>
@@ -39,7 +46,7 @@ const PersonalExpAllList = () => {
                                     fontSize: 20,
                                     fontWeight: 800
                                 }}>
-                                ₹8450.90
+                                ₹{totalPersonalMoneyExpenses}
                             </Text>
                             <Text
                                 style={{
@@ -66,7 +73,7 @@ const PersonalExpAllList = () => {
                                 fontSize: 20,
                                 fontWeight: 800
                             }}>
-                            31
+                            {totalPersonalTransactionExpenses}
                         </Text>
                         <Text
                             style={{
@@ -83,7 +90,7 @@ const PersonalExpAllList = () => {
                 </View>
                 <View style={styles.expensesTitleContainer}>
                     <View style={styles.rightTitleContainer}>
-                        <Text style={styles.titles}>31</Text>
+                        <Text style={styles.titles}>{totalPersonalTransactionExpenses}</Text>
                         <Text style={styles.titles}>Expenses Found</Text>
                     </View>
                     <View style={styles.leftTitleContainer}>

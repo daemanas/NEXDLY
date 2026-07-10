@@ -105,6 +105,55 @@ const ExpenseProvider = ({ children }) => {
         )
     }
 
+    const handaleDeleteGroupExpenses = (id) => {
+        setGroupExpenses(groupExpenses.filter(
+            (item) => item.id != id
+        ))
+    }
+
+    const handaleDeleteGroupMember = (groupId, memberId) => {
+        setGroupExpenses((prev) =>
+            prev.map((item) => {
+                if (item.id === groupId) {
+                    return {
+                        ...item,
+                        members: item.members.filter(
+                            (member) => member.id != memberId
+                        )
+                    }
+                }
+                return item;
+            })
+        )
+
+    }
+
+    const handleEditGroupName = (
+        groupId,
+        newGroupName
+    ) => {
+
+        setGroupExpenses((prevGroups) =>
+
+            prevGroups.map((group) => {
+
+                if (group.id === groupId) {
+
+                    return {
+                        ...group,
+                        title: newGroupName,
+                    };
+
+                }
+
+                return group;
+
+            })
+
+        );
+
+    };
+
 
 
     // const [groupEditItem, setGroupEditItem] = useState(null)
@@ -117,11 +166,7 @@ const ExpenseProvider = ({ children }) => {
     //             accumulator + item.amount, 0
     //     );
 
-    // const handaleDeleteGroupExpenses = (id) => {
-    //     setGroupExpenses(groupExpenses.filter(
-    //         (item) => item.id != id
-    //     ))
-    // }
+
 
     // const editGroupExpenseshandelar = (item) => {
     //     setGroupEdit(true);
@@ -169,9 +214,11 @@ const ExpenseProvider = ({ children }) => {
                 totalGroupExpenses,
                 addGroupMemberMoney,
                 addNewGroupMember,
-
+                handaleDeleteGroupExpenses,
+                handaleDeleteGroupMember,
+                handleEditGroupName,
                 // totalGroupMoneyExpenses,
-                // handaleDeleteGroupExpenses,
+
 
                 // isgroupEdit,
                 // setGroupEdit,

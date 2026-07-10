@@ -3,10 +3,16 @@ import React from 'react'
 import Entypo from 'react-native-vector-icons/Entypo';
 import GroupExpList from '../components/GroupExpenseListItem'
 import SearchFilter from '../components/ExpenseSearchFilter'
-
+import { useExpense } from '../../../context/ExpenseContext'
 
 
 const GroupExpAllList = () => {
+    const {
+        totalGroupExpenses,
+        //     totalGroupMoneyExpenses
+
+    } = useExpense()
+
     return (
         <View style={styles.container}>
             <View style={styles.contantContainer}>
@@ -59,14 +65,14 @@ const GroupExpAllList = () => {
                                 color: "rgb(62, 61, 61)",
                                 fontWeight: 470
                             }}>
-                            Total Transaction
+                            Total Groups
                         </Text>
                         <Text
                             style={{
                                 fontSize: 20,
                                 fontWeight: 800
                             }}>
-                            31
+                            {totalGroupExpenses}
                         </Text>
                         <Text
                             style={{
@@ -83,7 +89,7 @@ const GroupExpAllList = () => {
                 </View>
                 <View style={styles.expensesTitleContainer}>
                     <View style={styles.rightTitleContainer}>
-                        <Text style={styles.titles}>31</Text>
+                        <Text style={styles.titles}>{totalGroupExpenses}</Text>
                         <Text style={styles.titles}>Expenses Found</Text>
                     </View>
                     <View style={styles.leftTitleContainer}>
@@ -112,7 +118,7 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     contantContainer: {
-         flex: 1,
+        flex: 1,
         marginTop: 30,
         marginLeft: 20,
         marginRight: 20,
@@ -165,7 +171,7 @@ const styles = StyleSheet.create({
         transform: [{ translateX: -34 }]
     },
     itemContainer: {
-        flex:1,
+        flex: 1,
         marginTop: 20,
     },
     expensesTitleContainer: {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Alert } from 'react-native'
 import React from 'react'
 import { useExpense } from "../../../context/ExpenseContext";
 import Feather from 'react-native-vector-icons/Feather';
@@ -33,9 +33,29 @@ const GroupExpList = ({ limit }) => {
 
     const {
         groupExpenses,
-        // handaleDeleteGroupExpenses,
+        handaleDeleteGroupExpenses,
         // editGroupExpenseshandelar
     } = useExpense();
+
+    const confirmDeleteGroup = (groupId) => {
+        Alert.alert(
+            "Delete Group?",
+            "Are you sure you want to delete this group? This action cannot be undone.",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel",
+                },
+                {
+                    text: "Delete",
+                    style: "destructive",
+                    onPress: () => {
+                        handaleDeleteGroupExpenses(groupId);
+                    },
+                },
+            ]
+        );
+    };
 
 
 
@@ -94,7 +114,7 @@ const GroupExpList = ({ limit }) => {
                                 </Pressable>
                                 <Pressable
                                     style={styles.ButtonContainer}
-                                // onPress={() => handaleDeleteGroupExpenses(item.id)}
+                                onPress={() => confirmDeleteGroup(item.id)}
                                 >
                                     <Feather
                                         name="delete"

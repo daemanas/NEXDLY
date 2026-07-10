@@ -40,7 +40,7 @@ const GroupCard = () => {
                     <View style={styles.FoodContainerbox}>
                         <View style={styles.FoodContainerboxChi} >
                             <Text style={styles.FoodContainerboxTitle}>
-                                Transactions
+                                Total Groups
                             </Text>
                             <Text style={styles.FoodContainerboxContent}>
                                { totalGroupExpenses}

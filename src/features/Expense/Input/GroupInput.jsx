@@ -60,7 +60,7 @@ const GroupInput = () => {
 
   const [groupData, setGroupData] = useState({
     groupName: "",
-    groupIcon: "",
+    groupIcon: "?",
     date: new Date(),
     notes: "",
   });

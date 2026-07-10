@@ -15,6 +15,8 @@ import React, { useState } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
     useNavigation,
@@ -32,7 +34,9 @@ const GroupSummary = () => {
     const {
         groupExpenses,
         addGroupMemberMoney,
-        addNewGroupMember
+        addNewGroupMember,
+        handaleDeleteGroupMember,
+        handleEditGroupName,
     } = useExpense();
 
 
@@ -97,6 +101,12 @@ const GroupSummary = () => {
             </View>
         );
     }
+
+    const [isEditingGroupName, setIsEditingGroupName] = useState(false);
+
+    const [editedGroupName, setEditedGroupName] = useState(
+        currentGroup?.title || ""
+    );
 
 
     // MEMBERS
@@ -205,6 +215,26 @@ const GroupSummary = () => {
 
     }
 
+    const confirmDeleteGroupMember = (groupId, memberId) => {
+        Alert.alert(
+            "Delete Group?",
+            "Are you sure you want to delete this group? This action cannot be undone.",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel",
+                },
+                {
+                    text: "Delete",
+                    style: "destructive",
+                    onPress: () => {
+                        handaleDeleteGroupMember(groupId, memberId);
+                    },
+                },
+            ]
+        );
+    };
+
     // FORMAT DATE
     const formattedDate = currentGroup.date
         ? new Date(currentGroup.date).toLocaleDateString(
@@ -246,15 +276,10 @@ const GroupSummary = () => {
                     <Text style={styles.headerTitle}>
                         Group Summary
                     </Text>
+                    <Text>
 
-                    <Pressable style={styles.headerButton}>
+                    </Text>
 
-                        <Entypo
-                            name="dots-three-vertical"
-                            size={20}
-                            color="#31258F"
-                        />
-                    </Pressable>
                 </View>
 
                 {/* GROUP INFORMATION */}
@@ -273,25 +298,84 @@ const GroupSummary = () => {
 
                             <View style={styles.groupTitleContainer}>
 
-                                <Text
-                                    style={styles.groupName}
-                                    numberOfLines={1}
-                                >
-                                    {currentGroup.title}
-                                </Text>
+                                {isEditingGroupName ? (
 
-                                <Pressable style={styles.editButton}>
-                                    <Feather
-                                        name="edit-2"
-                                        size={14}
-                                        color="#6246EA"
-                                    />
+                                    <View style={styles.groupNameEditContainer}>
 
-                                    <Text style={styles.editText}>
-                                        Edit
-                                    </Text>
+                                        <TextInput
+                                            style={styles.groupNameInput}
+                                            value={editedGroupName}
+                                            onChangeText={setEditedGroupName}
+                                            autoFocus
+                                            maxLength={30}
+                                        />
 
-                                </Pressable>
+                                        <Pressable
+                                            style={styles.saveNameButton}
+                                            onPress={() => {
+
+                                                if (!editedGroupName.trim()) {
+                                                    return;
+                                                }
+
+                                                handleEditGroupName(
+                                                    groupId,
+                                                    editedGroupName.trim()
+                                                );
+
+                                                setIsEditingGroupName(false);
+                                            }}
+                                        >
+
+                                            <Feather
+                                                name="check"
+                                                size={17}
+                                                color="#FFFFFF"
+                                            />
+
+                                        </Pressable>
+
+                                    </View>
+
+                                ) : (
+
+                                    <>
+                                        <Text
+                                            style={styles.groupName}
+                                            numberOfLines={1}
+                                            ellipsizeMode="tail"
+                                        >
+                                            {currentGroup.title}
+                                        </Text>
+
+                                        <Pressable
+                                            style={styles.editButton}
+                                            onPress={() => {
+
+                                                setEditedGroupName(
+                                                    currentGroup.title
+                                                );
+
+                                                setIsEditingGroupName(true);
+
+                                            }}
+                                        >
+
+                                            <Feather
+                                                name="edit-2"
+                                                size={14}
+                                                color="#6246EA"
+                                            />
+
+                                            <Text style={styles.editText}>
+                                                Edit
+                                            </Text>
+
+                                        </Pressable>
+                                    </>
+
+                                )}
+
                             </View>
 
                             <View style={styles.groupSubInfo}>
@@ -462,11 +546,15 @@ const GroupSummary = () => {
                                             />
                                         </Pressable>
 
-                                        <Pressable style={styles.memberMenu}>
-                                            <Entypo
-                                                name="dots-three-vertical"
-                                                size={18}
-                                                color="#31258F"
+                                        <Pressable
+                                            style={styles.memberMenu}
+                                            onPress={() =>
+                                                confirmDeleteGroupMember(groupId, member.id)}
+                                        >
+                                            <MaterialCommunityIcons
+                                                name="delete"
+                                                size={25}
+                                                color="#DC2626"
                                             />
                                         </Pressable>
                                     </View>
@@ -718,6 +806,9 @@ const styles = StyleSheet.create({
         fontSize: 21,
         fontWeight: "700",
         color: "#171522",
+        alignItems: "center",
+        // justifyContent:"center"
+        marginRight: 35
     },
 
     groupCard: {
@@ -1161,6 +1252,49 @@ const styles = StyleSheet.create({
     errorButtonText: {
         color: "#FFFFFF",
         fontWeight: "600",
+    },
+
+    groupTitleContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        flex: 1,
+        gap: 8,
+    },
+
+    groupName: {
+        fontSize: 18,
+        fontWeight: "700",
+        color: "#171522",
+        maxWidth: 145,
+    },
+
+    groupNameEditContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        flex: 1,
+        gap: 7,
+    },
+
+    groupNameInput: {
+        flex: 1,
+        height: 38,
+        borderWidth: 1,
+        borderColor: "#C9C2FF",
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        fontSize: 16,
+        fontWeight: "600",
+        color: "#171522",
+        backgroundColor: "#F9F8FF",
+    },
+
+    saveNameButton: {
+        height: 36,
+        width: 36,
+        borderRadius: 10,
+        backgroundColor: "#6246EA",
+        justifyContent: "center",
+        alignItems: "center",
     },
 
 });
