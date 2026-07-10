@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Pressable, Alert } from 'react-native'
 import React from 'react'
 import { useExpense } from "../../../context/ExpenseContext";
 import Feather from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native'
 
 const formatMoney = (amount) => {
@@ -106,8 +107,8 @@ const GroupExpList = ({ limit }) => {
                                         })
                                     }}
                                 >
-                                    <Feather
-                                        name="edit-2"
+                                    <AntDesign
+                                        name="eye"
                                         size={20}
                                         color="rgb(88, 67, 222)"
                                     />
@@ -119,7 +120,7 @@ const GroupExpList = ({ limit }) => {
                                     <Feather
                                         name="delete"
                                         size={20}
-                                        color="rgb(88, 67, 222)"
+                                        color="#DC2626"
                                     />
                                 </Pressable>
 

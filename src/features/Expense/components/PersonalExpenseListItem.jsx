@@ -82,7 +82,7 @@ const PersonalExpList = ({ limit, }) => {
                                 <Feather
                                     name="delete"
                                     size={20}
-                                    color="rgb(88, 67, 222)"
+                                    color="#DC2626"
                                 />
                             </Pressable>
 

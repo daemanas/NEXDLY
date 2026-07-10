@@ -5,11 +5,9 @@ import { useExpense } from '../../../context/ExpenseContext'
 const GroupCard = () => {
     const {
         totalGroupExpenses,
-    //     totalGroupMoneyExpenses
+        allTotalGroupExpensesSum
 
     } = useExpense()
-
-    // const totalGroupMoneyExpenses = totalGroupExpenses
 
 
     return (
@@ -19,10 +17,8 @@ const GroupCard = () => {
                     <View style={styles.moneyContainerContent}>
                         <View style={styles.moneyContainerContentMoney}>
                             <Text style={{ color: "#ffff" }}> Total Spent </Text>
-                            <Text style={{ color: "#ffff", fontSize: 22, fontWeight: 500 }}> 
-                                {/* ₹{totalGroupMoneyExpenses}  */}
-                                100
-
+                            <Text style={{ color: "#ffff", fontSize: 22, fontWeight: 500 }}>
+                                {allTotalGroupExpensesSum}
                             </Text>
                             <Text style={{ color: "#ffff" }}> This Month </Text>
                         </View>
@@ -43,7 +39,7 @@ const GroupCard = () => {
                                 Total Groups
                             </Text>
                             <Text style={styles.FoodContainerboxContent}>
-                               { totalGroupExpenses}
+                                {totalGroupExpenses}
                             </Text>
                         </View>
                     </View>

@@ -9,9 +9,12 @@ import { useExpense } from '../../../context/ExpenseContext'
 const GroupExpAllList = () => {
     const {
         totalGroupExpenses,
-        //     totalGroupMoneyExpenses
+        allTotalGroupExpensesSum
 
     } = useExpense()
+
+    // const { groupExpenses } = useExpense();
+
 
     return (
         <View style={styles.container}>
@@ -45,7 +48,7 @@ const GroupExpAllList = () => {
                                     fontSize: 20,
                                     fontWeight: 800
                                 }}>
-                                ₹8450.90
+                                ₹{allTotalGroupExpensesSum}
                             </Text>
                             <Text
                                 style={{

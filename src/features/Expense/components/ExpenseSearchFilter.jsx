@@ -4,6 +4,7 @@ import {
     Text,
     TextInput,
     View,
+    ScrollView,
 } from 'react-native';
 
 import React, { useState } from 'react';
@@ -11,85 +12,62 @@ import React, { useState } from 'react';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
 
+const months = [
+    { id: 0, name: "Jan" },
+    { id: 1, name: "Feb" },
+    { id: 2, name: "Mar" },
+    { id: 3, name: "Apr" },
+    { id: 4, name: "May" },
+    { id: 5, name: "Jun" },
+    { id: 6, name: "Jul" },
+    { id: 7, name: "Aug" },
+    { id: 8, name: "Sep" },
+    { id: 9, name: "Oct" },
+    { id: 10, name: "Nov" },
+    { id: 11, name: "Dec" },
+];
+
 const ExpenseSearchFilter = () => {
     const [month, setMonth] = useState('This Month');
     const [showMonth, setShowMonth] = useState(false);
+    const [searchText, setSearchText] = useState("");
+
+    const [selectedMonth, setSelectedMonth] = useState(
+        new Date().getMonth()
+    );
 
     return (
         <View style={styles.mainContainer}>
-            <View style={styles.container}>
-
-                <View style={styles.searchContainer}>
-                    <Fontisto
-                        name="search"
-                        size={19}
-                        color="rgb(88, 84, 84)"
-                    />
-
-                    <TextInput
-                        placeholder="Search expenses..."
-                        style={styles.searchBox}
-                    />
-                </View>
-
-
-                <Pressable
-                    style={styles.monthContainer}
-                    onPress={() => setShowMonth(!showMonth)}
-                >
-                    <Text style={styles.monthText}>
-                        {month}
-                    </Text>
-
-                    <Feather
-                        name="chevron-down"
-                        size={18}
-                        color="#555"
-                    />
-                </Pressable>
-
-            </View>
-
-
-            {showMonth && (
-                <View style={styles.monthDropdown}>
-
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.monthContainer}
+            >
+                {months.map((month) => (
                     <Pressable
-                        onPress={() => {
-                            setMonth('This Month');
-                            setShowMonth(false);
-                        }}
+                        key={month.id}
+                        style={[
+                            styles.monthButton,
+                            selectedMonth === month.id &&
+                            styles.activeMonthButton
+                        ]}
+                        onPress={() =>
+                            setSelectedMonth(month.id)
+                        }
                     >
-                        <Text style={styles.monthOption}>
-                            This Month
+                        <Text
+                            style={[
+                                styles.monthText,
+
+                                selectedMonth === month.id &&
+                                styles.activeMonthText
+                            ]}
+                        >
+                            {month.name}
                         </Text>
                     </Pressable>
-
-                    <Pressable
-                        onPress={() => {
-                            setMonth('Last Month');
-                            setShowMonth(false);
-                        }}
-                    >
-                        <Text style={styles.monthOption}>
-                            Last Month
-                        </Text>
-                    </Pressable>
-
-                    <Pressable
-                        onPress={() => {
-                            setMonth('All');
-                            setShowMonth(false);
-                        }}
-                    >
-                        <Text style={styles.monthOption}>
-                            All
-                        </Text>
-                    </Pressable>
-
-                </View>
-            )}
-
+                ))}
+            </ScrollView>
         </View>
     );
 };
@@ -100,73 +78,32 @@ const styles = StyleSheet.create({
         width: '100%',
     },
 
-    container: {
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 24,
-    },
-
-    searchContainer: {
-        width: '64%',
-        height: 52,
-
-        borderWidth: 1,
-        borderColor: '#E2E2EA',
-        borderRadius: 13,
-
-        flexDirection: 'row',
-        alignItems: 'center',
-
-        paddingHorizontal: 15,
-    },
-
-    searchBox: {
-        flex: 1,
-        marginLeft: 8,
-        fontSize: 15,
-    },
-
     monthContainer: {
-        width: '32%',
-        height: 52,
+        gap: 9,
+        paddingVertical: 10,
+    },
 
-        borderWidth: 1,
-        borderColor: '#E2E2EA',
-        borderRadius: 13,
+    monthButton: {
+        height: 40,
+        minWidth: 58,
+        paddingHorizontal: 14,
+        borderRadius: 12,
+        backgroundColor: "#F2F1F7",
+        justifyContent: "center",
+        alignItems: "center",
+    },
 
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-
-        paddingHorizontal: 12,
+    activeMonthButton: {
+        backgroundColor: "#6246EA",
     },
 
     monthText: {
         fontSize: 14,
-        fontWeight: '500',
+        fontWeight: "600",
+        color: "#77738F",
     },
 
-    monthDropdown: {
-        position: 'absolute',
-        top: 82,
-        right: 0,
-
-        width: '32%',
-
-        backgroundColor: '#FFFFFF',
-        borderRadius: 10,
-
-        paddingVertical: 6,
-
-        elevation: 5,
-
-        zIndex: 10,
-    },
-
-    monthOption: {
-        paddingHorizontal: 12,
-        paddingVertical: 10,
-        fontSize: 14,
+    activeMonthText: {
+        color: "#FFFFFF",
     },
 });

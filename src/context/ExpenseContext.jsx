@@ -134,59 +134,38 @@ const ExpenseProvider = ({ children }) => {
     ) => {
 
         setGroupExpenses((prevGroups) =>
-
             prevGroups.map((group) => {
-
                 if (group.id === groupId) {
-
                     return {
                         ...group,
                         title: newGroupName,
                     };
-
                 }
-
                 return group;
-
             })
-
         );
-
     };
 
+    // const currentGroup = groupExpenses.find(
+    //     (item) => item.id === groupId
+    // )
 
+    // const allTotalGroupExpensesSum = currentGroup.members.reduce(
+    //     (accu, item) => accu + Number(item.amount), 0
+    // )
 
-    // const [groupEditItem, setGroupEditItem] = useState(null)
-
-    // const [isgroupEdit, setGroupEdit] = useState(false)
-
-    // const totalGroupMoneyExpenses =
-    //     groupExpenses.reduce(
-    //         (accumulator, item) =>
-    //             accumulator + item.amount, 0
-    //     );
-
-
-
-    // const editGroupExpenseshandelar = (item) => {
-    //     setGroupEdit(true);
-    //     setGroupEditItem(item);
-
-    // }
-
-    // const updateGroupExpense = (updatedItem) => {
-    //     setGroupExpenses((prevExpenses) =>
-    //         prevExpenses.map((item) =>
-    //             item.id === groupEditItem.id
-    //                 ? updatedItem
-    //                 : item
-    //         )
-    //     );
-
-    //     setGroupEditItem(null);
-
-    // };
-
+    // console.log(allTotalGroupExpensesSum)
+    const allTotalGroupExpensesSum = groupExpenses.reduce(
+        (groupTotal , group) => {
+            const memberTotal = group.members.reduce(
+                (memberTotal, member) => 
+                    memberTotal + Number(member.amount || 0) , 0
+            )
+            return groupTotal + memberTotal;
+        },
+        0
+            
+    )
 
 
     return (
@@ -217,6 +196,7 @@ const ExpenseProvider = ({ children }) => {
                 handaleDeleteGroupExpenses,
                 handaleDeleteGroupMember,
                 handleEditGroupName,
+                allTotalGroupExpensesSum,
                 // totalGroupMoneyExpenses,
 
 
