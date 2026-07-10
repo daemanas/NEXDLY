@@ -108,23 +108,50 @@ const GroupInput = () => {
   }
 
   const AddInputItems = () => {
-    // if (
-    //   !groupData.itemName.trim() ||
-    //   !groupData.amount.trim()
-    // ) {
-    //   Alert.alert(
-    //     "Missing Information",
-    //     "Please enter expense name and amount."
-    //   );
+    if (
+      !groupData.groupName.trim() ||
+      !groupData.groupIcon
+    ) {
+      Alert.alert(
+        "Missing Information",
+        "Please enter Group name and icon."
+      );
 
-    //   return;
-    // }
+      return;
+    }
+
+    if (member.length === 0) {
+      Alert.alert(
+        "No Member Added",
+        "Please add at least one member."
+      );
+      return;
+    }
+
+    const hasInvalidMember = member.some(
+      (item) =>
+        !item.name.trim() ||
+        !String(item.amount).trim()
+    )
+
+    if (hasInvalidMember) {
+      Alert.alert(
+        "Missing Member Information",
+        "Please enter name and amount for every member."
+      )
+      return;
+    }
+
     const newGroup = {
       id: Date.now(),
       title: groupData.groupName,
       icon: groupData.groupIcon,
       date: groupData.date,
-      members: member,
+      members: member.map((item) => ({
+        ...item,
+        name:item.name.trim(),
+        amount:Number(item.amount),
+      })),
       time: groupData.date.toLocaleTimeString(
         "en-IN",
         {
@@ -144,16 +171,19 @@ const GroupInput = () => {
 
     setGroupData({
       groupName: "",
-      groupIcon: "🍔",
+      groupIcon: "?",
       date: new Date(),
       notes: "",
     })
 
-    // setMember({
-    //   name: "",
-    //   amount: "",
-    // })
-  }
+    setMember([]); 
+    
+    Alert.alert(
+      "Group Created",
+      "Your group expense has been created successfully."
+    );
+
+  };
 
 
 

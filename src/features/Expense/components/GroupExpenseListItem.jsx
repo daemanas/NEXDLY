@@ -12,71 +12,78 @@ const GroupExpList = ({ limit }) => {
         // editGroupExpenseshandelar
     } = useExpense();
 
+
+
     const expensesData = limit
         ? groupExpenses.slice(0, limit)
         : groupExpenses
     return (
         <View style={styles.container}>
-            {expensesData.map((item) => (
-                <View
-                    style={styles.ItemList}
-                    key={item.id}
-                >
-                    <View style={styles.item}>
-                        <View style={styles.itemNameContainer}>
-                            <View style={[styles.itemIconContainer, { backgroundColor: item.iconBg }]}>
-                                <Text style={styles.itemIcon}>{item.icon}</Text>
+            {expensesData.map((item) => {
+
+                const totalGroupMoneyExpenses =
+                    item.members.reduce(
+                        (accu, member) =>
+                            accu + Number(member.amount),
+                        0
+                    );
+                return (
+                    <View
+                        style={styles.ItemList}
+                        key={item.id}
+                    >
+                        <View style={styles.item}>
+                            <View style={styles.itemNameContainer}>
+                                <View style={[styles.itemIconContainer, { backgroundColor: item.iconBg }]}>
+                                    <Text style={styles.itemIcon}>{item.icon}</Text>
+                                </View>
+
+                                <View style={styles.itemName}>
+                                    <Text style={{ fontSize: 16, fontWeight: 700 }} >{item.title}</Text>
+                                    <Text style={{ color: "#656164" }}>{item.date.toLocaleDateString("en-GB")}, {item.time}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.itemMoneyContainer}>
+                                <Text style={{ fontSize: 16, fontWeight: 700, color: "#e02b34" }}>
+                                    {totalGroupMoneyExpenses}
+                                    {/* 300 */}
+                                </Text>
+                                <Text style={{ fontSize: 15, }}>🏦</Text>
                             </View>
 
-                            <View style={styles.itemName}>
-                                <Text style={{ fontSize: 16, fontWeight: 700 }} >{item.title}</Text>
-                                <Text style={{ color: "#656164" }}>{item.date.toLocaleDateString("en-GB")}, {item.time}</Text>
+                            <View style={styles.itemButtonContainer}>
+                                <Pressable
+                                    key={item.id}
+                                    style={styles.ButtonContainer}
+                                    onPress={() => {
+                                        navigation.navigate("GroupSummer", {
+                                            groupId: item.id,
+                                        })
+                                    }}
+                                >
+                                    <Feather
+                                        name="edit-2"
+                                        size={20}
+                                        color="rgb(88, 67, 222)"
+                                    />
+                                </Pressable>
+                                <Pressable
+                                    style={styles.ButtonContainer}
+                                // onPress={() => handaleDeleteGroupExpenses(item.id)}
+                                >
+                                    <Feather
+                                        name="delete"
+                                        size={20}
+                                        color="rgb(88, 67, 222)"
+                                    />
+                                </Pressable>
+
                             </View>
                         </View>
-                        <View style={styles.itemMoneyContainer}>
-                            <Text style={{ fontSize: 16, fontWeight: 700, color: "#e02b34" }}>
-                                {/* ₹{item.amount} */}
-                                300
-                            </Text>
-                            <Text style={{ fontSize: 15, }}>🏦</Text>
-                        </View>
 
-                        <View style={styles.itemButtonContainer}>
-                            <Pressable
-                                key={item.id}
-                                style={styles.ButtonContainer}
-                                onPress={() => {
-                                    navigation.navigate("GroupSummer", {
-                                        groupId: item.id,
-                                    })
-                                }}
-                            >
-                                <Feather
-                                    name="edit-2"
-                                    size={20}
-                                    color="rgb(88, 67, 222)"
-                                />
-                            </Pressable>
-                            <Pressable
-                                style={styles.ButtonContainer}
-                            // onPress={() => handaleDeleteGroupExpenses(item.id)}
-                            >
-                                <Feather
-                                    name="delete"
-                                    size={20}
-                                    color="rgb(88, 67, 222)"
-                                />
-                            </Pressable>
-
-                        </View>
                     </View>
-
-                </View>
-            ))
-            }
-
-
-
+                )
+            })}
         </View >
     )
 }

@@ -149,14 +149,6 @@ const GroupSummary = () => {
             return;
         }
 
-        if (Number.isNaN(amount) || amount <= 0) {
-            Alert.alert(
-                "Invalid Amount",
-                "Please enter a valid amount greater than 0."
-            );
-            return;
-        }
-
         addGroupMemberMoney(
             groupId,
             memberId,

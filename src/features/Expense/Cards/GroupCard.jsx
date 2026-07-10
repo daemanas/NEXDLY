@@ -9,6 +9,8 @@ const GroupCard = () => {
 
     } = useExpense()
 
+    // const totalGroupMoneyExpenses = totalGroupExpenses
+
 
     return (
         <View style={styles.Container}>
