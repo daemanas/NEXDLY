@@ -1,10 +1,10 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { Lucide } from 'lucide-react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import PlanningList from './Planing/components/PlanningList'
 
 const WorkFlow = () => {
   return (
@@ -59,17 +59,23 @@ const WorkFlow = () => {
             </View>
             <View style={styles.planContainerText}>
               <Text style={{fontSize:20, fontWeight:500}}>4</Text>
-              <Text style={{fontSize:12}}>Conpl..</Text>
+              <Text style={{fontSize:12}}>Compl..</Text>
             </View>
           </View>
 
         </View>
 
         <View style = {styles.planListContainer}>
+
           <View style = {styles.planListText}>
             <Text>Plans</Text>
             <Text>View All ▶️</Text>
           </View>
+
+          <View style ={styles.planList}>
+            <PlanningList />
+          </View>
+
         </View>
 
       </ScrollView>
@@ -135,7 +141,11 @@ const styles = StyleSheet.create({
   planListText:{
     flexDirection:"row",
     justifyContent:"space-between"
-  }
+  },
+
+  planList:{
+    marginTop:20
+  },
 
 
 
