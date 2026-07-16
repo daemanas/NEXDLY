@@ -52,7 +52,8 @@ const Expansion = () => {
                                     <Text style={styles.ExpsButtonTitleText}>
                                         Expense
                                     </Text>
-                                    <Text style={styles.ExpsButtonTitleTextCom}>
+                                    <Text 
+                                    style={styles.ExpsButtonTitleTextCom}>
                                         Only my expense
                                     </Text>
                                 </View>

@@ -18,6 +18,9 @@ import GroupSummer from '../features/Expense/screens/GroupSummer'
 
 import { ExpenseProvider } from '../context/ExpenseContext'
 
+import PlanningNavigation from './PlanningNavigation'
+
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -79,7 +82,7 @@ const BottomTabs = () => {
 
             <Tab.Screen
                 name="My Plans"
-                component={Workflow}
+                component={PlanningNavigation}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <Entypo
@@ -148,6 +151,12 @@ const Navigation = () => {
                         name="GroupSummer"
                         component={GroupSummer}
                     />
+
+                    {/* <Stack.Screen
+                        name='MyPlans'
+                        component={PlanningNavigatio}
+                    /> */}
+
 
                 </Stack.Navigator>
 

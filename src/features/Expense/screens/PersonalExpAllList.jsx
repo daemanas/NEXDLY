@@ -103,8 +103,6 @@ const PersonalExpAllList = () => {
                     showsVerticalScrollIndicator={false}>
                     <PersonalExpList />
                 </ScrollView>
-
-
             </View>
         </View>
     )

@@ -1,12 +1,16 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { useNavigation } from '@react-navigation/native'
 import PlanningList from './Planing/components/PlanningList'
 
 const WorkFlow = () => {
+
+  const navigation = useNavigation()
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.contantContainer}>
@@ -17,8 +21,8 @@ const WorkFlow = () => {
 
         <View style={styles.planeCheckContainer}>
 
-          <View style={[styles.planContainer, {marginLeft:10}]}>
-            <View style={[styles.planContainerIcon, {backgrozundColor:"#cfd2fe"}]}>
+          <View style={[styles.planContainer, { marginLeft: 10 }]}>
+            <View style={[styles.planContainerIcon, { backgrozundColor: "#cfd2fe" }]}>
               <FontAwesome6
                 name="calendar-check"
                 size={24}
@@ -26,15 +30,15 @@ const WorkFlow = () => {
               />
             </View>
             <View style={styles.planContainerText}>
-              <Text style={{fontSize:20, fontWeight:500}}>8</Text>
-              <Text style={{fontSize:12}}>Total Plans</Text>
+              <Text style={{ fontSize: 20, fontWeight: 500 }}>8</Text>
+              <Text style={{ fontSize: 12 }}>Total Plans</Text>
             </View>
           </View>
 
           <View style={styles.planContainerMidilLine} />
 
           <View style={styles.planContainer}>
-            <View style={[styles.planContainerIcon, {backgroundColor: "#fde1bd"}]}>
+            <View style={[styles.planContainerIcon, { backgroundColor: "#fde1bd" }]}>
               <Feather
                 name="clock"
                 size={26}
@@ -42,15 +46,15 @@ const WorkFlow = () => {
               />
             </View>
             <View style={styles.planContainerText}>
-              <Text style={{fontSize:20, fontWeight:500}}>4</Text>
-              <Text style={{fontSize:12}}>Pending</Text>
+              <Text style={{ fontSize: 20, fontWeight: 500 }}>4</Text>
+              <Text style={{ fontSize: 12 }}>Pending</Text>
             </View>
           </View>
 
           <View style={styles.planContainerMidilLine} />
 
-          <View style={[styles.planContainer, {marginRight:10}]}>
-            <View style={[styles.planContainerIcon, {backgroundColor: "#cff6d9"}]}>
+          <View style={[styles.planContainer, { marginRight: 10 }]}>
+            <View style={[styles.planContainerIcon, { backgroundColor: "#cff6d9" }]}>
               <Ionicons
                 name="cloud-done-outline"
                 size={26}
@@ -58,21 +62,27 @@ const WorkFlow = () => {
               />
             </View>
             <View style={styles.planContainerText}>
-              <Text style={{fontSize:20, fontWeight:500}}>4</Text>
-              <Text style={{fontSize:12}}>Compl..</Text>
+              <Text style={{ fontSize: 20, fontWeight: 500 }}>4</Text>
+              <Text style={{ fontSize: 12 }}>Compl..</Text>
             </View>
           </View>
 
         </View>
 
-        <View style = {styles.planListContainer}>
+        <View style={styles.planListContainer}>
 
-          <View style = {styles.planListText}>
+          <View style={styles.planListText}>
             <Text>Plans</Text>
-            <Text>View All ▶️</Text>
+            <Pressable
+              onPress={() => navigation.navigate
+                ('AddPlans')
+              }
+            >
+              <Text>View All ▶️</Text>
+            </Pressable>
           </View>
 
-          <View style ={styles.planList}>
+          <View style={styles.planList}>
             <PlanningList />
           </View>
 
@@ -114,9 +124,9 @@ const styles = StyleSheet.create({
     // justifyContent:"center"
   },
   planContainer: {
-    flexDirection:"row",
-    gap:6,
-    
+    flexDirection: "row",
+    gap: 6,
+
   },
 
   planContainerIcon: {
@@ -127,24 +137,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10
   },
-  
-  planContainerMidilLine:{
-    borderWidth:0.2,
-    height:46,
+
+  planContainerMidilLine: {
+    borderWidth: 0.2,
+    height: 46,
     borderColor: "#d0d0dc",
   },
 
-  planListContainer:{
-    marginTop:30
+  planListContainer: {
+    marginTop: 30
   },
 
-  planListText:{
-    flexDirection:"row",
-    justifyContent:"space-between"
+  planListText: {
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
 
-  planList:{
-    marginTop:20
+  planList: {
+    marginTop: 20
   },
 
 

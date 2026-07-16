@@ -23,7 +23,6 @@ const PlanningList = () => {
   return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
-
         <View style={styles.cardImageTitleContainer}>
 
           <View style={styles.cardImageContainer}>
@@ -89,7 +88,8 @@ export default PlanningList
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%"
+    width: "100%",
+    gap: 5
   },
 
   cardContainer: {
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     color: "#9d9d9d",
     alignItems: "center",
     flexDirection: "row",
+    fontWeight: 700
   },
 
   cardPercentageContainer: {
@@ -141,8 +142,8 @@ const styles = StyleSheet.create({
     gap: 12,
     justifyContent: "flex-start",
     flex: 1,
-    marginLeft:7,
-     marginRight: 15,
+    marginLeft: 9,
+    marginRight: 15,
 
 
   },
