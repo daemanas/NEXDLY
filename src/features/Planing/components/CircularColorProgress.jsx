@@ -2,7 +2,10 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 
-const CircularProgress = ({limit}) => {
+
+import Feather from 'react-native-vector-icons/Feather';
+
+const CircularProgress = ({ limit }) => {
   const percentage = limit;
 
   const size = 60;
@@ -44,7 +47,12 @@ const CircularProgress = ({limit}) => {
       </Svg>
 
       <Text style={styles.percentage}>
-        {percentage}%
+        {/* {percentage}% */}
+        <Feather
+          name="clock"
+          size={26}
+          color="#fdae02"
+        />
       </Text>
     </View>
   );

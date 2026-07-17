@@ -20,12 +20,14 @@ const PlanningNavigation = () => {
         headerShown: false,
       }}
     >
+      {/* fix this */}
 
       <Stack.Screen
         name="Workflow"
         component={Workflow}
-      />
+      />   
 
+      
       <Stack.Screen
         name="AddPlans"
         component={AddPlaning}

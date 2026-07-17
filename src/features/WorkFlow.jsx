@@ -7,6 +7,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native'
 import PlanningList from './Planing/components/PlanningList'
 
+
+import AntDesign from 'react-native-vector-icons/AntDesign';
+
 const WorkFlow = () => {
 
   const navigation = useNavigation()
@@ -73,11 +76,7 @@ const WorkFlow = () => {
 
           <View style={styles.planListText}>
             <Text>Plans</Text>
-            <Pressable
-              onPress={() => navigation.navigate
-                ('AddPlans')
-              }
-            >
+            <Pressable>
               <Text>View All ▶️</Text>
             </Pressable>
           </View>
@@ -89,6 +88,18 @@ const WorkFlow = () => {
         </View>
 
       </ScrollView>
+      <View style={styles.InputContainerButton}>
+        <Pressable
+          style={styles.addButton}
+          onPress={() => navigation.navigate('AddPlans')}
+        >
+          <AntDesign
+            name="plus"
+            size={30}
+            color="#FFFFFF"
+          />
+        </Pressable>
+      </View>
     </View>
   )
 }
@@ -156,6 +167,26 @@ const styles = StyleSheet.create({
   planList: {
     marginTop: 20
   },
+  addButton: {
+    height: 58,
+    width: 58,
+    backgroundColor: "#6246EA",
+    borderRadius: 29,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    right: 22,
+    bottom: 25,
+    elevation: 8,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+  }
 
 
 
