@@ -1,8 +1,48 @@
-import { KeyboardAvoidingView, Pressable, TextInput, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-// import {  } from 'react-native/types_generated/index'
+import { KeyboardAvoidingView, Pressable, TextInput, StyleSheet, Text, View, Platform, Alert } from 'react-native'
+import React, { useState } from 'react'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const PlaningInput = () => {
+
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date());
+
+  const [show, setShow] = useState(false);
+  const [endShow, setEndShow] = useState(false);
+
+
+
+  const onStartDateChange = (even, selectedDate) => {
+    const currentDate = selectedDate || startDate;
+    setShow(false)
+    if (currentDate) {
+      setStartDate(currentDate);
+    }
+
+  }
+
+  const onEndDateChange = (even, selectedDate) => {
+    const currentDate = selectedDate || endDate;
+
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0);
+
+    const end = new Date(currentDate);
+    end.setHours(0, 0, 0, 0);
+
+    setEndShow(false)
+    if (currentDate) {
+      if (end < start) {
+        Alert.alert(
+          "Invalid Date",
+          "End date cannot be before Start date."
+        )
+        return;
+      }
+      setEndDate(currentDate);
+    }
+
+  }
 
   return (
     <KeyboardAvoidingView
@@ -54,15 +94,46 @@ const PlaningInput = () => {
 
             <View style={styles.dateInput}>
               <Text>Start Date</Text>
+
+              {show && <DateTimePicker
+                mode='date'
+                display='spinner'
+                value={startDate}
+                onChange={onStartDateChange}
+              />}
               <View style={styles.inputBox}>
-                <TextInput style={styles.inputBoxContainer} placeholder=' Ex: 22/04/2006' />
+                <Pressable onPress={() => setShow(true)} >
+                  <TextInput
+                    style={styles.inputBoxContainer}
+                    placeholder=' Ex: 22/04/2006'
+                    value={startDate.toLocaleDateString("en-GB")}
+                    onChangeText={setStartDate}
+                    editable={false}
+                  />
+                </Pressable>
               </View>
             </View>
 
             <View style={styles.dateInput}>
+
               <Text>End Date</Text>
+              {endShow && <DateTimePicker
+                mode='date'
+                display='spinner'
+                value={endDate}
+                onChange={onEndDateChange}
+              />}
+
               <View style={styles.inputBox}>
-                <TextInput style={styles.inputBoxContainer} placeholder=' Ex: 22/04/2006' />
+                <Pressable onPress={() => setEndShow(true)} >
+                  <TextInput
+                    style={styles.inputBoxContainer}
+                    placeholder=' Ex: 22/04/2006'
+                    value={endDate.toLocaleDateString("en-GB")}
+                    onChangeText={setEndDate}
+                    editable={false}
+                  />
+                </Pressable>
               </View>
             </View>
 
@@ -146,7 +217,7 @@ const styles = StyleSheet.create({
   inputBoxContainer: {
     marginLeft: 15,
     marginRight: 15,
-    fontSize: 19
+    fontSize: 18
   },
 
   dateInput: {
