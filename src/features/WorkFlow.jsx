@@ -88,6 +88,7 @@ const WorkFlow = () => {
         </View>
 
       </ScrollView>
+      
       <View style={styles.InputContainerButton}>
         <Pressable
           style={styles.addButton}

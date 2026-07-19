@@ -1,8 +1,33 @@
-import { KeyboardAvoidingView, Pressable, TextInput, StyleSheet, Text, View, Platform, Alert } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  Pressable,
+  TextInput,
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+  Alert,
+  Modal
+} from 'react-native'
+
 import React, { useState } from 'react'
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { usePlaning } from '../../../context/PlaningContext';
+
+const planningIcons = [
+  "🏝️", "🏖️", "✈️",
+  "🚗", "⛺", "⛰️",
+  "🛍️", "🛒", "🎁",
+  "👕", "👟", "💄",
+  "🎂", "🎉", "🎈",
+  "🥳", "🎀", "🥂",
+  "🍯", "💰", "💵",
+  "🐷", "🪙", "📈",
+  "📅", "📝", "🏠",
+  "💻", "🏋️", "🧹"
+];
+
 
 const PlaningInput = () => {
 
@@ -12,22 +37,16 @@ const PlaningInput = () => {
 
   const [show, setShow] = useState(false);
   const [endShow, setEndShow] = useState(false);
+  const [showIconPicker, setShowIconPicker] = useState(false)
 
   const [inputData, setInputDate] = useState({
     planName: '',
     amount: '',
+    date: new Date(),
     startDate: new Date(),
     endDate: new Date(),
   })
 
-  const handelChange = (key, value) => {
-    setInputDate((prev) => ({
-      ...prev,
-      [key]: value
-    }))
-  }
-
-  console.log(inputData.endDate.toLocaleDateString("en-GB"))
 
 
   const onStartDateChange = (even, selectedDate) => {
@@ -35,7 +54,7 @@ const PlaningInput = () => {
     if (selectedDate) {
       setInputDate((prev) => ({
         ...prev,
-        startDate : selectedDate
+        startDate: selectedDate
       }));
     }
 
@@ -58,13 +77,50 @@ const PlaningInput = () => {
         )
         return;
       }
-      setInputDate((prev) =>({
+      setInputDate((prev) => ({
         ...prev,
-        endDate : selectedDate
+        endDate: selectedDate
       }));
     }
 
   }
+
+  const handelChange = (key, value) => {
+    setInputDate((prev) => ({
+      ...prev,
+      [key]: value
+    }))
+  }
+
+
+  const AddInputData = () => {
+    const newInputAdd = {
+      id: Date.now(),
+      planName: inputData.planName,
+      amount: inputData.amount,
+      date: inputData.date,
+      startDate: inputData.startDate,
+      endDate: inputData.endDate,
+    };
+    console.log("new planing : ", newInputAdd)
+
+    console.log("new date : ", newInputAdd.date.toLocaleDateString("en-GB"))
+
+    setPlaning((prev) => [
+      newInputAdd,
+      ...prev,
+    ])
+
+    setInputDate({
+      planName: '',
+      amount: '',
+      date: new Date(),
+      startDate: new Date(),
+      endDate: new Date(),
+    })
+
+  }
+
 
 
 
@@ -94,7 +150,7 @@ const PlaningInput = () => {
               <Text style={{ fontSize: 44 }} > 🏝️ </Text>
             </View>
 
-            <Pressable>
+            <Pressable onPress={() => setShowIconPicker(true)}>
               <Text style={{ fontWeight: 500, color: "#3d63ca" }} >Choose Plan Icon</Text>
             </Pressable>
 
@@ -174,7 +230,10 @@ const PlaningInput = () => {
 
           </View>
 
-          <Pressable style={styles.buttonContainer}>
+          <Pressable
+            style={styles.buttonContainer}
+            onPress={AddInputData}
+          >
             <Text
               style={{
                 fontSize: 18,
@@ -186,6 +245,24 @@ const PlaningInput = () => {
         </View>
 
       </View>
+
+      <Modal
+        visible={showIconPicker}
+        animationType='slide'
+        transparent={true}
+        onRequestClose={() => setShowIconPicker(false)}
+      >
+        <Pressable
+          onPress={() => setShowIconPicker(false)}
+          style={styles.planingIconContainer}>
+            <Pressable style={styles.planingIconBox}>
+              
+              <Text>Hello</Text>
+            </Pressable>
+          
+        </Pressable>
+
+      </Modal>
 
 
     </KeyboardAvoidingView>
@@ -275,6 +352,16 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center"
+  },
+
+  planingIconContainer: {
+    justifyContent: "flex-end",
+    backgroundColor:"rgba(0, 0, 0, 0.35)",
+    flex:1
+  },
+
+  planingIconBox:{
+    backgroundColor:"#ffff"
   }
 
 })

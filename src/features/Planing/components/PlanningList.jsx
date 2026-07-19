@@ -1,10 +1,12 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { use } from 'react'
 import PercentageCircle from "./CircularColorProgress"
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+
+import { usePlaning } from '../../../context/PlaningContext';
 
 const planningIcons = [
   "🏝️", "🏖️", "✈️",
@@ -20,65 +22,80 @@ const planningIcons = [
 ];
 
 const PlanningList = () => {
+
+  const {
+    planing
+  } = usePlaning()
+
   return (
     <View style={styles.container}>
-      <View style={styles.cardContainer}>
-        <View style={styles.cardImageTitleContainer}>
 
-          <View style={styles.cardImageContainer}>
-            <Text style={{ fontSize: 37 }}>⛰️</Text>
-          </View>
+      {planing.map((item) => (
 
-          <View style={styles.cardTitleContainer}>
-            <Text style={{ fontSize: 16, fontWeight: 500 }}>Goa Trip✈️</Text>
-            <View style={styles.cardSmallTitleContainer}>
-              <EvilIcons name="calendar" size={20} color={"#9d9d9d"} />
-              <Text style={styles.cardSmallTitle}>
-                15 july 2026
-              </Text>
+        <View 
+        style={styles.cardContainer}
+        key={item.id}
+        >
+
+          <View style={styles.cardImageTitleContainer}>
+
+            <View style={styles.cardImageContainer}>
+              <Text style={{ fontSize: 37 }}>⛰️</Text>
             </View>
 
-            <View
-              style={[
-                styles.cardSmallTitleContainer,
-                { gap: 5, marginLeft: 2 }]}
-            >
-              <Entypo name="wallet" size={16} color={"#9d9d9d"} />
-              <Text style={styles.cardSmallTitle}>
-                Budget ₹28,990
-              </Text>
+            <View style={styles.cardTitleContainer}>
+              <Text style={{ fontSize: 16, fontWeight: 500 }}>{item.planName}</Text>
+              <View style={styles.cardSmallTitleContainer}>
+                <EvilIcons name="calendar" size={20} color={"#9d9d9d"} />
+                <Text style={styles.cardSmallTitle}>
+                  {new Date(item.date).toLocaleDateString("en-GB")}
+                </Text>
+              </View>
+
+              <View
+                style={[
+                  styles.cardSmallTitleContainer,
+                  { gap: 5, marginLeft: 2 }]}
+              >
+                <Entypo name="wallet" size={16} color={"#9d9d9d"} />
+                <Text style={styles.cardSmallTitle}>
+                  Budget ₹{item.amount}
+                </Text>
+              </View>
+
+            </View>
+          </View>
+
+          <View style={styles.cardPercentageContainer}>
+            <View style={styles.cardPercentage}>
+              <PercentageCircle limit={69} />
+            </View>
+
+            <View style={styles.cardPercentageTitleContainer}>
+              <View style={styles.cardPercentageTitle}>
+                <Text style={styles.cardSmallPriceTitle}>{new Date(item.startDate).toLocaleDateString("en-GB")}</Text>
+                <Text style={styles.cardSmallTitle}>Start Time</Text>
+              </View>
+              <View style={styles.cardPercentageTitle}>
+                <Text style={styles.cardSmallPriceTitle}>{new Date(item.endDate).toLocaleDateString("en-GB")}</Text>
+                <Text style={styles.cardSmallTitle}>End Time</Text>
+              </View>
             </View>
 
           </View>
+
+          <Pressable style={styles.eyeButton}>
+            <AntDesign
+              name="eye"
+              size={20}
+              color="#631c1c"
+            />
+          </Pressable>
+
         </View>
 
-        <View style={styles.cardPercentageContainer}>
-          <View style={styles.cardPercentage}>
-            <PercentageCircle limit={69} />
-          </View>
+      ))}
 
-          <View style={styles.cardPercentageTitleContainer}>
-            <View style={styles.cardPercentageTitle}>
-              <Text style={styles.cardSmallPriceTitle}>₹2657</Text>
-              <Text style={styles.cardSmallTitle}>spen</Text>
-            </View>
-            <View style={styles.cardPercentageTitle}>
-              <Text style={styles.cardSmallPriceTitle}>₹270</Text>
-              <Text style={styles.cardSmallTitle}>remaining</Text>
-            </View>
-          </View>
-
-        </View>
-
-        <Pressable style={styles.eyeButton}>
-          <AntDesign
-            name="eye"
-            size={20}
-            color="#631c1c"
-          />
-        </Pressable>
-
-      </View>
 
     </View>
   )

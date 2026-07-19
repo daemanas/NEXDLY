@@ -361,7 +361,6 @@ const PersonalInput = () => {
 
       </ScrollView>
 
-
       {/* DATE PICKER */}
 
       {showDatePicker && (
@@ -389,7 +388,6 @@ const PersonalInput = () => {
         />
 
       )}
-
 
       {/* ICON PICKER MODAL */}
 
@@ -484,7 +482,6 @@ const PersonalInput = () => {
         </Pressable>
 
       </Modal>
-
 
     </KeyboardAvoidingView>
 
