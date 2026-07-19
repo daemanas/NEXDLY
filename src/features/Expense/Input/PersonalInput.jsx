@@ -254,26 +254,18 @@ const PersonalInput = () => {
 
                 <Pressable
                   style={styles.inputBox}
-                  onPress={() =>
-                    setShowDatePicker(true)
-                  }
+                  onPress={() => setShowDatePicker(true) }
                 >
-
                   <View style={styles.iconContainer}>
-
                     <Text style={styles.icon}>
                       📅
                     </Text>
-
                   </View>
 
-
                   <Text style={styles.dateText}>
-
                     {inputData.date.toLocaleDateString(
                       "en-GB"
                     )}
-
                   </Text>
 
                 </Pressable>

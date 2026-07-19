@@ -2,36 +2,55 @@ import { KeyboardAvoidingView, Pressable, TextInput, StyleSheet, Text, View, Pla
 import React, { useState } from 'react'
 import DateTimePicker from '@react-native-community/datetimepicker';
 
+import { usePlaning } from '../../../context/PlaningContext';
+
 const PlaningInput = () => {
 
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date());
+  const {
+    setPlaning
+  } = usePlaning()
 
   const [show, setShow] = useState(false);
   const [endShow, setEndShow] = useState(false);
 
+  const [inputData, setInputDate] = useState({
+    planName: '',
+    amount: '',
+    startDate: new Date(),
+    endDate: new Date(),
+  })
+
+  const handelChange = (key, value) => {
+    setInputDate((prev) => ({
+      ...prev,
+      [key]: value
+    }))
+  }
+
+  console.log(inputData.endDate.toLocaleDateString("en-GB"))
 
 
   const onStartDateChange = (even, selectedDate) => {
-    const currentDate = selectedDate || startDate;
     setShow(false)
-    if (currentDate) {
-      setStartDate(currentDate);
+    if (selectedDate) {
+      setInputDate((prev) => ({
+        ...prev,
+        startDate : selectedDate
+      }));
     }
 
   }
 
   const onEndDateChange = (even, selectedDate) => {
-    const currentDate = selectedDate || endDate;
 
-    const start = new Date(startDate);
+    const start = new Date(inputData.startDate);;
     start.setHours(0, 0, 0, 0);
 
-    const end = new Date(currentDate);
+    const end = new Date(selectedDate);
     end.setHours(0, 0, 0, 0);
 
     setEndShow(false)
-    if (currentDate) {
+    if (selectedDate) {
       if (end < start) {
         Alert.alert(
           "Invalid Date",
@@ -39,10 +58,15 @@ const PlaningInput = () => {
         )
         return;
       }
-      setEndDate(currentDate);
+      setInputDate((prev) =>({
+        ...prev,
+        endDate : selectedDate
+      }));
     }
 
   }
+
+
 
   return (
     <KeyboardAvoidingView
@@ -79,14 +103,27 @@ const PlaningInput = () => {
           <View style={styles.input}>
             <Text>Plan Name</Text>
             <View style={styles.inputBox}>
-              <TextInput style={styles.inputBoxContainer} placeholder=' Ex: Goa Trip' />
+              <TextInput
+                style={styles.inputBoxContainer}
+                placeholder=' Ex: Goa Trip'
+                value={inputData.planName}
+                onChangeText={(value) =>
+                  handelChange("planName", value)
+                }
+              />
             </View>
           </View>
 
           <View style={styles.input}>
             <Text>Trip Amount (Optional)</Text>
             <View style={styles.inputBox}>
-              <TextInput style={styles.inputBoxContainer} placeholder=' Ex: 1000' />
+              <TextInput
+                style={styles.inputBoxContainer}
+                placeholder=' Ex: 1000'
+                value={inputData.amount}
+                onChangeText={(value) =>
+                  handelChange("amount", value)}
+              />
             </View>
           </View>
 
@@ -98,7 +135,7 @@ const PlaningInput = () => {
               {show && <DateTimePicker
                 mode='date'
                 display='spinner'
-                value={startDate}
+                value={inputData.startDate}
                 onChange={onStartDateChange}
               />}
               <View style={styles.inputBox}>
@@ -106,8 +143,7 @@ const PlaningInput = () => {
                   <TextInput
                     style={styles.inputBoxContainer}
                     placeholder=' Ex: 22/04/2006'
-                    value={startDate.toLocaleDateString("en-GB")}
-                    onChangeText={setStartDate}
+                    value={inputData.startDate.toLocaleDateString("en-GB")}
                     editable={false}
                   />
                 </Pressable>
@@ -120,7 +156,7 @@ const PlaningInput = () => {
               {endShow && <DateTimePicker
                 mode='date'
                 display='spinner'
-                value={endDate}
+                value={inputData.endDate}
                 onChange={onEndDateChange}
               />}
 
@@ -129,8 +165,7 @@ const PlaningInput = () => {
                   <TextInput
                     style={styles.inputBoxContainer}
                     placeholder=' Ex: 22/04/2006'
-                    value={endDate.toLocaleDateString("en-GB")}
-                    onChangeText={setEndDate}
+                    value={inputData.endDate.toLocaleDateString("en-GB")}
                     editable={false}
                   />
                 </Pressable>

@@ -42,11 +42,8 @@ const ExpenseProvider = ({ children }) => {
                     : item
             )
         );
-
         setPersonalEditItem(null);
-
     };
-
 
 
 
@@ -146,15 +143,6 @@ const ExpenseProvider = ({ children }) => {
         );
     };
 
-    // const currentGroup = groupExpenses.find(
-    //     (item) => item.id === groupId
-    // )
-
-    // const allTotalGroupExpensesSum = currentGroup.members.reduce(
-    //     (accu, item) => accu + Number(item.amount), 0
-    // )
-
-    // console.log(allTotalGroupExpensesSum)
     const allTotalGroupExpensesSum = groupExpenses.reduce(
         (groupTotal , group) => {
             const memberTotal = group.members.reduce(

@@ -3,6 +3,8 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { PlaningProvider } from '../context/PlaningContext'
+
 import Workflow from '../features/WorkFlow';
 import AddPlaning from '../features/Planing/Inputs/PlaningInput'
 
@@ -15,25 +17,27 @@ const PlanningNavigation = () => {
 
 
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      {/* fix this */}
+    <PlaningProvider >
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        {/* fix this */}
 
-      <Stack.Screen
-        name="Workflow"
-        component={Workflow}
-      />   
+        <Stack.Screen
+          name="Workflow"
+          component={Workflow}
+        />
 
-      
-      <Stack.Screen
-        name="AddPlans"
-        component={AddPlaning}
-      />
 
-    </Stack.Navigator>
+        <Stack.Screen
+          name="AddPlans"
+          component={AddPlaning}
+        />
+
+      </Stack.Navigator>
+    </PlaningProvider>
   )
 }
 
