@@ -46,7 +46,7 @@ const PlanningList = () => {
           <View style={styles.cardImageTitleContainer}>
 
             <View style={styles.cardImageContainer}>
-              <Text style={{ fontSize: 37 }}>⛰️</Text>
+              <Text style={{ fontSize: 37 }}>{item.planIcon}</Text>
             </View>
 
             <View style={styles.cardTitleContainer}>
