@@ -8,6 +8,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import { usePlaning } from '../../../context/PlaningContext';
 
+import { useNavigation } from '@react-navigation/native'
+
+
 const planningIcons = [
   "🏝️", "🏖️", "✈️",
   "🚗", "⛺", "⛰️",
@@ -22,19 +25,22 @@ const planningIcons = [
 ];
 
 const PlanningList = () => {
-
+    const navigation = useNavigation()
   const {
     planing
   } = usePlaning()
 
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => navigation.navigate('PlanDetails')}
+    >
 
       {planing.map((item) => (
 
-        <View 
-        style={styles.cardContainer}
-        key={item.id}
+        <View
+          style={styles.cardContainer}
+          key={item.id}
         >
 
           <View style={styles.cardImageTitleContainer}>
@@ -97,7 +103,7 @@ const PlanningList = () => {
       ))}
 
 
-    </View>
+    </Pressable>
   )
 }
 

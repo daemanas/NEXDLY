@@ -707,35 +707,28 @@ const styles = StyleSheet.create({
 
   pickerHeader: {
     flexDirection: "row",
-
     justifyContent: "space-between",
     alignItems: "center",
-
     marginBottom: 20,
   },
 
 
   pickerTitle: {
     fontSize: 19,
-
     fontWeight: "700",
-
     color: "#2f2f31",
   },
 
 
   closeButton: {
     fontSize: 20,
-
     color: "#5b5b5b",
   },
 
 
   iconGrid: {
     flexDirection: "row",
-
     flexWrap: "wrap",
-
     gap: 12,
   },
 
@@ -743,11 +736,8 @@ const styles = StyleSheet.create({
   iconItem: {
     width: 50,
     height: 50,
-
     backgroundColor: "#F5F5FA",
-
     borderRadius: 13,
-
     justifyContent: "center",
     alignItems: "center",
   },
@@ -755,9 +745,7 @@ const styles = StyleSheet.create({
 
   selectedIconItem: {
     borderWidth: 2,
-
     borderColor: "#6246EA",
-
     backgroundColor: "#EEEBFF",
   },
 

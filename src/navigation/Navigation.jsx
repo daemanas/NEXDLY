@@ -83,6 +83,17 @@ const BottomTabs = () => {
             <Tab.Screen
                 name="My Plans"
                 component={PlanningNavigation}
+
+               //redirect main workflow page 
+
+                listeners={({ navigation }) => ({  
+                    tabPress: () => {
+                        navigation.navigate("My Plans", {
+                            screen: "Workflow",
+                        });
+                    },
+                })}
+                
                 options={{
                     tabBarIcon: ({ color }) => (
                         <Entypo

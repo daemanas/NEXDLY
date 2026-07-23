@@ -7,6 +7,7 @@ import { PlaningProvider } from '../context/PlaningContext'
 
 import Workflow from '../features/WorkFlow';
 import AddPlaning from '../features/Planing/Inputs/PlaningInput'
+import PlanDetails from '../features/Planing/screens/PlanDetailssScreen'
 
 
 
@@ -19,6 +20,7 @@ const PlanningNavigation = () => {
   return (
     <PlaningProvider >
       <Stack.Navigator
+        initialRouteName="Workflow"
         screenOptions={{
           headerShown: false,
         }}
@@ -34,6 +36,11 @@ const PlanningNavigation = () => {
         <Stack.Screen
           name="AddPlans"
           component={AddPlaning}
+        />
+
+        <Stack.Screen
+          name="PlanDetails"
+          component={PlanDetails}
         />
 
       </Stack.Navigator>

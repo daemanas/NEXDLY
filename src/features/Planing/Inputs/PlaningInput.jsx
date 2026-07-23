@@ -42,6 +42,7 @@ const PlaningInput = () => {
   const [inputData, setInputDate] = useState({
     planName: '',
     amount: '',
+    planIcon: '🏝️',
     date: new Date(),
     startDate: new Date(),
     endDate: new Date(),
@@ -98,6 +99,7 @@ const PlaningInput = () => {
       id: Date.now(),
       planName: inputData.planName,
       amount: inputData.amount,
+      planIcon: inputData.planIcon,
       date: inputData.date,
       startDate: inputData.startDate,
       endDate: inputData.endDate,
@@ -114,6 +116,7 @@ const PlaningInput = () => {
     setInputDate({
       planName: '',
       amount: '',
+      planIcon: '🏝️',
       date: new Date(),
       startDate: new Date(),
       endDate: new Date(),
@@ -147,7 +150,7 @@ const PlaningInput = () => {
           <View style={styles.imageContainer}>
 
             <View style={styles.iconContainer}>
-              <Text style={{ fontSize: 44 }} > 🏝️ </Text>
+              <Text style={{ fontSize: 44 }} > {inputData.planIcon} </Text>
             </View>
 
             <Pressable onPress={() => setShowIconPicker(true)}>
@@ -255,17 +258,67 @@ const PlaningInput = () => {
         <Pressable
           onPress={() => setShowIconPicker(false)}
           style={styles.planingIconContainer}>
-            <Pressable style={styles.planingIconBox}>
-              
-              <Text>Hello</Text>
-            </Pressable>
-          
+
+          <Pressable style={styles.planingIconBox}>
+
+            <View style={styles.planingIconBoxContainer}>
+
+              <View style={styles.pickerHeader}>
+
+                <Text style={styles.pickerTitle}>
+                  Select Plan Icon
+                </Text>
+
+                <Pressable
+                  onPress={() => setShowIconPicker(false)}
+                  style={styles.closeContainer}
+                >
+                  <Text>❌</Text>
+                </Pressable>
+
+              </View>
+
+              <View style={styles.pickerIconHome}>
+
+                {planningIcons.map((item, index) =>
+
+                  <Pressable
+                    key={index}
+                    style={[styles.iconItem,
+                    inputData.planIcon === item &&
+                    styles.selectedIconItem,
+                    ]}
+                    onPress={() => {
+                      setInputDate((prev) => ({
+                        ...prev,
+                        planIcon: item,
+                      }));
+
+                      setShowIconPicker(false)
+                    }}
+                  >
+
+                    <Text style={styles.iconItemContainer}>
+                      {item}
+                    </Text>
+
+                  </Pressable>
+
+                )}
+
+
+              </View>
+
+            </View>
+
+          </Pressable>
+
         </Pressable>
 
       </Modal>
 
 
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingView >
   )
 }
 
@@ -356,12 +409,69 @@ const styles = StyleSheet.create({
 
   planingIconContainer: {
     justifyContent: "flex-end",
-    backgroundColor:"rgba(0, 0, 0, 0.35)",
-    flex:1
+    backgroundColor: "rgba(0, 0, 0, 0.35)",
+    flex: 1
   },
 
-  planingIconBox:{
-    backgroundColor:"#ffff"
+  planingIconBox: {
+    backgroundColor: "#ffff",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+
+  planingIconBoxContainer: {
+    margin: 20
+  },
+
+  pickerHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+
+  },
+
+  pickerTitle: {
+    fontSize: 17,
+    fontWeight: 700
+  },
+
+  closeContainer: {
+    height: 25,
+    width: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    borderColor: "#9e3b3b"
+
+  },
+
+  pickerIconHome: {
+    flexDirection: "row",
+    gap: 13,
+    flexWrap: "wrap",
+    marginTop: 10,
+    marginBottom: 10
+
+  },
+
+  iconItem: {
+    height: 50,
+    width: 50,
+    borderRadius: 13,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#e1e1ec",
+  },
+
+  selectedIconItem: {
+    borderWidth: 2,
+    borderColor: "#6246EA",
+    backgroundColor: "#EEEBFF",
+  },
+
+  iconItemContainer: {
+    fontSize: 28
   }
+
 
 })
