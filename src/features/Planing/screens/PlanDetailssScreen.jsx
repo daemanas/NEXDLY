@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native'
 import React from 'react'
 import PlaningDetailsCard from '../cards/PlaningDetailsCard'
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
@@ -124,6 +126,67 @@ const PlanDetailssScreen = () => {
           </View>
         </View>
 
+        <View style={styles.planStatusContainer}>
+
+          <View style={styles.planStatusContaint}>
+
+            <View style={styles.statusContainer}>
+
+              <View style={styles.statusIconContainer}>
+                <Feather
+                  name="clock"
+                  size={27}
+                  color="#fdae02"
+                />
+              </View>
+              <View style={styles.statusIconTextContainer}>
+                <Text style={{ fontSize: 14, fontWeight: 700, }}>Plan Status</Text>
+
+                <View style={{ flexDirection: "row", alignItems: "center", marginLeft: -10 }}>
+                  <Entypo
+                    name="dot-single"
+                    size={26}
+                    color="#fdae02"
+                  />
+                  <Text style={{
+                    fontSize: 13, fontWeight: 500,
+                    color: "#fdae02"
+                  }}>Active</Text>
+
+                </View>
+
+                <Text style={{
+                  fontSize: 10,
+                  color: "#060605"
+                }}>Your plan is ongoing</Text>
+
+              </View>
+
+            </View>
+
+            <View style={styles.statusButtonContainer}>
+
+              <Pressable
+                style={styles.statusButtonContaint}
+                onPress={() => console.log("pressed")}
+              >
+
+                <View style={{ flexDirection: "row", gap: 3 }}>
+
+                  <Text style={{ fontSize: 16, }}>⚙️</Text>
+                  <Text style={{ color: "#4F46E5", fontSize: 16, fontWeight: 500 }}> Manage Plan </Text>
+                  <Text style={{ color: "#4F46E5", fontSize: 16, fontWeight: 500 }}>▼</Text>
+
+                </View>
+
+              </Pressable>
+
+            </View>
+
+          </View>
+
+        </View>
+
         <View style={styles.planNoteInpuatOutputContainer}>
 
           <View style={styles.planNoteHeaderContainer}>
@@ -135,7 +198,7 @@ const PlanDetailssScreen = () => {
                   size={18}
                   color="#5754f3"
                 />
-                <Text style={{color:"#000000", fontWeight:700, fontSize:16, marginLeft:10}}>Notes</Text>
+                <Text style={{ color: "#000000", fontWeight: 700, fontSize: 16, marginLeft: 10 }}>Notes</Text>
               </View>
 
               <View style={styles.planNoteHeaderContentText}>
@@ -144,7 +207,7 @@ const PlanDetailssScreen = () => {
                   size={16}
                   color="#5754f3"
                 />
-                <Text style={{color:"#1d50b7"}}>Add Note</Text>
+                <Text style={{ color: "#1d50b7" }}>Add Note</Text>
               </View>
 
             </View>
@@ -161,6 +224,27 @@ const PlanDetailssScreen = () => {
           </View>
 
         </View>
+
+
+
+        <Pressable
+          style={({ pressed, hovered }) => [
+            styles.planDeleteButtonContainer,
+            {
+              backgroundColor: pressed
+                ? "#efe7e7" // Darker blue when active/pressed
+                : hovered
+                  ? "#ffd2d2" // Lighter blue when hovering (Web/Desktop)
+                  : "#ffd2d2", // Default blue color
+            },
+          ]}>
+          <MaterialIcons
+            name="delete"
+            size={22}
+            color="#f02323"
+          />
+          <Text style={styles.deleteButtonText}>Delete Plan</Text>
+        </Pressable>
 
       </View>
     </ScrollView>
@@ -181,6 +265,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginLeft: 20,
     marginRight: 20,
+    marginBottom: 10
   },
 
   headerContainer: {
@@ -302,32 +387,115 @@ const styles = StyleSheet.create({
     gap: 10
   },
 
+  //status style
+
+  planStatusContainer: {
+    marginTop: 12,
+    height: 90,
+    width: "100%",
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+  },
+
+  planStatusContaint: {
+    margin: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%"
+
+  },
+
+  statusContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
+
+  statusIconContainer: {
+    backgroundColor: "#ffd895",
+    height: 39,
+    width: 39,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50
+  },
+
+  statusIconTextContainer: {
+    flexDirection: "column",
+    gap: 3,
+    marginLeft: 10
+  },
+
+  statusButtonContainer: {
+    flexDirection: "row",
+    flex: 1,
+    alignItems: "center"
+  },
+
+  statusButtonContaint: {
+    width: 160,
+    height: 60,
+    borderRadius: 12,
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#EEF2FF",
+    borderColor: "#D8D7FF",
+
+    shadowColor: "#6366F1",
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+
+  //Plan notes styles
+
   planNoteInpuatOutputContainer: {
     borderRadius: 10,
     marginTop: 12,
-    backgroundColor:"#ffff"
+    backgroundColor: "#ffff"
   },
 
-  planNoteHeaderContainer:{
-    margin:10
+  planNoteHeaderContainer: {
+    margin: 10
   },
 
-  planNoteHeaderContent:{
-    flexDirection:"row",
-    justifyContent:"space-between",
-    marginTop:10
+  planNoteHeaderContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10
   },
 
-  planNoteHeaderContentText:{
-    flexDirection:"row",
-    gap:5,
-    justifyContent:"center"
+  planNoteHeaderContentText: {
+    flexDirection: "row",
+    gap: 5,
+    justifyContent: "center"
   },
 
-  planNoteTextContainer:{
-    marginTop:10,
-    marginLeft:12,
-    marginRight:9
+  planNoteTextContainer: {
+    marginTop: 10,
+    marginLeft: 12,
+    marginRight: 9
+  },
+
+  //Delete Plan style
+
+  planDeleteButtonContainer: {
+    height: 48,
+    marginTop: 12,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ffd2d2",
+    flexDirection: "row",
+    gap: 4,
+
+  },
+
+  deleteButtonText: {
+    fontSize: 17,
+    color: "#f80707"
   }
 
 
