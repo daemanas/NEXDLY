@@ -25,85 +25,86 @@ const planningIcons = [
 ];
 
 const PlanningList = () => {
-    const navigation = useNavigation()
+  const navigation = useNavigation()
   const {
     planing
   } = usePlaning()
 
   return (
-    <Pressable
-      style={styles.container}
-      onPress={() => navigation.navigate('PlanDetails')}
-    >
+    <>
+      <View
+        style={styles.container}
 
-      {planing.map((item) => (
+      >
+        {planing.map((item) => (
+          <Pressable
+            style={styles.cardContainer}
+            key={item.id}
+            onPress={() =>
+              navigation.navigate('PlanDetails', {
+                planId: item.id
+              })}
+          >
 
-        <View
-          style={styles.cardContainer}
-          key={item.id}
-        >
+            <View style={styles.cardImageTitleContainer}>
 
-          <View style={styles.cardImageTitleContainer}>
-
-            <View style={styles.cardImageContainer}>
-              <Text style={{ fontSize: 37 }}>{item.planIcon}</Text>
-            </View>
-
-            <View style={styles.cardTitleContainer}>
-              <Text style={{ fontSize: 16, fontWeight: 500 }}>{item.planName}</Text>
-              <View style={styles.cardSmallTitleContainer}>
-                <EvilIcons name="calendar" size={20} color={"#9d9d9d"} />
-                <Text style={styles.cardSmallTitle}>
-                  {new Date(item.date).toLocaleDateString("en-GB")}
-                </Text>
+              <View style={styles.cardImageContainer}>
+                <Text style={{ fontSize: 37 }}>{item.planIcon}</Text>
               </View>
 
-              <View
-                style={[
-                  styles.cardSmallTitleContainer,
-                  { gap: 5, marginLeft: 2 }]}
-              >
-                <Entypo name="wallet" size={16} color={"#9d9d9d"} />
-                <Text style={styles.cardSmallTitle}>
-                  Budget ₹{item.amount}
-                </Text>
-              </View>
+              <View style={styles.cardTitleContainer}>
+                <Text style={{ fontSize: 16, fontWeight: 500 }}>{item.planName}</Text>
+                <View style={styles.cardSmallTitleContainer}>
+                  <EvilIcons name="calendar" size={20} color={"#9d9d9d"} />
+                  <Text style={styles.cardSmallTitle}>
+                    {new Date(item.date).toLocaleDateString("en-GB")}
+                  </Text>
+                </View>
 
-            </View>
-          </View>
+                <View
+                  style={[
+                    styles.cardSmallTitleContainer,
+                    { gap: 5, marginLeft: 2 }]}
+                >
+                  <Entypo name="wallet" size={16} color={"#9d9d9d"} />
+                  <Text style={styles.cardSmallTitle}>
+                    Budget ₹{item.amount}
+                  </Text>
+                </View>
 
-          <View style={styles.cardPercentageContainer}>
-            <View style={styles.cardPercentage}>
-              <PercentageCircle limit={69} />
-            </View>
-
-            <View style={styles.cardPercentageTitleContainer}>
-              <View style={styles.cardPercentageTitle}>
-                <Text style={styles.cardSmallPriceTitle}>{new Date(item.startDate).toLocaleDateString("en-GB")}</Text>
-                <Text style={styles.cardSmallTitle}>Start Time</Text>
-              </View>
-              <View style={styles.cardPercentageTitle}>
-                <Text style={styles.cardSmallPriceTitle}>{new Date(item.endDate).toLocaleDateString("en-GB")}</Text>
-                <Text style={styles.cardSmallTitle}>End Time</Text>
               </View>
             </View>
 
-          </View>
+            <View style={styles.cardPercentageContainer}>
+              <View style={styles.cardPercentage}>
+                <PercentageCircle limit={69} />
+              </View>
 
-          <Pressable style={styles.eyeButton}>
-            <AntDesign
-              name="eye"
-              size={20}
-              color="#631c1c"
-            />
+              <View style={styles.cardPercentageTitleContainer}>
+                <View style={styles.cardPercentageTitle}>
+                  <Text style={styles.cardSmallPriceTitle}>{new Date(item.startDate).toLocaleDateString("en-GB")}</Text>
+                  <Text style={styles.cardSmallTitle}>Start Time</Text>
+                </View>
+                <View style={styles.cardPercentageTitle}>
+                  <Text style={styles.cardSmallPriceTitle}>{new Date(item.endDate).toLocaleDateString("en-GB")}</Text>
+                  <Text style={styles.cardSmallTitle}>End Time</Text>
+                </View>
+              </View>
+
+            </View>
+
+            <Pressable style={styles.eyeButton}>
+              <AntDesign
+                name="eye"
+                size={20}
+                color="#631c1c"
+              />
+            </Pressable>
+
           </Pressable>
-
-        </View>
-
-      ))}
-
-
-    </Pressable>
+        ))}
+      </View>
+    </>
   )
 }
 

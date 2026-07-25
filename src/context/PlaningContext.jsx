@@ -5,6 +5,7 @@ const PlaningContext = createContext();
 const PlaningProvider = ({ children }) => {
 
     const [planing, setPlaning] = useState([])
+    console.log("Name : ", planing.planName)
 
 
     return (

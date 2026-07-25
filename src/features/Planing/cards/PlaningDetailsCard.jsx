@@ -5,7 +5,7 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 
-const PlaningDetailsCard = () => {
+const PlaningDetailsCard = ({itemName, itemStartDate, itemEndDate, itemIcon, itemDuration}) => {
     return (
         <View style={styles.container}>
             <View style={styles.planImageContainer}>
@@ -13,11 +13,11 @@ const PlaningDetailsCard = () => {
                 <View style={styles.planImageContaint}>
 
                     <View style={styles.cardImageContainer}>
-                        <Text style={{ fontSize: 35 }}>🏝️</Text>
+                        <Text style={{ fontSize: 35 }}>{itemIcon}</Text>
                     </View>
 
                     <View style={styles.planNameContainer}>
-                        <Text style={{ fontSize: 20, fontWeight: 500, marginTop: 17, color: "#fff" }}>Goa Trip</Text>
+                        <Text style={{ fontSize: 20, fontWeight: 500, marginTop: 17, color: "#fff" }}>{itemName}</Text>
                     </View>
 
                     <View>
@@ -27,19 +27,23 @@ const PlaningDetailsCard = () => {
                                 size={22}
                                 color="#ffff"
                             />
-                            <Text style={styles.planDurationDateText}>23 jun 2026</Text>
+                            <Text style={styles.planDurationDateText}> 
+                                {itemStartDate}
+                            </Text>
                             <Entypo
                                 name="dot-single"
                                 size={20}
                                 color="#ffff"
                             />
-                            <Text style={styles.planDurationDateText}>25 jun 2026</Text>
+                            <Text style={styles.planDurationDateText}>{itemEndDate}</Text>
                             <Entypo
                                 name="dot-single"
                                 size={20}
                                 color="#ffff"
                             />
-                            <Text style={styles.planDurationDateText}>3 Days</Text>
+                            <Text style={styles.planDurationDateText}>
+                                {itemDuration} {itemDuration === 1 ? "Day" :"Days"}
+                            </Text>
 
                             <Pressable style={styles.backgroundImageContainer}>
                                 <Feather
@@ -70,7 +74,7 @@ const styles = StyleSheet.create({
         width: "100%",
         borderRadius: 16,
         marginTop: 25,
-        backgroundColor: "#49561a",
+        backgroundColor: "#6d8712",
     },
 
     planImageContaint: {

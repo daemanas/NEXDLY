@@ -7,7 +7,8 @@ import {
   View,
   Platform,
   Alert,
-  Modal
+  Modal,
+  ScrollView
 } from 'react-native'
 
 import React, { useState } from 'react'
@@ -46,6 +47,7 @@ const PlaningInput = () => {
     date: new Date(),
     startDate: new Date(),
     endDate: new Date(),
+    planNote: ''
   })
 
 
@@ -103,6 +105,7 @@ const PlaningInput = () => {
       date: inputData.date,
       startDate: inputData.startDate,
       endDate: inputData.endDate,
+      planNote: inputData.planNote
     };
     console.log("new planing : ", newInputAdd)
 
@@ -120,6 +123,7 @@ const PlaningInput = () => {
       date: new Date(),
       startDate: new Date(),
       endDate: new Date(),
+      planNote: ''
     })
 
   }
@@ -136,188 +140,218 @@ const PlaningInput = () => {
           : undefined
       }
     >
+      <ScrollView>
 
-      <View style={styles.headingContainer} >
-        <Text style={{ fontSize: 21, fontWeight: 500 }}>Add New Plan</Text>
-        <Text style={{ fontSize: 15, }}>Create a New Plan</Text>
-      </View>
+        <View style={styles.headingContainer} >
+          <Text style={{ fontSize: 21, fontWeight: 500 }}>Add New Plan</Text>
+          <Text style={{ fontSize: 15, }}>Create a New Plan</Text>
+        </View>
 
 
-      <View style={styles.containtContainer}>
+        <View style={styles.containtContainer}>
 
-        <View style={styles.inputContaint}>
+          <View style={styles.inputContaint}>
 
-          <View style={styles.imageContainer}>
+            <View style={styles.imageContainer}>
 
-            <View style={styles.iconContainer}>
-              <Text style={{ fontSize: 44 }} > {inputData.planIcon} </Text>
+              <View style={styles.iconContainer}>
+                <Text style={{ fontSize: 44 }} > {inputData.planIcon} </Text>
+              </View>
+
+              <Pressable onPress={() => setShowIconPicker(true)}>
+                <Text style={{ fontWeight: 500, color: "#3d63ca" }} >Choose Plan Icon</Text>
+              </Pressable>
+
             </View>
 
-            <Pressable onPress={() => setShowIconPicker(true)}>
-              <Text style={{ fontWeight: 500, color: "#3d63ca" }} >Choose Plan Icon</Text>
+            <View style={styles.input}>
+              <Text>Plan Name</Text>
+              <View style={styles.inputBox}>
+                <TextInput
+                  style={styles.inputBoxContainer}
+                  placeholder=' Ex: Goa Trip'
+                  value={inputData.planName}
+                  onChangeText={(value) =>
+                    handelChange("planName", value)
+                  }
+                />
+              </View>
+            </View>
+
+            <View style={styles.input}>
+              <Text>Trip Amount (Optional)</Text>
+              <View style={styles.inputBox}>
+                <TextInput
+                  style={styles.inputBoxContainer}
+                  placeholder=' Ex: 1000'
+                  value={inputData.amount}
+                  onChangeText={(value) =>
+                    handelChange("amount", value)}
+                />
+              </View>
+            </View>
+
+            <View style={styles.inputDateContainer}>
+
+              <View style={styles.dateInput}>
+                <Text>Start Date</Text>
+
+                {show && <DateTimePicker
+                  mode='date'
+                  display='spinner'
+                  value={inputData.startDate}
+                  onChange={onStartDateChange}
+                />}
+                <View style={styles.inputBox}>
+                  <Pressable onPress={() => setShow(true)} >
+                    <TextInput
+                      style={styles.inputBoxContainer}
+                      placeholder=' Ex: 22/04/2006'
+                      value={inputData.startDate.toLocaleDateString("en-GB")}
+                      editable={false}
+                    />
+                  </Pressable>
+                </View>
+              </View>
+
+              <View style={styles.dateInput}>
+
+                <Text>End Date</Text>
+                {endShow && <DateTimePicker
+                  mode='date'
+                  display='spinner'
+                  value={inputData.endDate}
+                  onChange={onEndDateChange}
+                />}
+
+                <View style={styles.inputBox}>
+                  <Pressable onPress={() => setEndShow(true)} >
+                    <TextInput
+                      style={styles.inputBoxContainer}
+                      placeholder=' Ex: 22/04/2006'
+                      value={inputData.endDate.toLocaleDateString("en-GB")}
+                      editable={false}
+                    />
+                  </Pressable>
+                </View>
+              </View>
+
+            </View>
+
+
+            <View style={styles.inputContainer}>
+
+              <Text style={styles.inputname}>
+                Notes (Optional)
+              </Text>
+
+              <View style={styles.noteInputBox}>
+
+                <TextInput
+                  multiline
+                  numberOfLines={4}
+                  maxLength={130}
+                  placeholder="Write a note..."
+                  value={inputData.planNote}
+                  onChangeText={(value) =>
+                    handelChange(
+                      "planNote",
+                      value
+                    )
+                  }
+                  style={styles.noteInput}
+                  textAlignVertical="top"
+                />
+
+              </View>
+
+            </View>
+
+            <Pressable
+              style={styles.buttonContainer}
+              onPress={AddInputData}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: "#ffff",
+                  fontWeight: 500
+                }}>Add Plan</Text>
             </Pressable>
 
           </View>
 
-          <View style={styles.input}>
-            <Text>Plan Name</Text>
-            <View style={styles.inputBox}>
-              <TextInput
-                style={styles.inputBoxContainer}
-                placeholder=' Ex: Goa Trip'
-                value={inputData.planName}
-                onChangeText={(value) =>
-                  handelChange("planName", value)
-                }
-              />
-            </View>
-          </View>
-
-          <View style={styles.input}>
-            <Text>Trip Amount (Optional)</Text>
-            <View style={styles.inputBox}>
-              <TextInput
-                style={styles.inputBoxContainer}
-                placeholder=' Ex: 1000'
-                value={inputData.amount}
-                onChangeText={(value) =>
-                  handelChange("amount", value)}
-              />
-            </View>
-          </View>
-
-          <View style={styles.inputDateContainer}>
-
-            <View style={styles.dateInput}>
-              <Text>Start Date</Text>
-
-              {show && <DateTimePicker
-                mode='date'
-                display='spinner'
-                value={inputData.startDate}
-                onChange={onStartDateChange}
-              />}
-              <View style={styles.inputBox}>
-                <Pressable onPress={() => setShow(true)} >
-                  <TextInput
-                    style={styles.inputBoxContainer}
-                    placeholder=' Ex: 22/04/2006'
-                    value={inputData.startDate.toLocaleDateString("en-GB")}
-                    editable={false}
-                  />
-                </Pressable>
-              </View>
-            </View>
-
-            <View style={styles.dateInput}>
-
-              <Text>End Date</Text>
-              {endShow && <DateTimePicker
-                mode='date'
-                display='spinner'
-                value={inputData.endDate}
-                onChange={onEndDateChange}
-              />}
-
-              <View style={styles.inputBox}>
-                <Pressable onPress={() => setEndShow(true)} >
-                  <TextInput
-                    style={styles.inputBoxContainer}
-                    placeholder=' Ex: 22/04/2006'
-                    value={inputData.endDate.toLocaleDateString("en-GB")}
-                    editable={false}
-                  />
-                </Pressable>
-              </View>
-            </View>
-
-          </View>
-
-          <Pressable
-            style={styles.buttonContainer}
-            onPress={AddInputData}
-          >
-            <Text
-              style={{
-                fontSize: 18,
-                color: "#ffff",
-                fontWeight: 500
-              }}>Add Plan</Text>
-          </Pressable>
-
         </View>
 
-      </View>
+        <Modal
+          visible={showIconPicker}
+          animationType='slide'
+          transparent={true}
+          onRequestClose={() => setShowIconPicker(false)}
+        >
+          <Pressable
+            onPress={() => setShowIconPicker(false)}
+            style={styles.planingIconContainer}>
 
-      <Modal
-        visible={showIconPicker}
-        animationType='slide'
-        transparent={true}
-        onRequestClose={() => setShowIconPicker(false)}
-      >
-        <Pressable
-          onPress={() => setShowIconPicker(false)}
-          style={styles.planingIconContainer}>
+            <Pressable style={styles.planingIconBox}>
 
-          <Pressable style={styles.planingIconBox}>
+              <View style={styles.planingIconBoxContainer}>
 
-            <View style={styles.planingIconBoxContainer}>
+                <View style={styles.pickerHeader}>
 
-              <View style={styles.pickerHeader}>
-
-                <Text style={styles.pickerTitle}>
-                  Select Plan Icon
-                </Text>
-
-                <Pressable
-                  onPress={() => setShowIconPicker(false)}
-                  style={styles.closeContainer}
-                >
-                  <Text>❌</Text>
-                </Pressable>
-
-              </View>
-
-              <View style={styles.pickerIconHome}>
-
-                {planningIcons.map((item, index) =>
+                  <Text style={styles.pickerTitle}>
+                    Select Plan Icon
+                  </Text>
 
                   <Pressable
-                    key={index}
-                    style={[styles.iconItem,
-                    inputData.planIcon === item &&
-                    styles.selectedIconItem,
-                    ]}
-                    onPress={() => {
-                      setInputDate((prev) => ({
-                        ...prev,
-                        planIcon: item,
-                      }));
-
-                      setShowIconPicker(false)
-                    }}
+                    onPress={() => setShowIconPicker(false)}
+                    style={styles.closeContainer}
                   >
-
-                    <Text style={styles.iconItemContainer}>
-                      {item}
-                    </Text>
-
+                    <Text>❌</Text>
                   </Pressable>
 
-                )}
+                </View>
 
+                <View style={styles.pickerIconHome}>
+
+                  {planningIcons.map((item, index) =>
+
+                    <Pressable
+                      key={index}
+                      style={[styles.iconItem,
+                      inputData.planIcon === item &&
+                      styles.selectedIconItem,
+                      ]}
+                      onPress={() => {
+                        setInputDate((prev) => ({
+                          ...prev,
+                          planIcon: item,
+                        }));
+
+                        setShowIconPicker(false)
+                      }}
+                    >
+
+                      <Text style={styles.iconItemContainer}>
+                        {item}
+                      </Text>
+
+                    </Pressable>
+
+                  )}
+
+
+                </View>
 
               </View>
 
-            </View>
+            </Pressable>
 
           </Pressable>
 
-        </Pressable>
+        </Modal>
 
-      </Modal>
-
-
+      </ScrollView>
     </KeyboardAvoidingView >
   )
 }
@@ -471,7 +505,32 @@ const styles = StyleSheet.create({
 
   iconItemContainer: {
     fontSize: 28
-  }
+  },
+
+  inputContainer: {
+    marginTop: 20
+  },
+
+  noteInputBox: {
+    borderWidth: 1,
+    borderRadius: 15,
+
+    height: 100,
+
+    borderColor: "#E2E2EA",
+    marginTop: 10,
+  },
+
+
+  noteInput: {
+    flex: 1,
+
+    paddingHorizontal: 10,
+    paddingTop: 10,
+
+    fontSize: 17,
+    fontWeight: "500",
+  },
 
 
 })

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Pressable, Image } from 'react-native'
 import React from 'react'
 import PlaningDetailsCard from '../cards/PlaningDetailsCard'
 
@@ -7,11 +7,41 @@ import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
+
+import images from '../../../assets/images/images.jpg';
+
+import { usePlaning } from "../../../context/PlaningContext";
+import {
+  useRoute,
+} from "@react-navigation/native";
+
 const PlanDetailssScreen = () => {
+
+  const route = useRoute();
+  const { planId } = route.params || {};
+
+  const {
+    planing
+  } = usePlaning();
+
+  const currentPlan = planing.find(
+    (item) => item.id === planId
+
+  )
+
+  const start = new Date(currentPlan.startDate);
+  const end = new Date(currentPlan.endDate);
+
+  const duration =
+    Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+
+
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.contentContainer}>
@@ -21,7 +51,17 @@ const PlanDetailssScreen = () => {
         </View>
 
         <View style={styles.planImageCardContainer}>
-          <PlaningDetailsCard />
+          <PlaningDetailsCard
+            itemName={currentPlan.planName}
+
+            itemStartDate={new Date(currentPlan.startDate)
+              .toLocaleDateString("en-GB")}
+
+            itemEndDate={new Date(currentPlan.endDate).toLocaleDateString("en-GB")}
+
+            itemIcon={currentPlan.planIcon}
+            itemDuration = {duration}
+          />
         </View>
 
         <View style={styles.planCheckCardContainer}>
@@ -38,7 +78,7 @@ const PlanDetailssScreen = () => {
                 />
               </View>
               <Text style={styles.name}>Total Budget</Text>
-              <Text style={styles.amount}>555</Text>
+              <Text style={styles.amount}>{currentPlan.amount}</Text>
             </View>
 
             <View style={styles.boxLine} />
@@ -89,7 +129,10 @@ const PlanDetailssScreen = () => {
                 </View>
                 <View style={styles.planDate}>
                   <Text style={styles.planDateName}>Start Date</Text>
-                  <Text style={styles.planDateNum}>23 jun 2026</Text>
+                  <Text style={styles.planDateNum}>
+                    {new Date(currentPlan.startDate)
+                      .toLocaleDateString("en-GB")}
+                  </Text>
                 </View>
               </View>
 
@@ -103,7 +146,10 @@ const PlanDetailssScreen = () => {
                 </View>
                 <View style={styles.planDate}>
                   <Text style={styles.planDateName}>Start Date</Text>
-                  <Text style={styles.planDateNum}>23 jun 2026</Text>
+                  <Text style={styles.planDateNum}>
+                    {new Date(currentPlan.endDate)
+                      .toLocaleDateString("en-GB")}
+                  </Text>
                 </View>
               </View>
 
@@ -119,7 +165,9 @@ const PlanDetailssScreen = () => {
               </View>
               <View>
                 <Text style={styles.planDateName}>Duration</Text>
-                <Text style={styles.planDateNum}>4 Days</Text>
+                <Text style={styles.planDateNum}>
+                  {duration} {duration === 1 ? "Day" :"Days"}
+                </Text>
               </View>
             </View>
 
@@ -187,6 +235,8 @@ const PlanDetailssScreen = () => {
 
         </View>
 
+
+
         <View style={styles.planNoteInpuatOutputContainer}>
 
           <View style={styles.planNoteHeaderContainer}>
@@ -214,7 +264,7 @@ const PlanDetailssScreen = () => {
 
             <View style={styles.planNoteTextContainer}>
               <Text>
-                A "story" is a narrative account of a connected series of events, whether factual or fictional. It is designed to entertain, educate, or inform an audience, often featuring characters navigating a plot arc with a beginning, middle, and end.
+                {currentPlan.planNote}
               </Text>
             </View>
           </View>
@@ -225,7 +275,45 @@ const PlanDetailssScreen = () => {
 
         </View>
 
+        <View style={styles.planAlbemContainer}>
+          <View style={styles.planAlbemContaint}>
 
+            <View style={styles.planAlbamHeaderContainer}>
+
+              <View style={styles.planAlbamHeader}>
+                <View style={styles.planAlbamHeaderIcon}>
+                  <Ionicons
+                    name="image"
+                    size={18}
+                    color="#3d3aff"
+                  />
+                </View>
+                <Text>Trip Memories</Text>
+              </View>
+
+              <Pressable style={styles.planAlbamHeaderButton}>
+                <Text style={{ color: "#3d3aff" }}>View All </Text>
+              </Pressable>
+
+            </View>
+
+            <View style={styles.planAlbamPhotosContainer}>
+              <View style={styles.planAlbamPhotos}>
+                <Image source={images} style={styles.image} />
+                <Image source={images} style={styles.image} />
+                <Image source={images} style={styles.image} />
+              </View>
+              <Pressable style={styles.planPhotoAddButton}>
+                <AntDesign
+                  name="plus"
+                  size={18}
+                  color="#3d3aff"
+                />
+                <Text style={{ color: "#3d3aff", fontSize: 10, fontWeight: 500 }}>Add Photos</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
 
         <Pressable
           style={({ pressed, hovered }) => [
@@ -477,6 +565,71 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 12,
     marginRight: 9
+  },
+
+  // Plan Albems Styles
+
+  planAlbemContainer: {
+    marginTop: 10,
+    flex: 1,
+    borderRadius: 10,
+    backgroundColor: "#fff"
+  },
+
+  planAlbemContaint: {
+    margin: 10
+  },
+
+  planAlbamHeaderContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+
+  planAlbamHeader: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center"
+  },
+
+  planAlbamHeaderIcon: {
+    backgroundColor: "#cae6ff",
+    height: 25,
+    width: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 6
+  },
+
+  planAlbamPhotosContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
+
+  },
+
+  planAlbamPhotos: {
+    flexDirection: "row",
+    marginTop: 10,
+    gap: 6
+  },
+
+  image: {
+    height: 80,
+    width: 80,
+    borderRadius: 9
+  },
+
+  planPhotoAddButton: {
+    borderWidth: 1,
+    marginTop: 10,
+    marginLeft: 6,
+    height: 80,
+    width: 80,
+    borderRadius: 9,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "#6188ff",
+    borderStyle: "dashed"
   },
 
   //Delete Plan style
