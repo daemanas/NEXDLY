@@ -36,6 +36,11 @@ const PlanDetailssScreen = () => {
 
   )
 
+  const [showModal, setShowModal] = useState(false);
+  const [showExtendStart, setShowExtendStart] = useState(false);
+  const [showExtendEnd, setShowExtendEnd] = useState(false);
+
+  const [newStartDate, setNewStartDate] = useState(null);
   const start = new Date(currentPlan.startDate);
   const end = new Date(currentPlan.endDate);
 
@@ -49,11 +54,7 @@ const PlanDetailssScreen = () => {
       : title;
   };
 
-  const [showModal, setShowModal] = useState(false);
-  const [showExtendStart, setShowExtendStart] = useState(false);
-  const [showExtendEnd, setShowExtendEnd] = useState(false);
 
-  const [newStartDate, setNewStartDate] = useState(null);
 
   const handelOnModal = () => {
     setShowModal(true)
@@ -148,6 +149,8 @@ const PlanDetailssScreen = () => {
 
             itemIcon={currentPlan.planIcon}
             itemDuration={duration}
+            currentPlan={currentPlan}
+            planId={planId}
           />
         </View>
 
@@ -403,14 +406,14 @@ const PlanDetailssScreen = () => {
                 <Text style={{ color: "#000000", fontWeight: 700, fontSize: 16, marginLeft: 10 }}>Notes</Text>
               </View>
 
-              <View style={styles.planNoteHeaderContentText}>
+              <Pressable style={styles.planNoteHeaderContentText}>
                 <FontAwesome6
                   name="pencil"
                   size={16}
                   color="#5754f3"
                 />
                 <Text style={{ color: "#1d50b7" }}>Add Note</Text>
-              </View>
+              </Pressable>
 
             </View>
 
