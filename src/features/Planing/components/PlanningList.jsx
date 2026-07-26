@@ -106,14 +106,6 @@ const PlanningList = () => {
 
             </View>
 
-            <Pressable style={styles.eyeButton}>
-              <AntDesign
-                name="eye"
-                size={20}
-                color="#631c1c"
-              />
-            </Pressable>
-
           </Pressable>
         ))}
       </View>

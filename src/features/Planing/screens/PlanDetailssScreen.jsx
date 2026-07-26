@@ -34,13 +34,9 @@ const PlanDetailssScreen = () => {
   const {
     planing,
     setPlaning,
-    handaleDeletePlan
+    handaleDeletePlan,
   } = usePlaning();
 
-  // if (!currentPlan) {
-  //   navigation.goBack();
-  //   return null;
-  // }
 
   const currentPlan = planing.find(
     (item) => item.id === planId

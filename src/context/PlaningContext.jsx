@@ -12,15 +12,28 @@ const PlaningProvider = ({ children }) => {
         ))
     }
 
+    const totalPlans = planing.length;
+
+    const totalCompletedPlans = planing.filter(
+        item => item.status === "✔️ Completed Plan"
+    ).length
+
+    const totalPendingPlans = planing.filter(
+        item => item.status === "active"
+    ).length
+
 
 
     return (
         <PlaningContext.Provider
-        value ={{
-            planing,
-            setPlaning,
-            handaleDeletePlan
-        }}
+            value={{
+                planing,
+                setPlaning,
+                handaleDeletePlan,
+                totalCompletedPlans,
+                totalPlans,
+                totalPendingPlans
+            }}
         >
             {children}
         </PlaningContext.Provider>

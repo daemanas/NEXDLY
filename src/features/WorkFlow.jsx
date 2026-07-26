@@ -10,9 +10,19 @@ import PlanningList from './Planing/components/PlanningList'
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
+
+import { usePlaning } from "../context/PlaningContext";
+
 const WorkFlow = () => {
 
   const navigation = useNavigation()
+
+  const {
+    totalCompletedPlans,
+    totalPlans,
+    totalPendingPlans
+  } = usePlaning();
+
 
   return (
     <View style={styles.container}>
@@ -33,7 +43,7 @@ const WorkFlow = () => {
               />
             </View>
             <View style={styles.planContainerText}>
-              <Text style={{ fontSize: 20, fontWeight: 500 }}>8</Text>
+              <Text style={{ fontSize: 20, fontWeight: 500 }}>{totalPlans}</Text>
               <Text style={{ fontSize: 12 }}>Total Plans</Text>
             </View>
           </View>
@@ -49,7 +59,9 @@ const WorkFlow = () => {
               />
             </View>
             <View style={styles.planContainerText}>
-              <Text style={{ fontSize: 20, fontWeight: 500 }}>4</Text>
+              <Text style={{ fontSize: 20, fontWeight: 500 }}>
+                {totalPendingPlans}
+              </Text>
               <Text style={{ fontSize: 12 }}>Pending</Text>
             </View>
           </View>
@@ -65,7 +77,7 @@ const WorkFlow = () => {
               />
             </View>
             <View style={styles.planContainerText}>
-              <Text style={{ fontSize: 20, fontWeight: 500 }}>4</Text>
+              <Text style={{ fontSize: 20, fontWeight: 500 }}>{totalCompletedPlans}</Text>
               <Text style={{ fontSize: 12 }}>Compl..</Text>
             </View>
           </View>
@@ -88,7 +100,7 @@ const WorkFlow = () => {
         </View>
 
       </ScrollView>
-      
+
       <View style={styles.InputContainerButton}>
         <Pressable
           style={styles.addButton}
