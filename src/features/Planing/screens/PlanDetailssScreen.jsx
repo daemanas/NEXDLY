@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Pressable, Image, Modal } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Pressable, Image, Modal, TextInput, Alert } from 'react-native'
 import React, { useState } from 'react'
 import PlaningDetailsCard from '../cards/PlaningDetailsCard'
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -21,15 +21,26 @@ import {
   useRoute,
 } from "@react-navigation/native";
 
+import { useNavigation } from "@react-navigation/native";
+
+
 const PlanDetailssScreen = () => {
+
+  const navigation = useNavigation();
 
   const route = useRoute();
   const { planId } = route.params || {};
 
   const {
     planing,
-    setPlaning
+    setPlaning,
+    handaleDeletePlan
   } = usePlaning();
+
+  // if (!currentPlan) {
+  //   navigation.goBack();
+  //   return null;
+  // }
 
   const currentPlan = planing.find(
     (item) => item.id === planId
@@ -43,6 +54,12 @@ const PlanDetailssScreen = () => {
   const [newStartDate, setNewStartDate] = useState(null);
   const start = new Date(currentPlan.startDate);
   const end = new Date(currentPlan.endDate);
+
+  const [editNote, setEditNote] = useState(false)
+
+  const [editPlanNote, setEditPlanNote] = useState(
+    currentPlan?.planNote || ""
+  );
 
   const duration =
     Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
@@ -127,6 +144,37 @@ const PlanDetailssScreen = () => {
     Alert.alert(
       "Plan Updated",
       "Plan dates have been updated successfully."
+    );
+  };
+
+  const handleEditPlanNote = (planId, newPlanNote) => {
+    setPlaning((prev) =>
+      prev.map(plan =>
+        plan.id === planId
+          ? { ...plan, planNote: newPlanNote }
+          : plan
+      )
+    )
+  }
+
+  const confirmDelete = () => {
+    Alert.alert(
+      "Delete Plan",
+      "Are you sure you want to delete this plan? This action cannot be undone.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            handaleDeletePlan(currentPlan.id);
+            navigation.goBack();
+          },
+        },
+      ]
     );
   };
 
@@ -406,7 +454,10 @@ const PlanDetailssScreen = () => {
                 <Text style={{ color: "#000000", fontWeight: 700, fontSize: 16, marginLeft: 10 }}>Notes</Text>
               </View>
 
-              <Pressable style={styles.planNoteHeaderContentText}>
+              <Pressable
+                style={styles.planNoteHeaderContentText}
+                onPress={() => setEditNote(true)}
+              >
                 <FontAwesome6
                   name="pencil"
                   size={16}
@@ -418,9 +469,42 @@ const PlanDetailssScreen = () => {
             </View>
 
             <View style={styles.planNoteTextContainer}>
-              <Text>
-                {currentPlan.planNote}
-              </Text>
+              {
+                !editNote ? (
+                  <Text style={{ fontSize: 15 }}>
+                    {currentPlan.planNote}
+                  </Text>
+                ) : (
+                  <>
+                    <TextInput
+                      value={editPlanNote}
+                      autoFocus
+                      style={styles.noteEditInputContainer}
+                      onChangeText={setEditPlanNote}
+
+                    />
+                    <Pressable
+                      style={styles.saveNameButton}
+                      onPress={() => {
+                        if (!editPlanNote.trim()) return;
+                        handleEditPlanNote(
+                          planId,
+                          editPlanNote.trim()
+                        );
+
+                        setEditNote(false);
+                      }}
+                    >
+                      <Feather
+                        name="check"
+                        size={25}
+                        color="#FFFFFF"
+                      />
+                    </Pressable>
+                  </>
+                )
+              }
+
             </View>
           </View>
 
@@ -475,12 +559,15 @@ const PlanDetailssScreen = () => {
             styles.planDeleteButtonContainer,
             {
               backgroundColor: pressed
-                ? "#efe7e7" // Darker blue when active/pressed
+                ? "#efe7e7"
                 : hovered
-                  ? "#ffd2d2" // Lighter blue when hovering (Web/Desktop)
-                  : "#ffd2d2", // Default blue color
+                  ? "#ffd2d2"
+                  : "#ffd2d2",
             },
-          ]}>
+          ]}
+          onPress={confirmDelete}
+          
+        >
           <MaterialIcons
             name="delete"
             size={22}
@@ -795,8 +882,22 @@ const styles = StyleSheet.create({
   planNoteTextContainer: {
     marginTop: 10,
     marginLeft: 12,
-    marginRight: 9
+    marginRight: 9,
   },
+
+  noteEditInputContainer: {
+    fontSize: 16,
+  },
+  saveNameButton: {
+    height: 38,
+    width: "100%",
+    borderRadius: 10,
+    backgroundColor: "#6246EA",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+  },
+
 
   // Plan Albems Styles
 

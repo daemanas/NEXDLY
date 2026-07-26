@@ -5,14 +5,21 @@ const PlaningContext = createContext();
 const PlaningProvider = ({ children }) => {
 
     const [planing, setPlaning] = useState([])
-    console.log("Name : ", planing.planName)
+
+    const handaleDeletePlan = (id) => {
+        setPlaning(planing.filter(
+            (item) => item.id != id
+        ))
+    }
+
 
 
     return (
         <PlaningContext.Provider
         value ={{
             planing,
-            setPlaning
+            setPlaning,
+            handaleDeletePlan
         }}
         >
             {children}
