@@ -47,7 +47,8 @@ const PlaningInput = () => {
     date: new Date(),
     startDate: new Date(),
     endDate: new Date(),
-    planNote: ''
+    planNote: '',
+    status: "active",
   })
 
 
@@ -105,7 +106,8 @@ const PlaningInput = () => {
       date: inputData.date,
       startDate: inputData.startDate,
       endDate: inputData.endDate,
-      planNote: inputData.planNote
+      planNote: inputData.planNote,
+      status: inputData.status,
     };
     console.log("new planing : ", newInputAdd)
 
@@ -123,7 +125,8 @@ const PlaningInput = () => {
       date: new Date(),
       startDate: new Date(),
       endDate: new Date(),
-      planNote: ''
+      planNote: '',
+      status: "active",
     })
 
   }

@@ -5,7 +5,7 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 
-const PlaningDetailsCard = ({itemName, itemStartDate, itemEndDate, itemIcon, itemDuration}) => {
+const PlaningDetailsCard = ({ itemName, itemStartDate, itemEndDate, itemIcon, itemDuration }) => {
     return (
         <View style={styles.container}>
             <View style={styles.planImageContainer}>
@@ -20,14 +20,14 @@ const PlaningDetailsCard = ({itemName, itemStartDate, itemEndDate, itemIcon, ite
                         <Text style={{ fontSize: 20, fontWeight: 500, marginTop: 17, color: "#fff" }}>{itemName}</Text>
                     </View>
 
-                    <View>
+                    <View style={styles.planDurationContainer}>
                         <View style={styles.planDurationContainer}>
                             <EvilIcons
                                 name="calendar"
                                 size={22}
                                 color="#ffff"
                             />
-                            <Text style={styles.planDurationDateText}> 
+                            <Text style={styles.planDurationDateText}>
                                 {itemStartDate}
                             </Text>
                             <Entypo
@@ -42,18 +42,19 @@ const PlaningDetailsCard = ({itemName, itemStartDate, itemEndDate, itemIcon, ite
                                 color="#ffff"
                             />
                             <Text style={styles.planDurationDateText}>
-                                {itemDuration} {itemDuration === 1 ? "Day" :"Days"}
+                                {itemDuration} {itemDuration === 1 ? "Day" : "Days"}
                             </Text>
-
-                            <Pressable style={styles.backgroundImageContainer}>
-                                <Feather
-                                    name="camera"
-                                    size={14}
-                                    color="#3948e7"
-                                />
-                                <Text style={{ fontSize: 11, color: "#3948e7", fontWeight: 700 }}>Change Photo</Text>
-                            </Pressable>
                         </View>
+
+                        <Pressable style={styles.backgroundImageContainer}>
+                            <Feather
+                                name="camera"
+                                size={14}
+                                color="#3948e7"
+                            />
+                            <Text style={{ fontSize: 11, color: "#3948e7", fontWeight: 700 }}>Change Photo</Text>
+                        </Pressable>
+
                     </View>
 
                 </View>
@@ -92,10 +93,15 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
 
+    planNameContainer: {
+
+    },
+
     planDurationContainer: {
         flexDirection: "row",
-        gap: 1,
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginRight: 6,
     },
 
     planDurationDateText: {
@@ -107,12 +113,11 @@ const styles = StyleSheet.create({
     backgroundImageContainer: {
         flexDirection: "row",
         gap: 6,
-        marginLeft: 30,
         backgroundColor: "#fff",
         height: 26,
         width: 110,
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: 10
+        borderRadius: 10,
     }
 })

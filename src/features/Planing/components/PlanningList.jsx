@@ -30,6 +30,13 @@ const PlanningList = () => {
     planing
   } = usePlaning()
 
+
+  const shortenTitle = (title) => {
+    return title.length > 10
+      ? title.slice(0, 10) + "..."
+      : title;
+  };
+
   return (
     <>
       <View
@@ -53,7 +60,13 @@ const PlanningList = () => {
               </View>
 
               <View style={styles.cardTitleContainer}>
-                <Text style={{ fontSize: 16, fontWeight: 500 }}>{item.planName}</Text>
+                <Text
+                  style={{ fontSize: 16, fontWeight: 500 }}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {shortenTitle(item.planName)}
+                </Text>
                 <View style={styles.cardSmallTitleContainer}>
                   <EvilIcons name="calendar" size={20} color={"#9d9d9d"} />
                   <Text style={styles.cardSmallTitle}>
@@ -76,13 +89,13 @@ const PlanningList = () => {
             </View>
 
             <View style={styles.cardPercentageContainer}>
-              <View style={styles.cardPercentage}>
+              {/* <View style={styles.cardPercentage}>
                 <PercentageCircle limit={69} />
-              </View>
+              </View> */}
 
               <View style={styles.cardPercentageTitleContainer}>
                 <View style={styles.cardPercentageTitle}>
-                  <Text style={styles.cardSmallPriceTitle}>{new Date(item.startDate).toLocaleDateString("en-GB")}</Text>
+                  <Text style={styles.cardSmallPriceTitle} >{new Date(item.startDate).toLocaleDateString("en-GB")}</Text>
                   <Text style={styles.cardSmallTitle}>Start Time</Text>
                 </View>
                 <View style={styles.cardPercentageTitle}>
@@ -131,6 +144,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginLeft: 15,
     gap: 12,
+    flex: 1,
   },
 
   cardImageContainer: {
@@ -143,6 +157,7 @@ const styles = StyleSheet.create({
   },
 
   cardTitleContainer: {
+    flex: 1,
     gap: 7,
   },
 
@@ -165,9 +180,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 12,
     justifyContent: "flex-start",
-    flex: 1,
     marginLeft: 9,
     marginRight: 15,
+    width: 95
 
 
   },

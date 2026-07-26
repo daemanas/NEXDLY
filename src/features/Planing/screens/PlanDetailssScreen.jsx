@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, ScrollView, Pressable, Image } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, ScrollView, Pressable, Image, Modal } from 'react-native'
+import React, { useState } from 'react'
 import PlaningDetailsCard from '../cards/PlaningDetailsCard'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -26,7 +27,8 @@ const PlanDetailssScreen = () => {
   const { planId } = route.params || {};
 
   const {
-    planing
+    planing,
+    setPlaning
   } = usePlaning();
 
   const currentPlan = planing.find(
@@ -41,6 +43,91 @@ const PlanDetailssScreen = () => {
     Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
 
 
+  const shortenTitle = (title) => {
+    return title.length > 25
+      ? title.slice(0, 25) + "..."
+      : title;
+  };
+
+  const [showModal, setShowModal] = useState(false);
+  const [showExtendStart, setShowExtendStart] = useState(false);
+  const [showExtendEnd, setShowExtendEnd] = useState(false);
+
+  const [newStartDate, setNewStartDate] = useState(null);
+
+  const handelOnModal = () => {
+    setShowModal(true)
+  };
+
+  const handleOnComplete = (id) => {
+    setPlaning(prev =>
+      prev.map(item =>
+        item.id === id
+          ? { ...item, status: "✔️ Completed Plan" }
+          : item
+      )
+    )
+    setShowModal(false)
+  }
+
+  const handleOnCancel = (id) => {
+    setPlaning(prev =>
+      prev.map(item =>
+        item.id === id
+          ? { ...item, status: "❌ Cancel Plan" }
+          : item
+      )
+    )
+    setShowModal(false)
+  }
+
+  const handleOnActive = (id) => {
+    setPlaning(prev =>
+      prev.map(item =>
+        item.id === id
+          ? { ...item, status: "active" }
+          : item
+      )
+    )
+    setShowModal(false)
+  }
+
+  const handleExtendStart = (event, selectedDate) => {
+    setShowExtendStart(false);
+    if (!selectedDate) return;
+    setNewStartDate(selectedDate);
+    setShowExtendEnd(true);
+  };
+
+  const handleExtendEnd = (event, selectedDate) => {
+    setShowExtendEnd(false);
+    if (!selectedDate) return;
+    if (selectedDate < newStartDate) {
+      Alert.alert(
+        "Invalid Date",
+        "End Date cannot be before Start Date."
+      );
+      return;
+    }
+
+    setPlaning(prev =>
+      prev.map(item =>
+        item.id === currentPlan.id
+          ? {
+            ...item,
+            startDate: newStartDate,
+            endDate: selectedDate,
+            status: "active"
+          }
+          : item
+      )
+    );
+
+    Alert.alert(
+      "Plan Updated",
+      "Plan dates have been updated successfully."
+    );
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -52,7 +139,7 @@ const PlanDetailssScreen = () => {
 
         <View style={styles.planImageCardContainer}>
           <PlaningDetailsCard
-            itemName={currentPlan.planName}
+            itemName={shortenTitle(currentPlan.planName)}
 
             itemStartDate={new Date(currentPlan.startDate)
               .toLocaleDateString("en-GB")}
@@ -60,7 +147,7 @@ const PlanDetailssScreen = () => {
             itemEndDate={new Date(currentPlan.endDate).toLocaleDateString("en-GB")}
 
             itemIcon={currentPlan.planIcon}
-            itemDuration = {duration}
+            itemDuration={duration}
           />
         </View>
 
@@ -101,14 +188,27 @@ const PlanDetailssScreen = () => {
 
             <View style={styles.planBudgedContainer}>
               <View style={[styles.planBudgedIcon, {
-                backgroundColor: "#fddabd", height: 55,
+                height: 55,
                 width: 55,
+                backgroundColor:
+                  currentPlan.status === "active"
+                    ? "#FFF3D6"
+                    : currentPlan.status === "✔️ Completed Plan"
+                      ? "#DCFCE7"
+                      : "#FEE2E2",
+
               }]}>
-                <Feather
-                  name="clock"
-                  size={38}
-                  color="#fdae02"
-                />
+                {currentPlan.status === "active" ? (
+                  <Feather
+                    name="clock"
+                    size={37}
+                    color="#F59E0B"
+                  />
+                ) : currentPlan.status === "✔️ Completed Plan" ? (
+                  <Text style={{ fontSize: 18 }}>✔️</Text>
+                ) : (
+                  <Text style={{ fontSize: 18 }}>❌</Text>
+                )}
               </View>
               <Text style={styles.name}>Plan Status</Text>
             </View>
@@ -156,18 +256,20 @@ const PlanDetailssScreen = () => {
             </View>
 
             <View style={styles.planDuration}>
-              <View style={styles.planDurationIcon}>
-                <FontAwesome6
-                  name="calendar-days"
-                  size={18}
-                  color="#5754f3"
-                />
-              </View>
-              <View>
-                <Text style={styles.planDateName}>Duration</Text>
-                <Text style={styles.planDateNum}>
-                  {duration} {duration === 1 ? "Day" :"Days"}
-                </Text>
+              <View style={styles.planDurationff}>
+                <View style={styles.planDurationIcon}>
+                  <FontAwesome6
+                    name="calendar-days"
+                    size={18}
+                    color="#5754f3"
+                  />
+                </View>
+                <View>
+                  <Text style={styles.planDateName}>Duration</Text>
+                  <Text style={styles.planDateNum}>
+                    {duration} {duration === 1 ? "Day" : "Days"}
+                  </Text>
+                </View>
               </View>
             </View>
 
@@ -180,13 +282,32 @@ const PlanDetailssScreen = () => {
 
             <View style={styles.statusContainer}>
 
-              <View style={styles.statusIconContainer}>
-                <Feather
-                  name="clock"
-                  size={27}
-                  color="#fdae02"
-                />
+              <View
+                style={[
+                  styles.statusIconContainer,
+                  {
+                    backgroundColor:
+                      currentPlan.status === "active"
+                        ? "#FFF3D6"
+                        : currentPlan.status === "✔️ Completed Plan"
+                          ? "#DCFCE7"
+                          : "#FEE2E2",
+                  },
+                ]}
+              >
+                {currentPlan.status === "active" ? (
+                  <Feather
+                    name="clock"
+                    size={24}
+                    color="#F59E0B"
+                  />
+                ) : currentPlan.status === "✔️ Completed Plan" ? (
+                  <Text style={{ fontSize: 18 }}>✔️</Text>
+                ) : (
+                  <Text style={{ fontSize: 18 }}>❌</Text>
+                )}
               </View>
+
               <View style={styles.statusIconTextContainer}>
                 <Text style={{ fontSize: 14, fontWeight: 700, }}>Plan Status</Text>
 
@@ -194,12 +315,31 @@ const PlanDetailssScreen = () => {
                   <Entypo
                     name="dot-single"
                     size={26}
-                    color="#fdae02"
+                    color={
+                      currentPlan.status === "active"
+                        ? "#fdae02"
+                        : currentPlan.status === "✔️ Completed Plan"
+                          ? "#16A34A"
+                          : "#ca2d12"
+                    }
                   />
                   <Text style={{
                     fontSize: 13, fontWeight: 500,
-                    color: "#fdae02"
-                  }}>Active</Text>
+                    color:
+                      currentPlan.status === "active"
+                        ? "#fdae02"
+                        : currentPlan.status === "✔️ Completed Plan"
+                          ? "#16A34A"
+                          : "#ca2d12"
+
+                  }}>
+                    {currentPlan.status === "active"
+                      ? "Active"
+                      : currentPlan.status === "✔️ Completed Plan"
+                        ? "Completed"
+                        : "Cancel"
+                    }
+                  </Text>
 
                 </View>
 
@@ -214,20 +354,32 @@ const PlanDetailssScreen = () => {
 
             <View style={styles.statusButtonContainer}>
 
-              <Pressable
-                style={styles.statusButtonContaint}
-                onPress={() => console.log("pressed")}
-              >
 
-                <View style={{ flexDirection: "row", gap: 3 }}>
+              {
+                currentPlan.status === "active" ? (
+                  <Pressable
+                    style={styles.statusButtonContaint}
+                    onPress={handelOnModal}
+                  >
+                    <View style={{ flexDirection: "row", gap: 3 }}>
+                      <Text style={{ fontSize: 16, }}>⚙️</Text>
+                      <Text style={{ color: "#4F46E5", fontSize: 16, fontWeight: 500 }}> Manage Plan </Text>
+                      <Text style={{ color: "#4F46E5", fontSize: 16, fontWeight: 500 }}>▼</Text>
 
-                  <Text style={{ fontSize: 16, }}>⚙️</Text>
-                  <Text style={{ color: "#4F46E5", fontSize: 16, fontWeight: 500 }}> Manage Plan </Text>
-                  <Text style={{ color: "#4F46E5", fontSize: 16, fontWeight: 500 }}>▼</Text>
+                    </View>
 
-                </View>
-
-              </Pressable>
+                  </Pressable>
+                ) : (
+                  <Pressable
+                    style={styles.statusButtonContaint}
+                    onPress={handelOnModal}
+                  >
+                    <View style={{ flexDirection: "row", gap: 3 }}>
+                      <Text style={{ color: "#4F46E5", fontSize: 16, fontWeight: 500 }}>{currentPlan.status}</Text>
+                    </View>
+                  </Pressable>
+                )
+              }
 
             </View>
 
@@ -334,8 +486,78 @@ const PlanDetailssScreen = () => {
           <Text style={styles.deleteButtonText}>Delete Plan</Text>
         </Pressable>
 
-      </View>
-    </ScrollView>
+        <Modal
+          visible={showModal}
+          animationType='slide'
+          transparent={true}
+          onRequestClose={() => setShowModal(false)}
+        >
+
+          <Pressable
+            style={styles.modelContainer}
+            onPress={() => setShowModal(false)}
+          >
+            <View style={styles.modelContaint}>
+              <Pressable
+                style={styles.modeButtons}
+                onPress={() => handleOnComplete(currentPlan.id)}
+              >
+                <Text style={styles.modeButtonsText}>✔️ Completed Plan</Text>
+              </Pressable>
+              <View style={styles.modelLine} />
+              <Pressable
+                style={styles.modeButtons}
+                onPress={() => {
+                  setShowModal(false);
+                  setShowExtendStart(true);
+                }}
+              >
+                <Text style={styles.modeButtonsText}>⏳ Extend Plan</Text>
+              </Pressable>
+
+              <View style={styles.modelLine} />
+              <Pressable
+                style={styles.modeButtons}
+                onPress={() => handleOnCancel(currentPlan.id)}
+              >
+                <Text style={styles.modeButtonsText}>❌ Cancel Plan</Text>
+              </Pressable>
+
+              <View style={styles.modelLine} />
+              <Pressable
+                style={styles.modeButtons}
+                onPress={() => handleOnActive(currentPlan.id)}
+              >
+                <Text style={styles.modeButtonsText}>⛔No Completed</Text>
+              </Pressable>
+            </View>
+          </Pressable>
+
+        </Modal >
+
+        {
+          showExtendStart && (
+            <DateTimePicker
+              mode="date"
+              value={new Date(currentPlan.startDate)}
+              onChange={handleExtendStart}
+            />
+          )
+        }
+
+        {
+          showExtendEnd && (
+            <DateTimePicker
+              mode="date"
+              value={new Date(currentPlan.endDate)}
+              minimumDate={newStartDate}
+              onChange={handleExtendEnd}
+            />
+          )
+        }
+
+      </View >
+    </ScrollView >
   )
 }
 
@@ -467,12 +689,18 @@ const styles = StyleSheet.create({
     marginRight: 20,
     borderRadius: 8,
     height: 50.2,
-    width: 100,
+    width: 'auto',
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#dee0f9",
+  },
+
+  planDurationff: {
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+    gap: 10,
     flexDirection: "row",
-    gap: 10
   },
 
   //status style
@@ -649,6 +877,44 @@ const styles = StyleSheet.create({
   deleteButtonText: {
     fontSize: 17,
     color: "#f80707"
+  },
+
+  modelContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    width: "100%"
+  },
+
+  modelContaint: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    backgroundColor: "#cccccc",
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
+    paddingTop: 18,
+    paddingBottom: 30,
+    shadowColor: "#000",
+    shadowOpacity: .15,
+    shadowRadius: 25,
+    elevation: 20,
+  },
+  modeButtons: {
+    padding: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 40,
+    paddingRight: 40
+  },
+
+  modelLine: {
+    borderWidth: 0.2,
+  },
+
+  modeButtonsText: {
+    fontSize: 20,
+    fontWeight: 700
   }
 
 
