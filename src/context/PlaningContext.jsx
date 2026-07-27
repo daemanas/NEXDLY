@@ -22,6 +22,15 @@ const PlaningProvider = ({ children }) => {
         item => item.status === "active"
     ).length
 
+    const totalCancelPlans = planing.filter(
+        item => item.status === "❌ Cancel Plan"
+    ).length
+
+    const completedPlanPrecentage =
+        totalPlans === 0
+            ? 0
+            : Math.round((totalCompletedPlans * 100) / totalPlans);
+
 
 
     return (
@@ -32,7 +41,9 @@ const PlaningProvider = ({ children }) => {
                 handaleDeletePlan,
                 totalCompletedPlans,
                 totalPlans,
-                totalPendingPlans
+                totalPendingPlans,
+                totalCancelPlans,
+                completedPlanPrecentage
             }}
         >
             {children}

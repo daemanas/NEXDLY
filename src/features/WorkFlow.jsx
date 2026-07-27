@@ -5,7 +5,6 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { useNavigation } from '@react-navigation/native'
-import PlanningList from './Planing/components/PlanningList'
 
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -33,6 +32,7 @@ const WorkFlow = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.contantContainer}>
+
         <View style={styles.headerContainer}>
           <Text style={{ fontSize: 23, fontWeight: 500 }}>My Plans</Text>
           <Text>Plan smart, spend better</Text>

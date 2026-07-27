@@ -3,13 +3,11 @@ import { View, Text, StyleSheet } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 
 
-import Feather from 'react-native-vector-icons/Feather';
-
-const CircularProgress = ({ limit }) => {
+const CircularProgress = ({ limit, totalPlans }) => {
   const percentage = limit;
 
-  const size = 60;
-  const strokeWidth = 5;
+  const size = 100;
+  const strokeWidth = 6;
 
   const radius = (size - strokeWidth) / 2;
 
@@ -23,17 +21,17 @@ const CircularProgress = ({ limit }) => {
       <Svg width={size} height={size}>
 
         <Circle
-          cx={30}
-          cy={30}
+          cx={50}
+          cy={50}
           r={radius}
-          stroke="#E8E8F5"
+          stroke="#d4d4d6"
           strokeWidth={strokeWidth}
           fill="none"
         />
 
         <Circle
-          cx={30}
-          cy={30}
+          cx={50}
+          cy={50}
           r={radius}
           stroke="#8B7CF6"
           strokeWidth={strokeWidth}
@@ -41,36 +39,44 @@ const CircularProgress = ({ limit }) => {
           strokeDasharray={circumference}
           strokeDashoffset={progressOffset}
           strokeLinecap="round"
-          rotation="-90"
-          origin="30, 30"
+          rotation="90"
+          origin="50, 50"
         />
       </Svg>
 
-      <Text style={styles.percentage}>
-        {/* {percentage}% */}
-        <Feather
-          name="clock"
-          size={26}
-          color="#fdae02"
-        />
-      </Text>
+      <View style={styles.percentage}>
+
+        <Text style={{fontSize:22, fontWeight:500, color:"#8B7CF6"}}>
+          {totalPlans}
+        </Text>
+        <Text style={{fontSize:10.8, fontWeight:500}}>
+          Total Plans
+        </Text>
+
+      </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: 60,
-    height: 60,
+    width: 100,
+    height: 100,
     justifyContent: "center",
     alignItems: "center",
   },
 
   percentage: {
     position: "absolute",
-    fontSize: 13,
-    color: "#444",
+    justifyContent:"center",
+    alignItems:"center",
+    gap:3
   },
+
+  percentageText: {
+    fontStyle:14
+  }
 });
 
 export default CircularProgress;

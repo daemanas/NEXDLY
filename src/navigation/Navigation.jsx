@@ -17,6 +17,7 @@ import AddGroupExpenses from '../features/Expense/Input/GroupInput'
 import GroupSummer from '../features/Expense/screens/GroupSummer'
 
 import { ExpenseProvider } from '../context/ExpenseContext'
+import { PlaningProvider } from "../context/PlaningContext";
 
 import PlanningNavigation from './PlanningNavigation'
 
@@ -84,16 +85,16 @@ const BottomTabs = () => {
                 name="My Plans"
                 component={PlanningNavigation}
 
-               //redirect main workflow page 
+                //redirect main workflow page 
 
-                listeners={({ navigation }) => ({  
+                listeners={({ navigation }) => ({
                     tabPress: () => {
                         navigation.navigate("My Plans", {
                             screen: "Workflow",
                         });
                     },
                 })}
-                
+
                 options={{
                     tabBarIcon: ({ color }) => (
                         <Entypo
@@ -128,50 +129,52 @@ const BottomTabs = () => {
 const Navigation = () => {
     return (
         <ExpenseProvider>
-            <NavigationContainer>
+            <PlaningProvider>
+                <NavigationContainer>
 
-                <Stack.Navigator
-                    screenOptions={{
-                        headerShown: false,
-                    }}
-                >
+                    <Stack.Navigator
+                        screenOptions={{
+                            headerShown: false,
+                        }}
+                    >
 
-                    <Stack.Screen
-                        name="MainTabs"
-                        component={BottomTabs}
-                    />
+                        <Stack.Screen
+                            name="MainTabs"
+                            component={BottomTabs}
+                        />
 
 
-                    <Stack.Screen
-                        name="AllPersonalExpenses"
-                        component={AllPersonalExpenses}
-                    />
-                    <Stack.Screen
-                        name="AllGroupExpenses"
-                        component={AllGroupExpenses}
-                    />
-                    <Stack.Screen
-                        name="AddPersonalExpenses"
-                        component={AddPersonalExpenses}
-                    />
-                    <Stack.Screen
-                        name="AddGroupExpenses"
-                        component={AddGroupExpenses}
-                    />
-                    <Stack.Screen
-                        name="GroupSummer"
-                        component={GroupSummer}
-                    />
+                        <Stack.Screen
+                            name="AllPersonalExpenses"
+                            component={AllPersonalExpenses}
+                        />
+                        <Stack.Screen
+                            name="AllGroupExpenses"
+                            component={AllGroupExpenses}
+                        />
+                        <Stack.Screen
+                            name="AddPersonalExpenses"
+                            component={AddPersonalExpenses}
+                        />
+                        <Stack.Screen
+                            name="AddGroupExpenses"
+                            component={AddGroupExpenses}
+                        />
+                        <Stack.Screen
+                            name="GroupSummer"
+                            component={GroupSummer}
+                        />
 
-                    {/* <Stack.Screen
+                        {/* <Stack.Screen
                         name='MyPlans'
                         component={PlanningNavigatio}
                     /> */}
 
 
-                </Stack.Navigator>
+                    </Stack.Navigator>
 
-            </NavigationContainer>
+                </NavigationContainer>
+            </PlaningProvider>
         </ExpenseProvider>
     );
 };

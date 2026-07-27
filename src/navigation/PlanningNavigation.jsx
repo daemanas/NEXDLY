@@ -18,7 +18,6 @@ const PlanningNavigation = () => {
 
 
   return (
-    <PlaningProvider >
       <Stack.Navigator
         initialRouteName="Workflow"
         screenOptions={{
@@ -44,7 +43,6 @@ const PlanningNavigation = () => {
         />
 
       </Stack.Navigator>
-    </PlaningProvider>
   )
 }
 
