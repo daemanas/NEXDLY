@@ -115,7 +115,7 @@ export default PlanningList
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    gap: 5,
+    gap: 9,
     marginTop:14
   },
 
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: "row",
     justifyContent: "space-between",
-    height: 120,
+    height: 90,
     alignItems: "center",
     position: "relative",
   },
