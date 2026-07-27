@@ -1,10 +1,20 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
+import PlanningList from '../components/PlanningList'
+import { usePlaning } from "../../../context/PlaningContext";
+
 const AllPlanningScreen = () => {
+
+  const {
+    planing
+  } = usePlaning();
+
+  const pendingPlans = planing
+
   return (
     <View>
-      <Text>AllPlanningScreen</Text>
+      <PlanningList planing={pendingPlans} />
     </View>
   )
 }

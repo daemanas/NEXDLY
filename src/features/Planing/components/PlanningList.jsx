@@ -6,7 +6,6 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { usePlaning } from '../../../context/PlaningContext';
 
 import { useNavigation } from '@react-navigation/native'
 
@@ -24,11 +23,9 @@ const planningIcons = [
   "💻", "🏋️", "🧹"
 ];
 
-const PlanningList = () => {
+const PlanningList = ({planing}) => {
   const navigation = useNavigation()
-  const {
-    planing
-  } = usePlaning()
+
 
 
   const shortenTitle = (title) => {
@@ -118,7 +115,8 @@ export default PlanningList
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    gap: 5
+    gap: 5,
+    marginTop:14
   },
 
   cardContainer: {
