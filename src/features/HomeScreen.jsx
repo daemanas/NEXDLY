@@ -7,13 +7,19 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 import LinearGradient from 'react-native-linear-gradient'
 import { usePlaning } from "../context/PlaningContext";
 
+import { useNavigation } from '@react-navigation/native'
+
 import PercentageCircle from './Planing/components/CircularColorProgress'
+import PlanremainingCard from './HomeScreen/card/PlanremainingCard'
 const HomeScreen = () => {
 
+  const navigation = useNavigation()
   const {
     completedPlanPrecentage,
     totalPlans
@@ -93,6 +99,8 @@ const HomeScreen = () => {
 
         </LinearGradient>
 
+        <PlanremainingCard />
+
         <View style={styles.planCardTrackContainer}>
           <View style={styles.planCardTrackContaint}>
 
@@ -167,7 +175,6 @@ const HomeScreen = () => {
                 />
               </View>
               <Text style={styles.expensesName}>Persona Expenses</Text>
-              {/* <Text style={styles.expensesName}>Expenses</Text> */}
               <Text style={styles.expensesPrice}>23443</Text>
               <Text style={styles.expensesMonth}>This Month</Text>
             </View>
@@ -185,7 +192,6 @@ const HomeScreen = () => {
                 />
               </View>
               <Text style={styles.expensesName}>Group Expenses</Text>
-              {/* <Text style={styles.expensesName}>Expenses</Text> */}
               <Text style={styles.expensesPrice}>23443</Text>
               <Text style={styles.expensesMonth}>This Month</Text>
             </View>
@@ -193,7 +199,6 @@ const HomeScreen = () => {
             <View style={styles.planCardLine} />
 
             <View style={styles.expensesCardContaint}>
-
               <View style={[styles.expensesCardContaintIcon, {
                 backgroundColor: "#f8eaea"
               }]}>
@@ -205,15 +210,107 @@ const HomeScreen = () => {
               </View>
               <Text style={styles.expensesName}>Total Expenses</Text>
               {/* <Text style={styles.expensesName}>Expenses</Text> */}
-              <Text style={styles.expensesPrice}>23443</Text>
+              <Text style={styles.expensesPrice}>23,443</Text>
               <Text style={styles.expensesMonth}>This Month</Text>
             </View>
 
           </View>
         </View>
 
+        <View style={styles.addAllContainer}>
+          <View style={[styles.addAllHeader, { marginLeft: 17 }]}>
+            <Text style={{ fontSize: 11, fontWeight: 700 }}>Quick Actions (Add)</Text>
+          </View>
+
+          <View style={styles.addAllContaint}>
+
+            <Pressable
+              style={styles.expensesCardContaint}
+              onPress={() => navigation.navigate("My Plans", {
+                screen: "AddPlans",
+              })}
+            >
+              <View style={[styles.planCardTrackIcon, {
+                backgroundColor: "#cfd2fe"
+              }]}>
+                <FontAwesome
+                  name="calendar-plus-o"
+                  size={16}
+                  color="#282626"
+                />
+              </View>
+              <Text style={styles.addText}>
+                Add Plan
+              </Text>
+            </Pressable>
+
+            <View style={[styles.planCardLine, {
+              height: 50
+            }]} />
+
+            <Pressable
+              style={[styles.expensesCardContaint,]}
+              onPress={() => navigation.navigate('AddPersonalExpenses')}
+            >
+              <View style={[styles.planCardTrackIcon, { backgroundColor: "#cff6d9" }]}>
+                <Ionicons
+                  name="bag-add"
+                  size={18}
+                  color="#19953e"
+                />
+              </View>
+              <Text style={styles.addText}>
+                Personal Expenses
+              </Text>
+
+            </Pressable>
+
+            <View style={[styles.planCardLine, {
+              height: 50
+            }]} />
+
+            <Pressable
+              style={styles.expensesCardContaint}
+              onPress={() => navigation.navigate('AddGroupExpenses')}
+            >
+              <View style={[styles.expensesCardContaintIcon, {
+                backgroundColor: "#e2e2fc"
+              }]}>
+                <MaterialIcons
+                  name="groups"
+                  size={22}
+                  color="#423eba"
+                />
+              </View>
+              <Text style={styles.addText}>
+                Group Exprnses
+              </Text>
+            </Pressable>
+
+            <View style={[styles.planCardLine, {
+              height: 50
+            }]} />
+
+            <Pressable style={styles.expensesCardContaint}>
+              <View style={[styles.planCardTrackIcon, { backgroundColor: "#fcf0e2" }]}>
+                <MaterialIcons
+                  name="analytics"
+                  size={19}
+                  color="#e7912e"
+                />
+              </View>
+              <Text style={styles.addText}>
+                Report
+              </Text>
+            </Pressable>
+
+          </View>
+        </View>
+
+
+
       </View>
-    </ScrollView>
+    </ScrollView >
   )
 }
 
@@ -230,6 +327,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginLeft: 20,
     marginRight: 20,
+    marginBottom: 10,
   },
 
   headerContainer: {
@@ -401,7 +499,62 @@ const styles = StyleSheet.create({
   expensesMonth: {
     fontSize: 10,
     color: "#436ae7"
+  },
+
+  addAllContainer: {
+    marginTop: 15,
+    width: "100%",
+    height: 120,
+    borderRadius: 16,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+
+  },
+
+  addAllHeader: {
+    marginBottom: 10
+  },
+
+  addAllContaint: {
+    marginLeft: 17,
+    marginRight: 17,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+
+  },
+
+  addText: {
+    fontSize: 9,
+    fontWeight: 700
+  },
+
+  
+  remaniningContainer: {
+    // borderWidth: 1,
+    // borderRadius: 10,
+    height: 150,
+    width: "100%",
+    marginTop: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    // borderColor: "#d7d0d0",
+    // backgroundColor: "#fff"
+  },
+
+
+  planRemainingContainer:{
+    borderWidth: 1,
+    backgroundColor: "#fff",
+    width:"50%"
+  },
+  planRemainingHeader:{
+    flexDirection:"row",
+    justifyContent:"space-between"
   }
+
+
 
 
 
