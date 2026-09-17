@@ -12,6 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import LinearGradient from 'react-native-linear-gradient'
 import { usePlaning } from "../context/PlaningContext";
+import { useExpense } from '../context/ExpenseContext';
 
 import { useNavigation } from '@react-navigation/native'
 
@@ -20,10 +21,19 @@ import PlanremainingCard from './HomeScreen/card/PlanremainingCard'
 const HomeScreen = () => {
 
   const navigation = useNavigation()
+
   const {
     completedPlanPrecentage,
-    totalPlans
+    totalCompletedPlans,
+    totalPlans,
+    totalPendingPlans,
+    totalCancelPlans,
   } = usePlaning();
+
+    const {
+    totalPersonalMoneyExpenses,
+    totalGroupExpenses,
+  } = useExpense();
 
 
   return (
@@ -99,7 +109,7 @@ const HomeScreen = () => {
 
         </LinearGradient>
 
-        <PlanremainingCard />
+        <PlanremainingCard totalPersonalMoneyExpenses = {totalPersonalMoneyExpenses} />
 
         <View style={styles.planCardTrackContainer}>
           <View style={styles.planCardTrackContaint}>
@@ -112,7 +122,7 @@ const HomeScreen = () => {
                   color="#282626"
                 />
               </View>
-              <Text style={styles.textNumber}>12</Text>
+              <Text style={styles.textNumber}>{totalPlans}</Text>
               <Text style={styles.planText}>Total Plans</Text>
             </View>
 
@@ -126,7 +136,7 @@ const HomeScreen = () => {
                   color="#19953e"
                 />
               </View>
-              <Text style={styles.textNumber}>12</Text>
+              <Text style={styles.textNumber}>{totalCompletedPlans}</Text>
               <Text style={styles.planText}>Completed</Text>
             </View>
 
@@ -140,7 +150,7 @@ const HomeScreen = () => {
                   color="#e7912e"
                 />
               </View>
-              <Text style={styles.textNumber}>12</Text>
+              <Text style={styles.textNumber}>{totalPendingPlans}</Text>
               <Text style={styles.planText}>Pending</Text>
             </View>
 
@@ -154,7 +164,7 @@ const HomeScreen = () => {
                   color="#eb3a3a"
                 />
               </View>
-              <Text style={styles.textNumber}>12</Text>
+              <Text style={styles.textNumber}>{totalCancelPlans}</Text>
               <Text style={styles.planText}>Cancelled</Text>
             </View>
 
@@ -175,7 +185,7 @@ const HomeScreen = () => {
                 />
               </View>
               <Text style={styles.expensesName}>Persona Expenses</Text>
-              <Text style={styles.expensesPrice}>23443</Text>
+              <Text style={styles.expensesPrice}>{totalPersonalMoneyExpenses}</Text>
               <Text style={styles.expensesMonth}>This Month</Text>
             </View>
 
@@ -192,7 +202,7 @@ const HomeScreen = () => {
                 />
               </View>
               <Text style={styles.expensesName}>Group Expenses</Text>
-              <Text style={styles.expensesPrice}>23443</Text>
+              <Text style={styles.expensesPrice}>{totalGroupExpenses}</Text>
               <Text style={styles.expensesMonth}>This Month</Text>
             </View>
 
@@ -529,7 +539,7 @@ const styles = StyleSheet.create({
     fontWeight: 700
   },
 
-  
+
   remaniningContainer: {
     // borderWidth: 1,
     // borderRadius: 10,
@@ -544,14 +554,14 @@ const styles = StyleSheet.create({
   },
 
 
-  planRemainingContainer:{
+  planRemainingContainer: {
     borderWidth: 1,
     backgroundColor: "#fff",
-    width:"50%"
+    width: "50%"
   },
-  planRemainingHeader:{
-    flexDirection:"row",
-    justifyContent:"space-between"
+  planRemainingHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between"
   }
 
 

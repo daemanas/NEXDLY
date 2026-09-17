@@ -3,7 +3,7 @@ import React from 'react'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Feather from 'react-native-vector-icons/Feather';
 
-const PlanremainingCard = () => {
+const PlanremainingCard = ({ totalPersonalMoneyExpenses }) => {
     return (
         <View style={styles.remaniningContainer}>
             <View style={styles.remaniningContaint}>
@@ -50,23 +50,23 @@ const PlanremainingCard = () => {
                             <Text style={{ fontSize: 11, fontWeight: 500 }}>Juny</Text>
                         </View>
 
-                        <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center "}}>
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center " }}>
                             <View style={[styles.remainingExpencePrice, { marginTop: 14, gap: 5 }]}>
                                 <Text style={{ fontSize: 14, fontWeight: 500 }}>Total Spent</Text>
-                                <Text style={{ fontSize: 20, fontWeight: 700 }}>₹18,999</Text>
+                                <Text style={{ fontSize: 18, fontWeight: 700 }}>₹{totalPersonalMoneyExpenses}</Text>
                             </View>
 
-                            <View style={[styles.remaniningIconContainer, {backgroundColor:"#f4ddc4",}]}>
+                            <View style={[styles.remaniningIconContainer, { backgroundColor: "#f4ddc4", }]}>
                                 <Feather
-                                name="trending-down"
-                                size={24}
-                                color="#ae6845"
-                                 />
+                                    name="trending-down"
+                                    size={24}
+                                    color="#ae6845"
+                                />
                             </View>
                         </View>
 
-                        <View style={{marginTop:8}}>
-                            <Text style={{color:"#34b020", fontSize:12}}>⬇ 12% vs last month</Text>
+                        <View style={{ marginTop: 8 }}>
+                            <Text style={{ color: "#34b020", fontSize: 12 }}>⬇ 12% vs last month</Text>
                         </View>
 
 
@@ -155,13 +155,13 @@ const styles = StyleSheet.create({
 
     },
 
-    remaniningIconContainer:{
-        height:40,
-        width:43,
-        justifyContent:"center",
-        alignItems:"center",
-        marginTop:20,
-        borderRadius:10,
-        marginRight:10
+    remaniningIconContainer: {
+        height: 40,
+        width: 43,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 20,
+        borderRadius: 10,
+        marginRight: 10
     }
 })
