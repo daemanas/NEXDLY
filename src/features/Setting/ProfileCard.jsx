@@ -100,7 +100,7 @@ const ProfileCard = () => {
               />
             </View>
             <View>
-              <Text style={styles.textNumber}>{totalCancelPlans}</Text>=
+              <Text style={styles.textNumber}>{totalCancelPlans}</Text>
             </View>
           </View>
 
